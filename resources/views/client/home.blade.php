@@ -63,6 +63,7 @@
               <div class="tabBookingStep"> 
                 <div class="ps-md-3 ps-lg-0 mt-md-2 py-md-4">
                   <h1 class="h2 pt-xl-1 pb-3">Location Selection</h1>
+                  <input type="hidden" name="location" id="location">
     
                   <div class="card overflow-hidden border-0 shadow-sm card-hover">
                     <div class="row g-0">
@@ -72,7 +73,6 @@
                           <h5 class="card-title">Card title</h5>
                           <p class="card-text fs-sm">Some quick example text to build on the card title and make up the bulk of the card's content within card's body.</p>
                           <button type="button" data-location="location" class="btn btn-sm btn-primary nextBtn"  onclick="nextPrev(1)">Select This Location</button>
-                          <input type="text" name="location" id="location">
                         </div>
                       </div>
                     </div>
@@ -84,7 +84,7 @@
                  <!--Service------------------------>
                 <div class="ps-md-3 ps-lg-0 mt-md-2 py-md-4">
                   <h1 class="h2 pt-xl-1 pb-3">Service Selection</h1>
-                  <input type="text" id="service">
+                  <input type="hidden" id="service">
                   <div class="card overflow-hidden border-0 shadow-sm card-hover mb-2">
                     <div class="row g-0">
                       <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url({{asset('/client/assets/img/team/01.jpg')}}); min-height: 12rem;"></div>
@@ -117,7 +117,7 @@
                 <!--Service Details------------------------>
                 <div class="ps-md-3 ps-lg-0 mt-md-2 py-md-4">
                   <h1 class="h2 pt-xl-1 pb-3">Service Selection Details</h1>
-                  <input type="text" id="serviceDetails" name="serviceDetails">
+                  <input type="hidden" id="serviceDetails" name="serviceDetails">
                   <div id="serviceIdOne">
                     <div class="card overflow-hidden border-0 shadow-sm card-hover mb-2">
                       <div class="row g-0">
@@ -153,6 +153,7 @@
                 <!--Stylist------------------------>
                 <div class="ps-md-3 ps-lg-0 mt-md-2 py-md-4">
                   <h1 class="h2 pt-xl-1 pb-3">Select Stylist</h1>
+                  <input type="hidden" id="stylist" name="stylist">
     
                   <div class="card overflow-hidden border-0 shadow-sm card-hover">
                     <div class="row g-0">
@@ -162,7 +163,6 @@
                           <h5 class="card-title">Card title</h5>
                           <p class="card-text fs-sm">Some quick example text to build on the card title and make up the bulk of the card's content within card's body.</p>
                           <button type="button" data-stylist="stylist" class="btn btn-sm btn-primary nextBtn"  onclick="nextPrev(1)">Select This Location</button>
-                          <input type="text" id="stylist" name="stylist">
                         </div>
                       </div>
                     </div>
@@ -174,7 +174,7 @@
                 <!-----Datetime----------------------->
                 <div class="ps-md-3 ps-lg-0 mt-md-2 py-md-4">
                   <h1 class="h2 pt-xl-1 pb-3">Select Date & Time</h1>
-                  <input type="text" id="datetime" name="datetime">
+                  <input type="hidden" id="datetime" name="datetime">
                   <div class="row">
                     <div class="col-12 p-4">
                         <div class="card">
@@ -251,7 +251,7 @@
 
                   <div class="card overflow-hidden border-0 shadow-sm card-hover mb-2">
                     <div class="row g-0">
-                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url({{asset('/client/assets/img/team/01.jpg')}}); min-height: 12rem;"></div>
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url({{asset('/client/assets/img/team/34.png')}}); min-height: 12rem;"></div>
                       <div class="col-sm-8">
                         <div class="card-body">
                           <h5 class="card-title">Location</h5>
@@ -262,7 +262,7 @@
                           <p class="serviceInput"></p>
                           <h5 class="card-title">Stylist</h5>
                           <p class="stylistInput"></p>
-                          <h5 class="card-title">Fullname</h5>
+                          <h5 class="card-title">Full Name</h5>
                           <p class="fullnameInput"></p>
                           <h5 class="card-title">Phone</h5>
                           <p class="phoneInput"></p>
