@@ -13,6 +13,17 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
+            $table->text('short_description')->nullable();
+            $table->decimal('price_min', 20, 4)->nullable();
+            $table->decimal('price_max', 20, 4)->nullable();
+            $table->decimal('charge_amount', 20, 4)->nullable();
+            $table->string('duration')->nullable();
+            $table->bigInteger('category_id')->unsigned();
+            $table->foreign('category_id', 'services_category_id_foreign')->references('id')->on('services_categories')->onDelete('cascade');
+            $table->string('selection_image')->nullable();
+            $table->string('description_image')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

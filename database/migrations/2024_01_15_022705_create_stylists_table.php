@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('stylists', function (Blueprint $table) {
             $table->id();
+            $table->string('image')->nullable();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('display_name')->nullable();
+            $table->string('title')->nullable();
+            $table->string('bio')->nullable();
+            $table->string('email')->nullable();
+            $table->string('password')->nullable();
             $table->timestamps();
         });
     }

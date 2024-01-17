@@ -270,7 +270,7 @@
                   <ul class="nav flex-column pb-lg-1 mb-lg-3">
                     <li class="nav-item"><a href="https://thehairtric.com/" class="nav-link d-inline-block px-0 pt-1 pb-2">TheHairTRIC</a></li>
                     <li class="nav-item"><a href="https://lashility.com/" class="nav-link d-inline-block px-0 pt-1 pb-2">Lashility</a></li>
-                    <li class="nav-item"><a href="/admin" class="nav-link d-inline-block px-0 pt-1 pb-2">Staff Portal</a></li>
+                    <li class="nav-item"><a href="/dashboard" class="nav-link d-inline-block px-0 pt-1 pb-2">Staff Portal</a></li>
                     
                   </ul>
                   
