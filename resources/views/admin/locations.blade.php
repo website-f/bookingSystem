@@ -151,7 +151,7 @@
                             @foreach ($stylists as $stylist)
                                 <div class="row mb-2">
                                     <div class="col-lg-12">
-                                        <div class="btn btn-block styleBtn clearfix
+                                        <div class="btn btn-block btn-outline-primary styleBtn clearfix
                                         @if ($locations->stylists->contains($stylist->id))
                                             btn-primary active
                                         @else
@@ -168,11 +168,11 @@
                                                 <img class="img-fluid img-thumbnail" height="50px" width="50px" src="{{asset($stylist->image)}}" alt="">
                                                 {{$stylist->display_name}}
                                             </div>
-                                            <a href="#collapseTwo-{{$stylist->id}}" class="float-right bg-primary p-1 rounded" onclick="handleLinkClickEdit(event)">services</a>
+                                            {{-- <a href="#collapseTwo-{{$stylist->id}}" class="float-right bg-primary p-1 rounded" onclick="handleLinkClickEdit(event)">services</a> --}}
                                         </div>
                                     </div>
                                 </div>
-                                <div id="collapseTwo-{{$stylist->id}}" class="collapse">
+                                {{-- <div id="collapseTwo-{{$stylist->id}}" class="collapse">
                                   <div class="card-body">
                                     <div class="row">
                                       <div class="col-sm-6">
@@ -192,7 +192,7 @@
                                       </div>
                                     </div>
                                   </div>
-                                </div>
+                                </div> --}}
                             @endforeach
     
                         </div>
