@@ -34,15 +34,31 @@
   <link rel="stylesheet" href="{{asset('admin/plugins/daterangepicker/daterangepicker.css')}}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{asset('admin/plugins/summernote/summernote-bs4.min.css')}}">
+
+  <style>
+    .fixed-card {
+      width: 100%; /* Set the desired fixed width for the card */
+      margin: 0 auto; /* Center the card horizontally */
+    }
+  
+    .fixed-card img {
+      width: 200px; /* Set the desired fixed width for the image */
+      height: 200px; /* Set the desired fixed height for the image */
+    }
+
+    .btn-b-low {
+      background-color: #524cff
+    }
+  </style>
   
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
   <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
+  {{-- <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__shake" src="{{asset('client/assets/img/logoCombo.png')}}" alt="hairtricandlashility" width="20%">
-  </div>
+  </div> --}}
 
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -143,13 +159,37 @@
           </li>
 
           <li class="nav-item">
-            <a href="/dashboard/sylist" class="nav-link">
+            <a href="/dashboard/stylist" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
               <p>
                 Stylists
                
               </p>
             </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-th-list"></i>
+              <p>
+                Service
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/dashboard/service" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Service</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/dashboard/service-categories" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Category</p>
+                </a>
+              </li>
+            </ul>
           </li>
 
           <li class="nav-item">

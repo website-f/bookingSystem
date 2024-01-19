@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('bio')->nullable();
             $table->string('email')->nullable();
             $table->string('password')->nullable();
+            $table->string('status')->nulalble()->default('active');
             $table->timestamps();
         });
     }

@@ -25,4 +25,10 @@ Route::prefix('dashboard')->group(function() {
     Route::get('/', [AdminController::class, 'home'])->middleware('auth');
     Route::get('/location', [AdminController::class, 'location'])->middleware('auth');
     Route::post('/add-location', [AdminController::class, 'Addlocation'])->middleware('auth');
+    Route::get('/stylist', [AdminController::class, 'stylist'])->middleware('auth');
+    Route::post('/add-stylist', [AdminController::class, 'addStylist'])->middleware('auth');
+    Route::get('/service', [AdminController::class, 'service'])->middleware('auth');
+    Route::post('/add-service', [AdminController::class, 'addService'])->middleware('auth');
+    Route::get('/service-categories', [AdminController::class, 'category'])->middleware('auth');
+    Route::post('/add-category', [AdminController::class, 'addCategory'])->middleware('auth');
 });

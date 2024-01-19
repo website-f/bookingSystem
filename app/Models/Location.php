@@ -10,4 +10,9 @@ class Location extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'full_address', 'image', 'status'];
+
+    public function stylists() {
+        return $this->belongsToMany(Stylist::class, 'locations_stylists');
+    }
+
 }

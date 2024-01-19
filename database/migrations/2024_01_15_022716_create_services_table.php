@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreign('category_id', 'services_category_id_foreign')->references('id')->on('services_categories')->onDelete('cascade');
             $table->string('selection_image')->nullable();
             $table->string('description_image')->nullable();
-            $table->string('status')->nullable();
+            $table->string('status')->nullable()->default('active');
             $table->timestamps();
         });
     }
