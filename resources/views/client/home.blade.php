@@ -65,18 +65,24 @@
                   <h1 class="h2 pt-xl-1 pb-3">Location Selection</h1>
                   <input type="hidden" name="location" id="location">
     
-                  <div class="card overflow-hidden border-0 shadow-sm card-hover">
+                  @foreach ($location as $locations)
+                  <div class="card overflow-hidden border-0 shadow-sm card-hover mb-2">
                     <div class="row g-0">
-                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url({{asset('/client/assets/img/team/01.jpg')}}); min-height: 12rem;"></div>
+                      @if ($locations->image !== null)
+                      <div class="col-sm-4 bg-repeat-0" style="background-image: url({{ asset($locations->image) }}); min-height: 12rem; background-size: cover;"></div>
+                      @else
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover"></div>
+                      @endif
                       <div class="col-sm-8">
                         <div class="card-body">
-                          <h5 class="card-title">Card title</h5>
-                          <p class="card-text fs-sm">Some quick example text to build on the card title and make up the bulk of the card's content within card's body.</p>
-                          <button type="button" data-location="location" class="btn btn-sm btn-primary nextBtn"  onclick="nextPrev(1)">Select This Location</button>
+                          <h5 class="card-title">{{$locations->name}}</h5>
+                          <p class="card-text fs-sm">{{$locations->full_address}}</p>
+                          <button type="button" data-location="{{$locations->id}}" class="btn btn-sm btn-primary nextBtn"  onclick="nextPrev(1)">Select This Location</button>
                         </div>
                       </div>
                     </div>
                   </div>
+                  @endforeach
                   
                 </div>
               </div>
@@ -85,31 +91,24 @@
                 <div class="ps-md-3 ps-lg-0 mt-md-2 py-md-4">
                   <h1 class="h2 pt-xl-1 pb-3">Service Selection</h1>
                   <input type="hidden" id="service">
+
+                  @foreach ($category as $categories)
                   <div class="card overflow-hidden border-0 shadow-sm card-hover mb-2">
                     <div class="row g-0">
-                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url({{asset('/client/assets/img/team/01.jpg')}}); min-height: 12rem;"></div>
+                      @if ($categories->image !== null)
+                      <div class="col-sm-4 bg-repeat-0" style="background-image: url({{ asset($categories->image) }}); min-height: 12rem; background-size: cover; background-position: center;"></div>
+                      @else
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover"></div>
+                      @endif
                       <div class="col-sm-8">
                         <div class="card-body">
-                          <h5 class="card-title">Card title1</h5>
-                          <p class="card-text fs-sm">Some quick example text to build on the card title and make up the bulk of the card's content within card's body.</p>
-                          <button type="button" data-service="service1" class="btn btn-sm btn-primary nextBtn"  onclick="nextPrev(1)">Select This Location</button>
+                          <h5 class="card-title">{{$categories->name}}</h5>
+                          <button type="button" data-service="{{$categories->name}}" class="btn btn-sm btn-primary nextBtn"  onclick="nextPrev(1)">Select This</button>
                         </div>
                       </div>
                     </div>
                   </div>
-
-                  <div class="card overflow-hidden border-0 shadow-sm card-hover">
-                    <div class="row g-0">
-                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url({{asset('/client/assets/img/team/01.jpg')}}); min-height: 12rem;"></div>
-                      <div class="col-sm-8">
-                        <div class="card-body">
-                          <h5 class="card-title">Card title2</h5>
-                          <p class="card-text fs-sm">Some quick example text to build on the card title and make up the bulk of the card's content within card's body.</p>
-                          <button type="button" data-service="service2" class="btn btn-sm btn-primary nextBtn"  onclick="nextPrev(1)">Select This Location</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  @endforeach                
                   
                 </div>
               </div>
@@ -119,32 +118,44 @@
                   <h1 class="h2 pt-xl-1 pb-3">Service Selection Details</h1>
                   <input type="hidden" id="serviceDetails" name="serviceDetails">
                   <div id="serviceIdOne">
-                    <div class="card overflow-hidden border-0 shadow-sm card-hover mb-2">
-                      <div class="row g-0">
-                        <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url({{asset('/client/assets/img/team/01.jpg')}}); min-height: 12rem;"></div>
-                        <div class="col-sm-8">
-                          <div class="card-body">
-                            <h5 class="card-title">Card title 1</h5>
-                            <p class="card-text fs-sm">Some quick example text to build on the card title and make up the bulk of the card's content within card's body.</p>
-                            <button type="button" data-serviceDetails="serviceDetails1" class="btn btn-sm btn-primary nextBtn"  onclick="nextPrev(1)">Select This Location</button>
-                          </div>
+                  @foreach ($service1 as $services1)
+                  <div class="card overflow-hidden border-0 shadow-sm card-hover mb-2">
+                    <div class="row g-0">
+                      @if ($services1->selection_image !== null)
+                      <div class="col-sm-4 bg-repeat-0" style="background-image: url({{ asset($services1->selection_image) }}); min-height: 12rem; background-size: cover; background-position: center;"></div>
+                      @else
+                      <div class="col-sm-4 bg-repeat-0 bg-size-cover"></div>
+                      @endif
+                      <div class="col-sm-8">
+                        <div class="card-body">
+                          <h5 class="card-title">{{$services1->name}}</h5>
+                          <p class="card-text fs-sm">RM{{ number_format($services1->charge_amount, 2) }}</p>
+                          <button type="button" data-serviceDetails="{{$services1->name}}" class="btn btn-sm btn-primary nextBtn"  onclick="nextPrev(1)">Select This Service</button>
                         </div>
                       </div>
                     </div>
                   </div>
+                  @endforeach 
+                  </div>
                   <div id="serviceIdTwo">
-                    <div class="card overflow-hidden border-0 shadow-sm card-hover">
+                    @foreach ($service2 as $services2)
+                    <div class="card overflow-hidden border-0 shadow-sm card-hover mb-2">
                       <div class="row g-0">
-                        <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url({{asset('/client/assets/img/team/01.jpg')}}); min-height: 12rem;"></div>
+                        @if ($services2->selection_image !== null)
+                        <div class="col-sm-4 bg-repeat-0" style="background-image: url({{ asset($services2->selection_image) }}); min-height: 12rem; background-size: cover; background-position: center;"></div>
+                        @else
+                        <div class="col-sm-4 bg-repeat-0 bg-size-cover"></div>
+                        @endif
                         <div class="col-sm-8">
                           <div class="card-body">
-                            <h5 class="card-title">Card title 2</h5>
-                            <p class="card-text fs-sm">Some quick example text to build on the card title and make up the bulk of the card's content within card's body.</p>
-                            <button type="button" data-serviceDetails="serviceDetails2" class="btn btn-sm btn-primary nextBtn"  onclick="nextPrev(1)">Select This Location</button>
+                            <h5 class="card-title">{{$services2->name}}</h5>
+                            <p class="card-text fs-sm">RM{{ number_format($services1->charge_amount, 2) }}</p>
+                            <button type="button" data-serviceDetails="{{$services2->name}}" class="btn btn-sm btn-primary nextBtn"  onclick="nextPrev(1)">Select This Service</button>
                           </div>
                         </div>
                       </div>
                     </div>
+                    @endforeach 
                   </div>
                   
                 </div>
@@ -517,12 +528,12 @@
             locationInputVerify.innerHTML = dataLocationValue;
           }
 
-          if (dataServiceValue == "service1") {
+          if (dataServiceValue == "Hair Service") {
             console.log(dataServiceValue)
             serviceDetails1Div.style.display = "block";
             serviceDetails2Div.style.display = "none";
             
-          } else if (dataServiceValue == "service2") {
+          } else if (dataServiceValue == "Lash Service") {
             console.log(dataServiceValue)
             serviceDetails1Div.style.display = "none";
             serviceDetails2Div.style.display = "block"

@@ -31,7 +31,7 @@ class AdminController extends Controller
             $photo = $request->file('image');
         
             // Generate a unique name for the image
-            $newName = $request->name . '-' . now()->timestamp . '.' . $photo->getClientOriginalExtension();
+            $newName = now()->timestamp . '.' . $photo->getClientOriginalExtension();
         
             // Set the path where you want to store the image in the public directory
             $path = public_path('photo/' . $newName);
@@ -79,9 +79,64 @@ class AdminController extends Controller
 
     }
 
+    public function Editlocation(Request $request, $id) {
+
+        if ($request->file('image')) {
+            $photo = $request->file('image');
+        
+            // Generate a unique name for the image
+            $newName = now()->timestamp . '.' . $photo->getClientOriginalExtension();
+        
+            // Set the path where you want to store the image in the public directory
+            $path = public_path('photo/' . $newName);
+        
+            // Move the uploaded file to the specified path
+            $photo->move(public_path('photo'), $newName);
+        
+            // Save the path to the database
+            $fullpath = 'photo/' . $newName;
+
+            $location = Location::findOrFail($id);
+            $location->name = $request->name;
+            $location->full_address = $request->full_address;
+            $location->image = $fullpath;
+            $location->save();
+            if ($request->has('stylists')) {
+                $stylists = $request->input('stylists');
+            
+                // Synchronize the stylists and services for the location
+                $location->stylists()->sync($stylists);
+            }
+  
+        } else {
+            $location = Location::findOrFail($id);
+            $location->name = $request->name;
+            $location->full_address = $request->full_address;
+            $location->save();
+            if ($request->has('stylists')) {
+                $stylists = $request->input('stylists');
+            
+                // Synchronize the stylists and services for the location
+                $location->stylists()->sync($stylists);
+            }
+            
+            
+        }
+        
+
+        if($location) {
+            Session::flash('status', 'success');
+            Session::flash('message', 'New Location Added!');
+        }
+
+        return redirect('/dashboard/location');
+
+    }
+
     public function stylist() {
-        $stylist = Stylist::all();
-        return view('admin.stylists', ['stylist' => $stylist]);
+        $stylist = Stylist::with('services')->get();
+        $service = Service::with('stylists')->get();
+        return view('admin.stylists', ['stylist' => $stylist, 'service' => $service]);
     }
 
     public function addStylist(Request $request) {
@@ -175,6 +230,44 @@ class AdminController extends Controller
 
     }
 
+    public function editCategory(Request $request, $id) {
+
+        if ($request->file('image')) {
+            $photo = $request->file('image');
+        
+            // Generate a unique name for the image
+            $newName = now()->timestamp . '.' . $photo->getClientOriginalExtension();
+        
+            // Set the path where you want to store the image in the public directory
+            $path = public_path('photo/' . $newName);
+        
+            // Move the uploaded file to the specified path
+            $photo->move(public_path('photo'), $newName);
+        
+            // Save the path to the database
+            $fullpath = 'photo/' . $newName;
+
+            $category = ServiceCategory::findOrFail($id);
+            $category->name = $request->name;
+            $category->image = $fullpath;
+            $category->save();
+        } else {
+            $category = ServiceCategory::findOrFail($id);
+            $category->name = $request->name;
+            $category->save();
+
+        }
+        
+
+        if($category) {
+            Session::flash('status', 'success');
+            Session::flash('message', 'Successfully Edited');
+        }
+
+        return redirect('/dashboard/service-categories');
+
+    }
+
     public function service() {
         $service = Service::with('stylists')->get();
         $stylists = Stylist::with('services')->get();
@@ -218,6 +311,70 @@ class AdminController extends Controller
             }
         } else {
             $service = new Service;
+            $service->name = $request->name;
+            $service->short_description = $request->short_description;
+            $service->price_min = $request->price_min;
+            $service->price_max = $request->price_max;
+            $service->charge_amount = $request->charge_amount;
+            $service->duration = $request->duration;
+            $service->category_id = $request->category_id;
+            $service->status = 'active';
+            $service->save();
+            if ($request->has('stylists')) {
+                $stylists = $request->input('stylists');
+            
+                // Synchronize the stylists and services for the location
+                $service->stylists()->sync($stylists);
+            }
+
+        }
+        
+
+        if($service) {
+            Session::flash('status', 'success');
+            Session::flash('message', 'New Service Added!');
+        }
+
+        return redirect('/dashboard/service');
+
+    }
+
+    public function editService(Request $request, $id) {
+
+        if ($request->file('image')) {
+            $photo = $request->file('image');
+        
+            // Generate a unique name for the image
+            $newName = now()->timestamp . '.' . $photo->getClientOriginalExtension();
+        
+            // Set the path where you want to store the image in the public directory
+            $path = public_path('photo/' . $newName);
+        
+            // Move the uploaded file to the specified path
+            $photo->move(public_path('photo'), $newName);
+        
+            // Save the path to the database
+            $fullpath = 'photo/' . $newName;
+
+            $service = Service::findOrFail($id);
+            $service->name = $request->name;
+            $service->short_description = $request->short_description;
+            $service->price_min = $request->price_min;
+            $service->price_max = $request->price_max;
+            $service->charge_amount = $request->charge_amount;
+            $service->duration = $request->duration;
+            $service->category_id = $request->category_id;
+            $service->status = 'active';
+            $service->selection_image = $fullpath;
+            $service->save();
+            if ($request->has('stylists')) {
+                $stylists = $request->input('stylists');
+            
+                // Synchronize the stylists and services for the location
+                $service->stylists()->sync($stylists);
+            }
+        } else {
+            $service = Service::findOrFail($id);
             $service->name = $request->name;
             $service->short_description = $request->short_description;
             $service->price_min = $request->price_min;

@@ -134,7 +134,7 @@
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                    <form action="/dashboard/edit-location" method="POST"  enctype="multipart/form-data">
+                    <form action="/dashboard/edit-location/{{$locations->id}}" method="POST"  enctype="multipart/form-data">
                       @csrf
                       @method('PUT')
                     <div class="modal-body">

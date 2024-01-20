@@ -80,6 +80,24 @@
                   </div>
                   <label class="form-label">Image</label>
                   <input type="file" id="formFile" name="image" class="form-control">
+                  <hr>
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <p class="font-weight-bold">Services</p>
+                            @foreach ($service as $services)
+                                <div class="row mb-2">
+                                    <div class="col-lg-12">
+                                        <div class="btn btn-block btn-outline-primary styleBtn clearfix">
+                                            <div class="float-left">
+                                                <input type="checkbox" name="services[]" autocomplete="off" value="{{$services->id}}">
+                                                {{$services->name}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                      </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -172,6 +190,34 @@
                       </div>
                       <label class="form-label">Image</label>
                       <input type="file" name="image" class="form-control">
+                      <hr>
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <p class="font-weight-bold">Stylists</p>
+                              @foreach ($service as $services)
+                                  <div class="row mb-2">
+                                      <div class="col-lg-12">
+                                          <div class="btn btn-block btn-outline-primary styleBtn clearfix
+                                          @if ($stylists->services->contains($services->id))
+                                            btn-primary active
+                                        @else
+                                            btn-outline-primary
+                                        @endif
+                                          ">
+                                              <div class="float-left">
+                                                  <input type="checkbox" name="services[]" autocomplete="off" value="{{$services->id}}"
+                                                  @if ($stylists->services->contains($services->id))
+                                                checked
+                                                @endif
+                                                  >
+                                                  {{$services->name}}
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              @endforeach
+                          </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -191,5 +237,44 @@
   </section>
   <!-- /.content -->
 </div>
+<script src="{{asset('admin/plugins/jquery/jquery.min.js')}}"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      var styleBtns = document.querySelectorAll('.styleBtn');
+
+      styleBtns.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+              var checkbox = this.querySelector('input[type="checkbox"]');
+              checkbox.checked = !checkbox.checked;
+
+              // Optionally, you can manually update the styling based on the checkbox state.
+              if (checkbox.checked) {
+                  btn.classList.add('btn-primary', 'active');
+              } else {
+                  btn.classList.remove('btn-primary', 'active');
+              }
+          });
+      });
+  });
+</script>
+<script>
+  function handleLinkClick(event) {
+      event.stopPropagation(); // Prevent the click event from bubbling up to the parent div
+      // Add your custom link click logic here
+      var targetId = event.target.getAttribute('href'); // Get the target collapse div ID
+      console.log('Target ID:', targetId);
+      $(targetId).collapse('toggle');
+  }
+
+  function handleLinkClickEdit(event) {
+      event.stopPropagation(); // Prevent the click event from bubbling up to the parent div
+      // Add your custom link click logic here
+      var targetId = event.target.getAttribute('href'); // Get the target collapse div ID
+      console.log('Target ID:', targetId);
+      var targetDiv = document.querySelector(targetId);
+      var targetDicRem = targetDiv.classList.remove("show")
+      console.log(targetDiv)
+  }
+</script>
 
 @endsection

@@ -48,7 +48,7 @@
                 <form action="/dashboard/add-category" method="POST"  enctype="multipart/form-data">
                   @csrf
                 <div class="modal-body">
-                  <label class="form-label">Service Name</label>
+                  <label class="form-label">Name</label>
                   <input type="text" name="name" class="form-control"><br>
                   <label class="form-label">Image</label>
                   <input type="file" name="image" class="form-control"><br>
@@ -87,16 +87,16 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle">Edit Location</h5>
+                      <h5 class="modal-title" id="exampleModalLongTitle">Edit category</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                    <form action="/dashboard/edit-location" method="POST"  enctype="multipart/form-data">
+                    <form action="/dashboard/edit-category/{{$categories->id}}" method="POST"  enctype="multipart/form-data">
                       @csrf
                       @method('PUT')
                     <div class="modal-body">
-                      <label class="form-label">Location Name</label>
+                      <label class="form-label">Name</label>
                       <input type="text" name="name" class="form-control" value="{{$categories->name}}"><br>
                       <label class="form-label">Image</label>
                       <input type="file" name="image" class="form-control"><br>
