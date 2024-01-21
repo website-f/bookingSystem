@@ -64,6 +64,7 @@
                 <div class="ps-md-3 ps-lg-0 mt-md-2 py-md-4">
                   <h1 class="h2 pt-xl-1 pb-3">Location Selection</h1>
                   <input type="hidden" name="location" id="location">
+                  <input type="hidden" name="locationName" id="locationName">
     
                   @foreach ($location as $locations)
                   <div class="card overflow-hidden border-0 shadow-sm card-hover mb-2">
@@ -77,7 +78,7 @@
                         <div class="card-body">
                           <h5 class="card-title">{{$locations->name}}</h5>
                           <p class="card-text fs-sm">{{$locations->full_address}}</p>
-                          <button type="button" data-location="{{$locations->id}}" class="btn btn-sm btn-primary nextBtn"  onclick="nextPrev(1)">Select This Location</button>
+                          <button type="button" data-location="{{$locations->id}}" data-locationName="{{$locations->name}}" class="btn btn-sm btn-primary nextBtn"  onclick="nextPrev(1)">Select This Location</button>
                         </div>
                       </div>
                     </div>
@@ -117,6 +118,7 @@
                 <div class="ps-md-3 ps-lg-0 mt-md-2 py-md-4">
                   <h1 class="h2 pt-xl-1 pb-3">Service Selection Details</h1>
                   <input type="hidden" id="serviceDetails" name="serviceDetails">
+                  <input type="hidden" id="serviceDetailsId" name="serviceDetailsId">
                   <div id="serviceIdOne">
                   @foreach ($service1 as $services1)
                   <div class="card overflow-hidden border-0 shadow-sm card-hover mb-2">
@@ -130,7 +132,7 @@
                         <div class="card-body">
                           <h5 class="card-title">{{$services1->name}}</h5>
                           <p class="card-text fs-sm">RM{{ number_format($services1->charge_amount, 2) }}</p>
-                          <button type="button" data-serviceDetails="{{$services1->name}}" class="btn btn-sm btn-primary nextBtn"  onclick="nextPrev(1)">Select This Service</button>
+                          <button type="button" data-serviceDetails="{{$services1->name}}" data-serviceId="{{$services1->id}}" class="btn btn-sm btn-primary nextBtn getStylistsbtn"  onclick="nextPrev(1)">Select This Service</button>
                         </div>
                       </div>
                     </div>
@@ -150,7 +152,7 @@
                           <div class="card-body">
                             <h5 class="card-title">{{$services2->name}}</h5>
                             <p class="card-text fs-sm">RM{{ number_format($services1->charge_amount, 2) }}</p>
-                            <button type="button" data-serviceDetails="{{$services2->name}}" class="btn btn-sm btn-primary nextBtn"  onclick="nextPrev(1)">Select This Service</button>
+                            <button type="button" data-serviceDetails="{{$services2->name}}" data-serviceId="{{$services2->id}}" class="btn btn-sm btn-primary nextBtn getStylistsbtn"  onclick="nextPrev(1)">Select This Service</button>
                           </div>
                         </div>
                       </div>
@@ -166,17 +168,24 @@
                   <h1 class="h2 pt-xl-1 pb-3">Select Stylist</h1>
                   <input type="hidden" id="stylist" name="stylist">
     
-                  <div class="card overflow-hidden border-0 shadow-sm card-hover">
-                    <div class="row g-0">
-                      <div class="col-sm-4 bg-repeat-0 bg-size-cover" style="background-image: url({{asset('/client/assets/img/team/01.jpg')}}); min-height: 12rem;"></div>
-                      <div class="col-sm-8">
-                        <div class="card-body">
-                          <h5 class="card-title">Card title</h5>
-                          <p class="card-text fs-sm">Some quick example text to build on the card title and make up the bulk of the card's content within card's body.</p>
-                          <button type="button" data-stylist="stylist" class="btn btn-sm btn-primary nextBtn"  onclick="nextPrev(1)">Select This Location</button>
+                  <div id="stylistContainer">
+                    @foreach ($stylists as $stylist)
+                    <div class="card overflow-hidden border-0 shadow-sm card-hover mb-2">
+                      <div class="row g-0">
+                        @if ($stylist->image !== null)
+                        <div class="col-sm-4 bg-repeat-0" style="background-image: url({{ asset($stylist->image) }}); min-height: 12rem; background-size: cover; background-position: center;"></div>
+                        @else
+                        <div class="col-sm-4 bg-repeat-0 bg-size-cover"></div>
+                        @endif
+                        <div class="col-sm-8">
+                          <div class="card-body">
+                            <h5 class="card-title">{{$stylist->display_name}}</h5>
+                            <button type="button" data-stylist="{{$stylist->display_name}}" class="btn btn-sm btn-primary nextBtn"  onclick="nextPrev(1)">Select This</button>
+                          </div>
                         </div>
                       </div>
                     </div>
+                    @endforeach 
                   </div>
 
                 </div>
@@ -298,6 +307,49 @@
         </div>
       </section>
       <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+      <script src="{{asset('admin/plugins/jquery/jquery.min.js')}}"></script>
+      <script>
+        $(document).ready(function () {
+            $('.getStylistsbtn').on('click', function () {
+                var locationId = $('#location').val();
+                var serviceId = $('#serviceDetailsId').val();
+        
+                $.ajax({
+                    url: '/get-stylist/' + locationId + '/' + serviceId,
+                    type: 'GET',
+                    success: function (data) {
+                        // Assuming you have a container with the ID 'stylistContainer'
+                        $('#stylistContainer').html(''); // Clear previous content
+                        if (data.stylists.length > 0) {
+                            $.each(data.stylists, function (index, stylist) {
+                                var cardHtml = '<div class="card overflow-hidden border-0 shadow-sm card-hover mb-2">';
+                                cardHtml += '<div class="row g-0">';
+                                if (stylist.image !== null) {
+                                    cardHtml += '<div class="col-sm-4 bg-repeat-0" style="background-image: url(' + stylist.image + '); min-height: 12rem; background-size: cover; background-position: center;"></div>';
+                                } else {
+                                    cardHtml += '<div class="col-sm-4 bg-repeat-0 bg-size-cover"></div>';
+                                }
+                                cardHtml += '<div class="col-sm-8">';
+                                cardHtml += '<div class="card-body">';
+                                cardHtml += '<h5 class="card-title">' + stylist.display_name + '</h5>';
+                                cardHtml += '<button type="button" data-stylist="' + stylist.display_name + '" class="btn btn-sm btn-primary nextBtn"  onclick="nextPrev(1)">Select This</button>';
+                                cardHtml += '</div></div></div></div>';
+                                $('#stylistContainer').append(cardHtml);
+                            });
+                        } else {
+                            // Handle case where no stylists are returned
+                            $('#stylistContainer').html('<p>No stylists available for the selected criteria.</p>');
+                        }
+                        // Continue with the logic for the next step or any additional actions
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+
+      </script>
       <script>
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -305,13 +357,12 @@
             calendar.render()
           }
       
-          let nextBtns = document.querySelectorAll(".nextBtn");
-
-          nextBtns.forEach(function(nextBtn) {
-            nextBtn.addEventListener('click', function() {
-              switchTab();
-            })
-           })
+          var stylistContainer = document.getElementById('stylistContainer');
+    stylistContainer.addEventListener('click', function(event) {
+        if (event.target.classList.contains('nextBtn')) {
+            switchTab();
+        }
+    });
           // Example: Switch to the "datetime" tab
           // document.getElementById('nextBtn').addEventListener('click', function () {
           //   switchTab();
@@ -491,8 +542,10 @@
           var clickedButton = event.target;
           var dataDateValue = clickedButton.getAttribute('data-date');
           var dataLocationValue = clickedButton.getAttribute('data-location');
+          var dataLocationNameValue = clickedButton.getAttribute('data-locationName');
           var dataServiceValue = clickedButton.getAttribute('data-service');
           var dataServiceDetailsValue = clickedButton.getAttribute('data-serviceDetails');
+          var dataServiceDetailsIdValue = clickedButton.getAttribute('data-serviceId');
           var dataStylistValue = clickedButton.getAttribute('data-stylist');
 
           let serviceDetails1Div = document.getElementById("serviceIdOne");
@@ -500,7 +553,9 @@
 
           var datetimeInput = document.getElementById("datetime");
           var locationInput = document.getElementById("location");
+          var locationInputName = document.getElementById("locationName");
           var serviceInput = document.getElementById("serviceDetails");
+          var serviceInputId = document.getElementById("serviceDetailsId");
           var stylistInput = document.getElementById("stylist");
           var fn = document.getElementById("fn");
           var ln = document.getElementById("ln");
@@ -525,7 +580,8 @@
           if (dataLocationValue !== null) {
             console.log(dataLocationValue)
             locationInput.value = dataLocationValue;
-            locationInputVerify.innerHTML = dataLocationValue;
+            locationInputName.value = dataLocationNameValue;
+            locationInputVerify.innerHTML = dataLocationNameValue;
           }
 
           if (dataServiceValue == "Hair Service") {
@@ -542,6 +598,7 @@
           if (dataServiceDetailsValue !== null) {
             console.log(dataServiceDetailsValue)
             serviceInput.value = dataServiceDetailsValue;
+            serviceInputId.value = dataServiceDetailsIdValue;
             serviceInputVerify.innerHTML = dataServiceDetailsValue;
           }
 

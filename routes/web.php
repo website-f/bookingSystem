@@ -20,6 +20,7 @@ Route::get('/', [BookingController::class, 'home']);
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login-fill', [AuthController::class, 'loginAuth']);
 Route::get('/logout', [AuthController::class, "logout"])->middleware('auth');
+Route::get('/get-stylist/{locationId}/{serviceId}', [BookingController::class, 'getStylists']);
 
 Route::prefix('dashboard')->group(function() {
     Route::get('/', [AdminController::class, 'home'])->middleware('auth');

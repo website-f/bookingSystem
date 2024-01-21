@@ -67,11 +67,11 @@
                                             <img class="img-fluid img-thumbnail" height="50px" width="50px" src="{{asset($stylist->image)}}" alt="{{$stylist->display_name}}">
                                             {{$stylist->display_name}}
                                         </div>
-                                        <a data-toggle="collapse" href="#collapseOne-{{$stylist->id}}" class="float-right bg-primary p-1 rounded" onclick="handleLinkClick(event)">services</a>
+                                        {{-- <a data-toggle="collapse" href="#collapseOne-{{$stylist->id}}" class="float-right bg-primary p-1 rounded" onclick="handleLinkClick(event)">services</a> --}}
                                     </div>
                                 </div>
                             </div>
-                            <div id="collapseOne-{{$stylist->id}}" class="collapse">
+                            {{-- <div id="collapseOne-{{$stylist->id}}" class="collapse">
                               <div class="card-body">
                                 <div class="row">
                                   <div class="col-sm-6">
@@ -89,7 +89,7 @@
                                   </div>
                                 </div>
                               </div>
-                            </div>
+                            </div> --}}
                         @endforeach
                     </div>
                   </div>
