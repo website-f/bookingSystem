@@ -81,6 +81,9 @@
                   <label class="form-label">Image</label>
                   <input type="file" id="formFile" name="image" class="form-control">
                   <hr>
+                  <label class="form-label">Off Day</label>
+                  <input type="date" name="off_days" class="form-control">
+                  <hr>
                       <div class="row">
                         <div class="col-lg-12">
                           <p class="font-weight-bold">Services</p>
@@ -154,7 +157,7 @@
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                    <form action="/dashboard/edit-stylist" method="POST"  enctype="multipart/form-data">
+                    <form action="/dashboard/edit-stylist/{{$stylists->id}}" method="POST"  enctype="multipart/form-data">
                       @csrf
                       @method('PUT')
                     <div class="modal-body">
@@ -190,6 +193,9 @@
                       </div>
                       <label class="form-label">Image</label>
                       <input type="file" name="image" class="form-control">
+                      <hr>
+                      <label class="form-label">Off Day</label>
+                      <input type="date" name="off_days" class="form-control">
                       <hr>
                         <div class="row">
                           <div class="col-lg-12">

@@ -167,6 +167,7 @@
                 <div class="ps-md-3 ps-lg-0 mt-md-2 py-md-4">
                   <h1 class="h2 pt-xl-1 pb-3">Select Stylist</h1>
                   <input type="hidden" id="stylist" name="stylist">
+                  <input type="hidden" id="stylistId" name="stylistId">
     
                   <div id="stylistContainer">
                     @foreach ($stylists as $stylist)
@@ -180,7 +181,7 @@
                         <div class="col-sm-8">
                           <div class="card-body">
                             <h5 class="card-title">{{$stylist->display_name}}</h5>
-                            <button type="button" data-stylist="{{$stylist->display_name}}" class="btn btn-sm btn-primary nextBtn"  onclick="nextPrev(1)">Select This</button>
+                            <button type="button" data-stylist="{{$stylist->id}}" data-stylist-id="{{$stylist->id}}" class="btn btn-sm btn-primary nextBtn"  onclick="nextPrev(1)">Select This</button>
                           </div>
                         </div>
                       </div>
@@ -332,13 +333,13 @@
                                 cardHtml += '<div class="col-sm-8">';
                                 cardHtml += '<div class="card-body">';
                                 cardHtml += '<h5 class="card-title">' + stylist.display_name + '</h5>';
-                                cardHtml += '<button type="button" data-stylist="' + stylist.display_name + '" class="btn btn-sm btn-primary nextBtn"  onclick="nextPrev(1)">Select This</button>';
+                                cardHtml += '<button type="button" data-stylist="' + stylist.display_name + '" data-stylist-id="' + stylist.id + '" class="btn btn-sm btn-primary nextBtn"  onclick="nextPrev(1)">Select This</button>';
                                 cardHtml += '</div></div></div></div>';
                                 $('#stylistContainer').append(cardHtml);
                             });
                         } else {
                             // Handle case where no stylists are returned
-                            $('#stylistContainer').html('<p>No stylists available for the selected criteria.</p>');
+                            $('#stylistContainer').html('<p>No stylists available for the selected location.</p>');
                         }
                         // Continue with the logic for the next step or any additional actions
                     },
@@ -358,11 +359,11 @@
           }
       
           var stylistContainer = document.getElementById('stylistContainer');
-    stylistContainer.addEventListener('click', function(event) {
-        if (event.target.classList.contains('nextBtn')) {
-            switchTab();
-        }
-    });
+          stylistContainer.addEventListener('click', function(event) {
+              if (event.target.classList.contains('nextBtn')) {
+                  switchTab();
+              }
+          });
           // Example: Switch to the "datetime" tab
           // document.getElementById('nextBtn').addEventListener('click', function () {
           //   switchTab();
@@ -419,30 +420,23 @@
           // Return a schedule object or array with information about available, booked, and off days
           // Example:
           var dateString = date.toLocaleDateString('en-US', { timeZone: 'Asia/Kuala_Lumpur' }).split('/').join('-');
-        
-          // Simulate an asynchronous call
-          setTimeout(function() {
-            var data = {
-              date: dateString,
-              availability: [
-                { start: dateString + 'T10:00:00', end: dateString + 'T12:00:00' },
-                // ... other available time slots ...
-              ],
-              booked: [
-                { start: '1-13-2024' + 'T13:00:00', end: '1-13-2024' + 'T14:00:00' },
-                { start: '1-14-2024' + 'T11:00:00', end: '1-14-2024' + 'T12:00:00' }
-                // ... other booked time slots ...
-              ],
-              offDays: [
-                '1-15-2024', // Example off day
-                '1-20-2024',
-                '2-25-2024',
-                // ... other off days ...
-              ]
-            };
-        
-            callback(data); // Invoke the callback with stylist data
-          }, 0); // Simulate a delay of 1 second, replace with your actual data fetching logic
+          var stylistId = document.getElementById("stylistId");
+          console.log(stylistId.value)
+
+          // Make an AJAX request to fetch the stylist's schedule
+          $.ajax({
+              type: 'GET',
+              url: '/get-schedule/' + stylistId.value,
+              data: { date: dateString },
+              dataType: 'json',
+              success: function (data) {
+                  // Invoke the callback with the fetched data
+                  callback(data);
+              },
+              error: function (error) {
+                  console.error('Error fetching stylist schedule:', error);
+              }
+          });
         }
         
         
@@ -547,6 +541,7 @@
           var dataServiceDetailsValue = clickedButton.getAttribute('data-serviceDetails');
           var dataServiceDetailsIdValue = clickedButton.getAttribute('data-serviceId');
           var dataStylistValue = clickedButton.getAttribute('data-stylist');
+          var dataStylistIdValue = clickedButton.getAttribute('data-stylist-id');
 
           let serviceDetails1Div = document.getElementById("serviceIdOne");
           let serviceDetails2Div = document.getElementById("serviceIdTwo")
@@ -557,6 +552,7 @@
           var serviceInput = document.getElementById("serviceDetails");
           var serviceInputId = document.getElementById("serviceDetailsId");
           var stylistInput = document.getElementById("stylist");
+          var stylistIdInput = document.getElementById("stylistId");
           var fn = document.getElementById("fn");
           var ln = document.getElementById("ln");
           var email = document.getElementById("email");
@@ -603,8 +599,10 @@
           }
 
           if (dataStylistValue !== null) {
-            console.log(dataStylistValue)
+            console.log(dataStylistIdValue)
             stylistInput.value = dataStylistValue;
+            stylistIdInput.value = dataStylistIdValue;
+
             stylistInputVerify.innerHTML = dataStylistValue;
           }
 

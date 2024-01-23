@@ -7,6 +7,7 @@ use App\Models\Stylist;
 use App\Models\Location;
 use Illuminate\Http\Request;
 use App\Models\ServiceCategory;
+use App\Models\StylistSchedule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 
@@ -126,7 +127,7 @@ class AdminController extends Controller
 
         if($location) {
             Session::flash('status', 'success');
-            Session::flash('message', 'New Location Added!');
+            Session::flash('message', 'Successfully Edited');
         }
 
         return redirect('/dashboard/location');
@@ -176,6 +177,34 @@ class AdminController extends Controller
             $stylist->save();
 
         }
+
+        $offDaysString = $request->input('off_days');
+
+        $offDays = $this->parseOffDaysString($offDaysString);
+
+        $stylistSchedule = StylistSchedule::where('stylist_id', $stylist->id)->first();
+    
+        if ($stylistSchedule) {
+            // Retrieve the current off days
+            $currentOffDays = json_decode($stylistSchedule->off_days, true);
+        
+            // Merge the current off days with the new off days
+            $mergedOffDays = array_merge($currentOffDays, $offDays);
+        
+            // Update the existing StylistSchedule
+            $stylistSchedule->update([
+                'off_days' => json_encode($mergedOffDays), // Convert the merged array to JSON
+            ]);
+        } else {
+            // Create a new StylistSchedule instance
+            $stylistSchedule = new StylistSchedule([
+                'stylist_id' => $stylist->id,
+                'off_days' => json_encode($offDays),
+            ]);
+    
+            // Save the data to the database
+            $stylistSchedule->save();
+        }
         
 
         if($stylist) {
@@ -185,6 +214,98 @@ class AdminController extends Controller
 
         return redirect('/dashboard/stylist');
 
+    }
+
+    public function editStylist(Request $request, $id) {
+
+        if ($request->file('image')) {
+            $photo = $request->file('image');
+        
+            // Generate a unique name for the image
+            $newName = $request->display_name . '-' . now()->timestamp . '.' . $photo->getClientOriginalExtension();
+        
+            // Set the path where you want to store the image in the public directory
+            $path = public_path('photo/' . $newName);
+        
+            // Move the uploaded file to the specified path
+            $photo->move(public_path('photo'), $newName);
+        
+            // Save the path to the database
+            $fullpath = 'photo/' . $newName;
+
+            $stylist = Stylist::findOrFail($id);
+            $stylist->first_name = $request->first_name;
+            $stylist->last_name = $request->last_name;
+            $stylist->display_name = $request->display_name;
+            $stylist->title = $request->title;
+            $stylist->bio = $request->bio;
+            $stylist->email = $request->email;
+            $stylist->image = $fullpath;
+            $stylist->save();
+        } else {
+            $stylist = Stylist::findOrFail($id);
+            $stylist->first_name = $request->first_name;
+            $stylist->last_name = $request->last_name;
+            $stylist->display_name = $request->display_name;
+            $stylist->title = $request->title;
+            $stylist->bio = $request->bio;
+            $stylist->email = $request->email;
+            $stylist->save();
+
+        }
+
+        $offDaysString = $request->input('off_days');
+
+        $offDays = $this->parseOffDaysString($offDaysString);
+
+        $stylistSchedule = StylistSchedule::where('stylist_id', $id)->first();
+    
+        if ($stylistSchedule) {
+            // Retrieve the current off days
+            $currentOffDays = json_decode($stylistSchedule->off_days, true);
+        
+            // Merge the current off days with the new off days
+            $mergedOffDays = array_merge($currentOffDays, $offDays);
+        
+            // Update the existing StylistSchedule
+            $stylistSchedule->update([
+                'off_days' => json_encode($mergedOffDays), // Convert the merged array to JSON
+            ]);
+        } else {
+            // Create a new StylistSchedule instance
+            $stylistSchedule = new StylistSchedule([
+                'stylist_id' => $stylist->id,
+                'off_days' => json_encode($offDays),
+            ]);
+    
+            // Save the data to the database
+            $stylistSchedule->save();
+        }
+        
+
+        if($stylist) {
+            Session::flash('status', 'success');
+            Session::flash('message', 'Successfully Edited');
+        }
+
+        return redirect('/dashboard/stylist');
+
+    }
+
+    private function parseOffDaysString($offDaysString)
+    {
+        $offDays = [];
+    
+        // Convert the off_days string to an array
+        $offDaysArray = explode(',', $offDaysString);
+    
+        // Format each off day and add it to the offDays array
+        foreach ($offDaysArray as $offDay) {
+            $formattedOffDay = date('n-j-Y', strtotime($offDay));
+            $offDays[] = $formattedOffDay;
+        }
+    
+        return $offDays;
     }
 
     public function category() {
