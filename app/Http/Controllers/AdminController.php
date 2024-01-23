@@ -137,7 +137,8 @@ class AdminController extends Controller
     public function stylist() {
         $stylist = Stylist::with('services')->get();
         $service = Service::with('stylists')->get();
-        return view('admin.stylists', ['stylist' => $stylist, 'service' => $service]);
+        $stylistSchedule = StylistSchedule::all();
+        return view('admin.stylists', ['stylist' => $stylist, 'service' => $service, 'stylistSchedule' => $stylistSchedule]);
     }
 
     public function addStylist(Request $request) {

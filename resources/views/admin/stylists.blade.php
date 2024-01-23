@@ -136,7 +136,23 @@
                   <b>Booking</b> <a class="float-right">1,322</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Today</b> <a class="float-right"><span class="badge badge-success">on duty</span></a>
+                  @php
+                      $stylistSch = $stylistSchedule->where('stylist_id', $stylists->id)->first();
+                      $isOffDuty = false;
+                  
+                      if ($stylistSch) {
+                          $stylistSchOffDays = json_decode($stylistSch->off_days, true);
+                          $todayDate = date('n-j-Y');
+                          $isOffDuty = in_array($todayDate, $stylistSchOffDays);
+                      }
+                  @endphp
+                  <b>Today</b> <a class="float-right">
+                    @if ($isOffDuty)
+                    <span class="badge badge-danger">Off duty</span>
+                    @else
+                    <span class="badge badge-success">on duty</span>
+                    @endif
+                  </a>
                 </li>
                 {{-- <li class="list-group-item">
                   <b>Friends</b> <a class="float-right">13,287</a>
@@ -195,6 +211,29 @@
                       <input type="file" name="image" class="form-control">
                       <hr>
                       <label class="form-label">Off Day</label>
+                      <div class="row">
+                        <div class="col-lg-12">
+                          @php
+                              $stylistSchEdit = $stylistSchedule->where('stylist_id', $stylists->id)->first();
+                              $stylistSchOffDaysEdit = [];
+                          
+                              if ($stylistSchEdit) {
+                                  $stylistSchOffDaysEdit = json_decode($stylistSchEdit->off_days, true);
+                              }
+                          @endphp
+                          
+                          @if ($stylistSchOffDaysEdit)
+                              @foreach ($stylistSchOffDaysEdit as $offdays)
+                                  <div class="btn btn-block btn-outline-info mb-2 p-0">
+                                      <p>{{$offdays}}</p>
+                                  </div>  
+                              @endforeach
+                          @else
+                              <p class="mb-2">No off days applied</p>
+                          @endif
+                        </div>
+                      </div>
+                      <label>Add +</label>
                       <input type="date" name="off_days" class="form-control">
                       <hr>
                         <div class="row">
