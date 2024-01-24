@@ -58,7 +58,8 @@
           <!-- Account details -->
           <div class="col-md-8 offset-lg-1 pb-5 mb-2 mb-lg-4 pt-md-5 mt-n3 mt-md-0">
 
-            <form id="regForm" action="#">
+            <form id="regForm" action="/book-appointment" method="POST">
+              @csrf
               <!-- One "tab" for each step in the form: -->
               <div class="tabBookingStep"> 
                 <div class="ps-md-3 ps-lg-0 mt-md-2 py-md-4">
@@ -480,6 +481,7 @@
           for (var hour = 10; hour <= 21; hour++) {
             var startTime = `${stylistSchedule.date}T${hour.toString().padStart(2, '0')}:00:00`;
             var endTime = `${stylistSchedule.date}T${(hour + 1).toString().padStart(2, '0')}:00:00`;
+            console.log(startTime)
         
             // Check if the time slot is booked
             var isBooked = stylistSchedule.booked.some(slot => (slot.start <= startTime && slot.end > startTime));

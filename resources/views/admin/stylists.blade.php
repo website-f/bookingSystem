@@ -51,31 +51,31 @@
                   <div class="row mb-2">
                     <div class="col-lg-6">
                       <label class="form-label">First Name</label>
-                      <input type="text" name="first_name" class="form-control"><br>
+                      <input type="text" name="first_name" class="form-control form-control-border"><br>
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label">Last Name</label>
-                      <input type="text" name="last_name" class="form-control"><br>
+                      <input type="text" name="last_name" class="form-control form-control-border"><br>
                     </div>
                   </div>
                   <div class="row mb-2">
                     <div class="col-lg-6">
                       <label class="form-label">Display Name</label>
-                      <input type="text" name="display_name" class="form-control"><br>
+                      <input type="text" name="display_name" class="form-control form-control-border"><br>
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label">Title</label>
-                      <input type="text" name="title" class="form-control"><br>
+                      <input type="text" name="title" class="form-control form-control-border"><br>
                     </div>
                   </div>
                   <div class="row mb-2">
                     <div class="col-lg-6">
-                      <label class="form-label">Bio</label>
-                      <input type="text" name="bio" class="form-control"><br>
+                      <label class="form-label">Bio</label> 
+                      <input type="text" name="bio" class="form-control form-control-border"><br>
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label">Email</label>
-                      <input type="text" name="email" class="form-control"><br>
+                      <input type="text" name="email" class="form-control form-control-border"><br>
                     </div>
                   </div>
                   <label class="form-label">Image</label>
@@ -224,14 +224,45 @@
                           
                           @if ($stylistSchOffDaysEdit)
                               @foreach ($stylistSchOffDaysEdit as $offdays)
-                                  <div class="btn btn-block btn-outline-info mb-2 p-0">
-                                      <p>{{$offdays}}</p>
+                                  <div class="btn btn-block btn-outline-info mb-2 clearfix offday-item" data-offday="{{$offdays}}">
+                                    <div class="float-left"><p>{{$offdays}}</p></div>
+                                    <div class="float-right"> <button type="button" class="btn btn-sm btn-danger remove-offday"><i class="fas fa-trash-alt"></i></button></div>
                                   </div>  
                               @endforeach
                           @else
                               <p class="mb-2">No off days applied</p>
                           @endif
                         </div>
+                        <!-- JavaScript to handle removal and send AJAX request -->
+                      <script src="{{asset('admin/plugins/jquery/jquery.min.js')}}"></script>
+                      <script>
+                        $(document).ready(function () {
+                            $('.remove-offday').on('click', function () {
+                                var offdayItem = $(this).closest('.offday-item');
+                                var offday = offdayItem.data('offday');
+                                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                      
+                                // Make an AJAX request to remove the off-day
+                                $.ajax({
+                                    url: '/remove-offday',
+                                    type: 'POST',
+                                    data: {
+                                        _token: csrfToken,
+                                        stylistId: {{$stylists->id}},
+                                        offday: offday
+                                    },
+                                    success: function (response) {
+                                        // Assuming the response is a success message
+                                        console.log(response);
+                                        offdayItem.remove();
+                                    },
+                                    error: function (error) {
+                                        console.log(error);
+                                    }
+                                });
+                            });
+                        });
+                      </script>
                       </div>
                       <label>Add +</label>
                       <input type="date" name="off_days" class="form-control">

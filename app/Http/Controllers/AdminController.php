@@ -147,7 +147,7 @@ class AdminController extends Controller
             $photo = $request->file('image');
         
             // Generate a unique name for the image
-            $newName = $request->display_name . '-' . now()->timestamp . '.' . $photo->getClientOriginalExtension();
+            $newName = now()->timestamp . '.' . $photo->getClientOriginalExtension();
         
             // Set the path where you want to store the image in the public directory
             $path = public_path('photo/' . $newName);
@@ -223,7 +223,7 @@ class AdminController extends Controller
             $photo = $request->file('image');
         
             // Generate a unique name for the image
-            $newName = $request->display_name . '-' . now()->timestamp . '.' . $photo->getClientOriginalExtension();
+            $newName = now()->timestamp . '.' . $photo->getClientOriginalExtension();
         
             // Set the path where you want to store the image in the public directory
             $path = public_path('photo/' . $newName);
@@ -307,6 +307,30 @@ class AdminController extends Controller
         }
     
         return $offDays;
+    }
+
+    public function removeOffday(Request $request)
+    {
+        $stylistId = $request->input('stylistId');
+        $offday = $request->input('offday');
+    
+        // Retrieve the stylist schedule
+        $stylistSchedule = StylistSchedule::where('stylist_id', $stylistId)->first();
+    
+        if ($stylistSchedule) {
+            // Remove the off-day from the array
+            $offDays = json_decode($stylistSchedule->off_days, true);
+            $offDays = array_diff($offDays, [$offday]);
+    
+            // Update the stylist schedule
+            $stylistSchedule->update([
+                'off_days' => json_encode(array_values($offDays)),
+            ]);
+    
+            return response()->json(['message' => 'Off-day removed successfully']);
+        }
+    
+        return response()->json(['error' => 'Stylist schedule not found'], 404);
     }
 
     public function category() {
