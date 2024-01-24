@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
 use App\Models\Service;
 use App\Models\Stylist;
+use App\Models\Customer;
 use App\Models\Location;
 use Illuminate\Http\Request;
 use App\Models\ServiceCategory;
@@ -14,7 +16,17 @@ use Illuminate\Support\Facades\Session;
 class AdminController extends Controller
 {
     public function home() {
-        return view('admin.admin');
+        $bookings = Booking::all();
+        $locations = Location::all();
+        $stylists = Stylist::all();
+        $services = Service::all();
+        $customers = Customer::all();
+        return view('admin.admin', ['bookings' => $bookings,
+                                    'locations' => $locations,
+                                    'stylists' => $stylists,
+                                    'services' => $services,
+                                    'customers' => $customers
+        ]);
     }
 
     public function location() {

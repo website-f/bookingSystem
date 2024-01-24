@@ -80,52 +80,76 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Sponsor Events</h3>
+              <h3 class="card-title">Appointments</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>#</th>
+                  <th>Status</th>
                   <th>Submission Date</th>
+                  <th>Booking Code</th>
+                  <th>Location</th>
+                  <th>Service</th>
+                  <th>Stylist</th>
+                  <th>Date</th>
+                  <th>Customer Name</th>
+                  <th>Customer Phone</th>
                 </tr>
                 </thead>
                 <tbody>
-                  {{-- @foreach ($sponsor as $sponsorship)
+                  @foreach ($bookings as $booking)
                     <tr>
                       <td>
-                        <a href="/view-request/{{$sponsorship->id}}" class="btn btn-primary btn-sm mb-1"><i class="ion ion-eye"></i></a>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal{{$sponsorship->id}}">
-                          <i class="ion ion-ios-trash"></i>
-                        </button>
-                        
-                        <!-- Modal -->
-                        <div class="modal fade" id="modal{{$sponsorship->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Delete</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              <div class="modal-body">
-                                Are you sure want to remove {{$sponsorship->event_name}} ?
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <a href="/delete/{{$sponsorship->id}}" class="btn btn-danger">Confirm</a>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                        @if ($booking->status == "active")
+                          <button class="btn btn-primary">Active</button>
+                        @elseif ($booking->status == "complete")
+                          <button class="btn btn-success">Complete</button>
+                        @elseif ($booking->status == "cancelled")
+                          <button class="btn btn-danger">Cancelled</button>
+                        @else
+                          {{$booking->status}}
+                        @endif
                       </td>
-                      <td>{{$sponsorship->created_at->format('d-m-Y')}}</td>
-                      
+                      <td>{{$booking->created_at->format('d-m-Y')}}</td>
+                      <td>{{$booking->booking_code}}</td>
+                      <td>
+                        @php
+                            $location = $locations->where('id', $booking->location_id)->first();
+                        @endphp
+                        {{$location->name}}
+                      </td>
+                      <td>
+                        @php
+                            $service = $services->where('id', $booking->service_id)->first();
+                        @endphp
+                        {{$service->name}}
+                      </td>
+                      <td>
+                        @php
+                            $stylist = $stylists->where('id', $booking->stylist_id)->first();
+                        @endphp
+                        {{$stylist->display_name}}
+                      </td>
+                      <td>
+                        @php
+                            $fulldate = json_decode($booking->date);
+                        @endphp
+                        {{$fulldate}}
+                      </td>
+                      <td>
+                        @php
+                            $customer = $customers->where('id', $booking->customer_id)->first();
+                        @endphp
+                        {{$customer->first_name}} {{$customer->last_name}}
+                      </td>
+                      <td>
+                        {{$customer->phone}}
+                      </td>
                     </tr>
-                  @endforeach --}}
+                  @endforeach
+                </tbody>
               </table>
             </div>
             <!-- /.card-body -->
@@ -146,6 +170,7 @@
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false, "pageLength": 30,
       "buttons": ["copy", "excel", "pdf", "print"],
+      "order": [[1, "desc"]],
 
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({

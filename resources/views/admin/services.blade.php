@@ -133,7 +133,8 @@
             
             <div class="card-body">
               <h5 class="card-title"><b>{{$services->name}}</b></h5>
-              <p class="card-text">{{$services->full_address}}</p>
+              <p class="card-text">{{$services->short_description}}</p>
+              <p class="card-text">RM{{number_format($services->charge_amount, 2)}}</p>
               <button type="button" class="btn btn-primary w-100" data-toggle="modal" data-target="#editServices-{{$services->id}}">
                 <i class="fas fa-edit"></i> Edit Services
               </button>
@@ -198,6 +199,7 @@
                         <label class="form-label">Image</label>
                         <input type="file" name="image" class="form-control"><br>
                         <hr>
+
                         <div class="row">
                           <div class="col-lg-12">
                             <p class="font-weight-bold">Stylists</p>

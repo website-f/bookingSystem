@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->text('short_description')->nullable();
-            $table->decimal('price_min', 20, 4)->nullable();
-            $table->decimal('price_max', 20, 4)->nullable();
-            $table->decimal('charge_amount', 20, 4)->nullable();
+            $table->decimal('price_min', 20, 2)->nullable();
+            $table->decimal('price_max', 20, 2)->nullable();
+            $table->decimal('charge_amount', 20, 2)->nullable();
             $table->string('duration')->nullable();
             $table->bigInteger('category_id')->unsigned();
             $table->foreign('category_id', 'services_category_id_foreign')->references('id')->on('services_categories')->onDelete('cascade');

@@ -130,6 +130,7 @@
               <h3 class="profile-username text-center">{{$stylists->display_name}}</h3>
 
               <p class="text-muted text-center">{{$stylists->bio}}</p>
+              <p class="text-muted text-center">{{$stylists->email}}</p>
 
               <ul class="list-group list-group-unbordered mb-3">
                 <li class="list-group-item">
@@ -140,7 +141,7 @@
                       $stylistSch = $stylistSchedule->where('stylist_id', $stylists->id)->first();
                       $isOffDuty = false;
                   
-                      if ($stylistSch) {
+                      if ($stylistSch && $stylistSch->off_days !== null) {
                           $stylistSchOffDays = json_decode($stylistSch->off_days, true);
                           $todayDate = date('n-j-Y');
                           $isOffDuty = in_array($todayDate, $stylistSchOffDays);
