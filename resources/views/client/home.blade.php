@@ -152,7 +152,7 @@
                         <div class="col-sm-8">
                           <div class="card-body">
                             <h5 class="card-title">{{$services2->name}}</h5>
-                            <p class="card-text fs-sm">RM{{ number_format($services1->charge_amount, 2) }}</p>
+                            <p class="card-text fs-sm">RM{{ number_format($services2->charge_amount, 2) }}</p>
                             <button type="button" data-serviceDetails="{{$services2->name}}" data-serviceId="{{$services2->id}}" class="btn btn-sm btn-primary nextBtn getStylistsbtn"  onclick="nextPrev(1)">Select This Service</button>
                           </div>
                         </div>
