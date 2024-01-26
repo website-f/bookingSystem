@@ -19,8 +19,8 @@ class BookingController extends Controller
     {
         $location = Location::all();
         $category = ServiceCategory::all();
-        $service1 = Service::where('category_id', 3)->get();
-        $service2 = Service::where('category_id', 4)->get();
+        $service1 = Service::where('category_id', 1)->get();
+        $service2 = Service::where('category_id', 2)->get();
     
         // Fetch all stylists initially
         $stylists = Stylist::all();
