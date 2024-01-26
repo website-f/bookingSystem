@@ -121,7 +121,7 @@
             <div class="card-body box-profile">
               <div class="text-center">
                 @if ($stylists->image !== null)
-                <img width="50px" height="50px" class="profile-user-img img-fluid img-circle" src="{{asset($stylists->image)}}" alt="{{$stylists->display_name}}"> 
+                <a href="{{asset($stylists->image)}}"><img width="50px" height="50px" class="profile-user-img img-fluid img-circle" src="{{asset($stylists->image)}}" alt="{{$stylists->display_name}}"></a> 
                 @else
                 <img class="profile-user-img img-fluid img-circle" src="#" alt="{{$stylists->display_name}}">
                 @endif
