@@ -439,7 +439,7 @@ class AdminController extends Controller
             $photo = $request->file('image');
         
             // Generate a unique name for the image
-            $newName = $request->name . '-' . now()->timestamp . '.' . $photo->getClientOriginalExtension();
+            $newName = now()->timestamp . '.' . $photo->getClientOriginalExtension();
         
             // Set the path where you want to store the image in the public directory
             $path = public_path('photo/' . $newName);
