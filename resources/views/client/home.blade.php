@@ -324,10 +324,11 @@
                         $('#stylistContainer').html(''); // Clear previous content
                         if (data.stylists.length > 0) {
                             $.each(data.stylists, function (index, stylist) {
+                                var stylistImage = "{{ asset($stylist->image) }}";
                                 var cardHtml = '<div class="card overflow-hidden border-0 shadow-sm card-hover mb-2">';
                                 cardHtml += '<div class="row g-0">';
                                 if (stylist.image !== null) {
-                                    cardHtml += '<div class="col-sm-4 bg-repeat-0" style="background-image: url(' + stylist.image + '); min-height: 12rem; background-size: cover; background-position: center;"></div>';
+                                    cardHtml += '<div class="col-sm-4 bg-repeat-0" style="background-image: url(' + stylistImage + '); min-height: 12rem; background-size: cover; background-position: center;"></div>';
                                 } else {
                                     cardHtml += '<div class="col-sm-4 bg-repeat-0 bg-size-cover"></div>';
                                 }
