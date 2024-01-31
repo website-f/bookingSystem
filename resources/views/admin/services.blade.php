@@ -123,7 +123,7 @@
 
       <div class="row">
         @foreach ($service as $services)
-        <div class="col-lg-3">
+        <div class="col-lg-2">
           <div class="card ">
             @if ($services->selection_image !== null)
             <img class="card-img-top" src="{{asset($services->selection_image)}}" alt="{{$services->name}}"> 
