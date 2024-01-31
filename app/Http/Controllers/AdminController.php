@@ -316,6 +316,21 @@ class AdminController extends Controller
 
     }
 
+    public function removeStylist($id) {
+        $stylist = Stylist::findOrFail($id);
+        $stylist->services()->detach();
+        $stylist->locations()->detach();
+        $stylist->delete();
+
+        if($stylist) {
+            Session::flash('status', 'success');
+            Session::flash('message', 'Successfully Deleted');
+        }
+
+        return redirect('/dashboard/stylist');
+
+    }
+
     private function parseOffDaysString($offDaysString)
     {
         $offDays = [];
@@ -566,6 +581,20 @@ class AdminController extends Controller
         if($service) {
             Session::flash('status', 'success');
             Session::flash('message', 'New Service Added!');
+        }
+
+        return redirect('/dashboard/service');
+
+    }
+
+    public function removeService($id) {
+        $service = Service::findOrFail($id);
+        $service->stylists()->detach();
+        $service->delete();
+
+        if($service) {
+            Session::flash('status', 'success');
+            Session::flash('message', 'Successfully Deleted');
         }
 
         return redirect('/dashboard/service');

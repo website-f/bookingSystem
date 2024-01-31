@@ -34,9 +34,11 @@ Route::prefix('dashboard')->group(function() {
     Route::get('/stylist', [AdminController::class, 'stylist'])->middleware('auth');
     Route::post('/add-stylist', [AdminController::class, 'addStylist'])->middleware('auth');
     Route::put('/edit-stylist/{id}', [AdminController::class, 'editStylist'])->middleware('auth');
+    Route::get('/remove-stylist/{id}', [AdminController::class, 'removeStylist'])->middleware('auth');
     Route::get('/service', [AdminController::class, 'service'])->middleware('auth');
     Route::post('/add-service', [AdminController::class, 'addService'])->middleware('auth');
     Route::put('/edit-service/{id}', [AdminController::class, 'editService'])->middleware('auth');
+    Route::get('/remove-service/{id}', [AdminController::class, 'removeService'])->middleware('auth');
     Route::get('/service-categories', [AdminController::class, 'category'])->middleware('auth');
     Route::post('/add-category', [AdminController::class, 'addCategory'])->middleware('auth');
     Route::put('/edit-category/{id}', [AdminController::class, 'editCategory'])->middleware('auth');

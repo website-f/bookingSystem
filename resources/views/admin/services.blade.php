@@ -135,7 +135,7 @@
               <h5 class="card-title"><b>{{$services->name}}</b></h5>
               <p class="card-text">{{$services->short_description}}</p>
               <p class="card-text">RM{{number_format($services->charge_amount, 2)}}</p>
-              <button type="button" class="btn btn-primary w-100" data-toggle="modal" data-target="#editServices-{{$services->id}}">
+              <button type="button" class="btn btn-primary w-100 mb-2" data-toggle="modal" data-target="#editServices-{{$services->id}}">
                 <i class="fas fa-edit"></i> Edit Services
               </button>
               
@@ -235,6 +235,31 @@
                       <button type="submit" class="btn btn-primary">Edit</button>
                     </div>
                     </form>
+                  </div>
+                </div>
+              </div>
+
+              <button type="button" class="btn btn-danger w-100 btn-sm" data-toggle="modal" data-target="#removeSServices-{{$services->id}}">
+                <i class="fas fa-trash-alt"></i> Remove Stylist
+              </button>
+
+               <!-- Modal -->
+               <div class="modal fade" id="removeSServices-{{$services->id}}" tabindex="-1" role="dialog" aria-labelledby="removeSServices-{{$services->id}}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Remove Service</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p>Are you sure want to remove {{$services->name}} ?</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <a class="btn btn-danger" href="/dashboard/remove-service/{{$services->id}}">Confirm</a>
+                    </div>
                   </div>
                 </div>
               </div>
