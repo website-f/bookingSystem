@@ -241,7 +241,7 @@ class AdminController extends Controller
             $path = public_path('photo/' . $newName);
         
             // Move the uploaded file to the specified path
-            $photo->move(public_path('photo'), $newName);
+             file_put_contents($path, file_get_contents($photo->getRealPath()));
         
             // Save the path to the database
             $fullpath = 'photo/' . $newName;
@@ -268,17 +268,28 @@ class AdminController extends Controller
         }
 
         $offDaysString = $request->input('off_days');
+        $offDays = "";
 
-        $offDays = $this->parseOffDaysString($offDaysString);
+        if ($offDaysString) {
+            $offDays = $this->parseOffDaysString($offDaysString);
+        } else {
+            $offDays = [];
+        }
 
         $stylistSchedule = StylistSchedule::where('stylist_id', $id)->first();
     
         if ($stylistSchedule) {
             // Retrieve the current off days
             $currentOffDays = json_decode($stylistSchedule->off_days, true);
-        
-            // Merge the current off days with the new off days
-            $mergedOffDays = array_merge($currentOffDays, $offDays);
+            $mergedOffDays = "";
+
+            if ($currentOffDays !== null) {
+                // Merge the current off days with the new off days
+                $mergedOffDays = array_merge($currentOffDays, $offDays);
+            } else {
+                $mergedOffDays = [];
+            }
+     
         
             // Update the existing StylistSchedule
             $stylistSchedule->update([

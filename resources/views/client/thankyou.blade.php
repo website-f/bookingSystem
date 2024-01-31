@@ -16,7 +16,9 @@
         <div class="text-center">
             <h1>Thank You !</h1>
             <p>Your appointment booking is complete !  </p>
-            <a href="/" class="btn btn-primary" >Book Again</button>
+            <p>Your booking code is <b>{{$booking->booking_code}}</b> (can screenshot)</p>
+            
+            <a href="/" class="btn btn-primary" >Book Again</a>
         </div>
     </div>
 

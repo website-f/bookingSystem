@@ -23,7 +23,7 @@ Route::get('/logout', [AuthController::class, "logout"])->middleware('auth');
 Route::get('/get-stylist/{locationId}/{serviceId}', [BookingController::class, 'getStylists']);
 Route::get('/get-schedule/{stylistId}', [BookingController::class, 'getSchedule']);
 Route::post('/book-appointment', [BookingController::class, 'bookAppointment']);
-Route::post('/thankyou', [BookingController::class, 'thankyou']);
+Route::get('/thankyou/{id}', [BookingController::class, 'thankyou']);
 Route::post('/remove-offday', [AdminController::class, 'removeOffday'])->middleware('auth');
 
 Route::prefix('dashboard')->group(function() {

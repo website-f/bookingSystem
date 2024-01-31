@@ -134,7 +134,23 @@
 
               <ul class="list-group list-group-unbordered mb-3">
                 <li class="list-group-item">
-                  <b>Booking</b> <a class="float-right">1,322</a>
+                  @php
+                      $stylistBooked = $stylistSchedule->where('stylist_id', $stylists->id)->first();
+                      $isBooked = false;
+
+                      if ($stylistBooked && $stylistBooked->booked !== null) {
+                        $stylistBookedArray = json_decode($stylistBooked->booked, true);
+                        $stylistBookedCount = count($stylistBookedArray);
+                        $isBooked = true;
+                      }
+                  @endphp
+                  <b>Booking</b> <a class="float-right">
+                    @if ($isBooked)
+                        {{$stylistBookedCount}}
+                    @else
+                     0
+                    @endif
+                  </a>
                 </li>
                 <li class="list-group-item">
                   @php
