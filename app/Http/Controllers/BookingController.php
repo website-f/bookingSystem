@@ -159,7 +159,7 @@ class BookingController extends Controller
         $booking->comments = $comments;
         $booking->save();
 
-        // Mail::to($email)->send(new SubmitNotification($bookingCode));
+        Mail::to($email)->send(new SubmitNotification($bookingCode));
 
         return redirect("/thankyou/" . $booking->id);
 
