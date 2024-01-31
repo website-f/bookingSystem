@@ -324,7 +324,7 @@
                         $('#stylistContainer').html(''); // Clear previous content
                         if (data.stylists.length > 0) {
                             $.each(data.stylists, function (index, stylist) {
-                                var stylistImage = "{{ asset($stylist->image) }}";
+                              var stylistImage = stylist.image ? '{{ asset('') }}' + stylist.image : '';
                                 var cardHtml = '<div class="card overflow-hidden border-0 shadow-sm card-hover mb-2">';
                                 cardHtml += '<div class="row g-0">';
                                 if (stylist.image !== null) {
