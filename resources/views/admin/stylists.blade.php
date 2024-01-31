@@ -117,7 +117,7 @@
       <div class="row">
           @foreach ($stylist as $stylists)  
           <div class="col-md-3">
-          <div class="card card-primary card-outline fixed-card">
+          <div class="card card-primary card-outline fixed-card mb-2">
             <div class="card-body box-profile">
               <div class="text-center">
                 @if ($stylists->image !== null)

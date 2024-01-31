@@ -126,7 +126,7 @@
         <div class="col-lg-2">
           <div class="card ">
             @if ($services->selection_image !== null)
-            <img class="card-img-top" src="{{asset($services->selection_image)}}" alt="{{$services->name}}"> 
+            <img class="card-img-top img-fixed-hw" src="{{asset($services->selection_image)}}" alt="{{$services->name}}"> 
             @else
             <img class="card-img-top" src="#" alt="{{$services->name}}">
             @endif
