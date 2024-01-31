@@ -11,7 +11,9 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\ServiceCategory;
 use App\Models\StylistSchedule;
+use App\Mail\SubmitNotification;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 
 class BookingController extends Controller
 {
@@ -19,10 +21,10 @@ class BookingController extends Controller
     {
         $location = Location::all();
         $category = ServiceCategory::all();
-        // $service1 = Service::where('category_id', 1)->get();
-        // $service2 = Service::where('category_id', 2)->get();
-        $service1 = Service::where('category_id', 3)->get();
-        $service2 = Service::where('category_id', 4)->get();
+        $service1 = Service::where('category_id', 1)->get();
+        $service2 = Service::where('category_id', 2)->get();
+        // $service1 = Service::where('category_id', 3)->get();
+        // $service2 = Service::where('category_id', 4)->get();
     
         // Fetch all stylists initially
         $stylists = Stylist::all();
@@ -156,6 +158,8 @@ class BookingController extends Controller
         $booking->status = $status;
         $booking->comments = $comments;
         $booking->save();
+
+        // Mail::to($email)->send(new SubmitNotification($bookingCode));
 
         return redirect("/thankyou/" . $booking->id);
 
