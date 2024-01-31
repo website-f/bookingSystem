@@ -241,7 +241,7 @@ class AdminController extends Controller
             $path = public_path('photo/' . $newName);
         
             // Move the uploaded file to the specified path
-             file_put_contents($path, file_get_contents($photo->getRealPath()));
+            $photo->move(public_path('photo'), $newName);
         
             // Save the path to the database
             $fullpath = 'photo/' . $newName;
