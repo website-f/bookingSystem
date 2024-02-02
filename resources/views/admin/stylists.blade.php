@@ -287,7 +287,7 @@
                       <hr>
                         <div class="row">
                           <div class="col-lg-12">
-                            <p class="font-weight-bold">Stylists</p>
+                            <p class="font-weight-bold">Services</p>
                               @foreach ($service as $services)
                                   <div class="row mb-2">
                                       <div class="col-lg-12">

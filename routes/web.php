@@ -42,4 +42,5 @@ Route::prefix('dashboard')->group(function() {
     Route::get('/service-categories', [AdminController::class, 'category'])->middleware('auth');
     Route::post('/add-category', [AdminController::class, 'addCategory'])->middleware('auth');
     Route::put('/edit-category/{id}', [AdminController::class, 'editCategory'])->middleware('auth');
+    Route::get('/users', [AdminController::class, 'users'])->middleware('auth');
 });

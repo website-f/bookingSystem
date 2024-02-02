@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Booking;
 use App\Models\Service;
 use App\Models\Stylist;
@@ -599,5 +600,10 @@ class AdminController extends Controller
 
         return redirect('/dashboard/service');
 
+    }
+
+    public function users() {
+        $users = User::all();
+        return view('admin.users', ['users' => $users]);
     }
 }

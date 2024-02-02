@@ -80,26 +80,32 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Appointments</h3>
+              <h3 class="card-title">Users</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>Status</th>
-                  <th>Submission Date</th>
-                  <th>Booking Code</th>
-                  <th>Location</th>
-                  <th>Service</th>
-                  <th>Stylist</th>
-                  <th>Date</th>
-                  <th>Customer Name</th>
-                  <th>Customer Phone</th>
+                  <th>Action</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Branch</th>
                 </tr>
                 </thead>
                 <tbody>
-                  
+                  @foreach ($users as $user)
+                      <tr>
+                        <td>
+                          <a class="btn btn-primary" href="/dashboard/view-user/{{$user->id}}">View</a>
+                        </td>
+                        <td>{{$user->name}}</td>
+                        <td>{{$user->email}}</td>
+                        <td>{{$user->role->role}}</td>
+                        <td>{{$user->branch->branch}}</td>
+                      </tr>
+                  @endforeach
                 </tbody>
               </table>
             </div>
