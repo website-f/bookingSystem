@@ -239,7 +239,7 @@
                 </div>
               </div>
 
-              <button type="button" class="btn btn-danger w-100 btn-sm mt-auto" data-toggle="modal" data-target="#removeSServices-{{$services->id}}">
+              <button type="button" class="btn btn-danger w-100 btn-sm" data-toggle="modal" data-target="#removeSServices-{{$services->id}}">
                 <i class="fas fa-trash-alt"></i> Remove Stylist
               </button>
 
