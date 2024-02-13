@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
+use App\Models\Branch;
 use App\Models\Booking;
 use App\Models\Service;
 use App\Models\Stylist;
@@ -605,5 +607,28 @@ class AdminController extends Controller
     public function users() {
         $users = User::all();
         return view('admin.users', ['users' => $users]);
+    }
+
+    public function viewuser($id) {
+        $user = User::findOrFail($id);
+        $role = Role::all();
+        $branch = Branch::all();
+        return view('admin.user-view', ['user' => $user, 'role' => $role, 'branch' => $branch]);
+    }
+
+    public function editUser(Request $request, $id) {
+        $user = User::findOrFail($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->role_id = $request->role;
+        $user->branch_id = $request->branch;
+        $user->save();
+
+        if ($user) {
+            Session::flash('status', 'success');
+            Session::flash('message', 'successfully edited!');
+        }
+
+        return redirect('/dashboard/view-user/' . $id);
     }
 }

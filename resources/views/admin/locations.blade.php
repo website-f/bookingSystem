@@ -110,17 +110,17 @@
       <div class="row">
         @foreach ($location as $locations)
         <div class="col-lg-3">
-          <div class="card ">
+          <div class="card h-100">
             @if ($locations->image !== null)
             <img class="card-img-top" src="{{asset($locations->image)}}" alt="{{$locations->name}}"> 
             @else
             <img class="card-img-top" src="#" alt="{{$locations->name}}">
             @endif
             
-            <div class="card-body">
+            <div class="card-body d-flex flex-column">
               <h5 class="card-title"><b>{{$locations->name}}</b></h5>
               <p class="card-text">{{$locations->full_address}}</p>
-              <button type="button" class="btn btn-primary w-100" data-toggle="modal" data-target="#editLocation-{{$locations->id}}">
+              <button type="button" class="btn btn-primary w-100 mt-auto" data-toggle="modal" data-target="#editLocation-{{$locations->id}}">
                 <i class="fas fa-edit"></i> Edit Location
               </button>
               
