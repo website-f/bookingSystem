@@ -109,7 +109,7 @@
 
       <div class="row">
         @foreach ($location as $locations)
-        <div class="col-lg-3 mb-4">
+        <div class="col-lg-3 mb-3">
           <div class="card h-100">
             @if ($locations->image !== null)
             <img class="card-img-top" src="{{asset($locations->image)}}" alt="{{$locations->name}}"> 
