@@ -135,7 +135,7 @@
               <h5 class="card-title"><b>{{$services->name}}</b></h5>
               <p class="card-text">{{$services->short_description}}</p>
               <p class="card-text">RM{{number_format($services->charge_amount, 2)}}</p>
-              <button type="button" class="btn btn-primary w-100 mb-2 mt-auto" data-toggle="modal" data-target="#editServices-{{$services->id}}">
+              <button type="button" class="btn btn-primary w-100 mb-2 mt-auto btn-sm" data-toggle="modal" data-target="#editServices-{{$services->id}}">
                 <i class="fas fa-edit"></i> Edit Services
               </button>
               
