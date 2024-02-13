@@ -123,19 +123,19 @@
 
       <div class="row">
         @foreach ($service as $services)
-        <div class="col-lg-2">
-          <div class="card ">
+        <div class="col-lg-2 mb-3">
+          <div class="card h-100">
             @if ($services->selection_image !== null)
             <img class="card-img-top img-fixed-hw" src="{{asset($services->selection_image)}}" alt="{{$services->name}}"> 
             @else
             <img class="card-img-top" src="#" alt="{{$services->name}}">
             @endif
             
-            <div class="card-body">
+            <div class="card-body d-flex flex-column">
               <h5 class="card-title"><b>{{$services->name}}</b></h5>
               <p class="card-text">{{$services->short_description}}</p>
               <p class="card-text">RM{{number_format($services->charge_amount, 2)}}</p>
-              <button type="button" class="btn btn-primary w-100 mb-2" data-toggle="modal" data-target="#editServices-{{$services->id}}">
+              <button type="button" class="btn btn-primary w-100 mb-2 mt-auto" data-toggle="modal" data-target="#editServices-{{$services->id}}">
                 <i class="fas fa-edit"></i> Edit Services
               </button>
               
@@ -239,7 +239,7 @@
                 </div>
               </div>
 
-              <button type="button" class="btn btn-danger w-100 btn-sm" data-toggle="modal" data-target="#removeSServices-{{$services->id}}">
+              <button type="button" class="btn btn-danger w-100 btn-sm mt-auto" data-toggle="modal" data-target="#removeSServices-{{$services->id}}">
                 <i class="fas fa-trash-alt"></i> Remove Stylist
               </button>
 
