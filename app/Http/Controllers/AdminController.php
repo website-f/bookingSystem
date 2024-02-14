@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use App\Models\ServiceCategory;
 use App\Models\StylistSchedule;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
@@ -75,9 +76,12 @@ class AdminController extends Controller
         $location = Location::with('stylists')->get();
         $stylists = Stylist::with('services')->get();
         $service = Service::all();
+        $userBranch = Auth::user()->branch->branch;
+        $locationBranch = Location::where('name', 'LIKE', $userBranch)->first();
         return view('admin.locations', ['location' => $location,
                                         'stylists' => $stylists,
-                                        'service' => $service]);
+                                        'service' => $service,
+                                        'locationBranch' => $locationBranch]);
     }
 
     public function Addlocation(Request $request) {

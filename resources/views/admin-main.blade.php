@@ -133,7 +133,7 @@
           <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div> --}}
         <div class="info text-center">
-          {{-- <a href="#" class="d-block">{{Auth::user()->name}}</a> --}}
+          <a href="#" class="d-block">{{Auth::user()->name}}</a>
         </div>
       </div>
 
@@ -171,7 +171,7 @@
               </p>
             </a>
           </li>
-
+          @if (Auth::user()->role_id == 1)
           <li class="nav-item">
             <a href="/dashboard/stylist" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
@@ -181,7 +181,7 @@
               </p>
             </a>
           </li>
-
+       
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-th-list"></i>
@@ -205,7 +205,7 @@
               </li>
             </ul>
           </li>
-
+         @endif
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-laptop"></i>

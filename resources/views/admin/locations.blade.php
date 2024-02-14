@@ -30,8 +30,6 @@
        <div class="alert alert-success" role="alert">{{Session::get('message')}}</div>
       @endif
       @if (Auth::user()->role_id == 1)
-          
-      @endif
       <div class="row mb-4">
         <div class="col-lg-2">
           <button type="button" class="btn btn-outline-primary w-100" data-toggle="modal" data-target="#addLocation">
@@ -214,6 +212,110 @@
         </div>
         @endforeach
       </div>
+      @else
+      <div class="row">
+        <div class="col-lg-3 mb-3">
+          <div class="card h-100">
+            @if ($locationBranch->image !== null)
+            <img class="card-img-top" src="{{asset($locationBranch->image)}}" alt="{{$locationBranch->name}}"> 
+            @else
+            <img class="card-img-top" src="#" alt="{{$locationBranch->name}}">
+            @endif
+            
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title"><b>{{$locationBranch->name}}</b></h5>
+              <p class="card-text">{{$locationBranch->full_address}}</p>
+              <button type="button" class="btn btn-primary w-100 mt-auto" data-toggle="modal" data-target="#editLocation-{{$locationBranch->id}}">
+                <i class="fas fa-edit"></i> Edit Location
+              </button>
+              
+              <!-- Modal -->
+              <div class="modal fade" id="editLocation-{{$locationBranch->id}}" tabindex="-1" role="dialog" aria-labelledby="editLocation-{{$locationBranch->id}}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Edit Location</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <form action="/dashboard/edit-location/{{$locationBranch->id}}" method="POST"  enctype="multipart/form-data">
+                      @csrf
+                      @method('PUT')
+                    <div class="modal-body">
+                      <label class="form-label">Location Name</label>
+                      <input type="text" name="name" class="form-control" value="{{$locationBranch->name}}"><br>
+                      <label class="form-label">Location Full Address</label>
+                      <textarea name="full_address" class="form-control" cols="30" rows="7">{{$locationBranch->full_address}}</textarea><br>
+                      <label class="form-label">Image</label>
+                      <input type="file" name="image" class="form-control"><br>
+                      <hr>
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <p class="font-weight-bold">Stylists</p>
+                            @foreach ($stylists as $stylist)
+                                <div class="row mb-2">
+                                    <div class="col-lg-12">
+                                        <div class="btn btn-block btn-outline-primary styleBtn clearfix
+                                        @if ($locationBranch->stylists->contains($stylist->id))
+                                            btn-primary active
+                                        @else
+                                            btn-outline-primary
+                                        @endif
+                                        "
+                                        >
+                                            <div class="float-left">
+                                                <input type="checkbox" name="stylists[]" autocomplete="off" value="{{$stylist->id}}"
+                                                @if ($locationBranch->stylists->contains($stylist->id))
+                                                checked
+                                                @endif 
+                                                >
+                                                <img class="img-fluid img-thumbnail" height="50px" width="50px" src="{{asset($stylist->image)}}" alt="">
+                                                {{$stylist->display_name}}
+                                            </div>
+                                            {{-- <a href="#collapseTwo-{{$stylist->id}}" class="float-right bg-primary p-1 rounded" onclick="handleLinkClickEdit(event)">services</a> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- <div id="collapseTwo-{{$stylist->id}}" class="collapse">
+                                  <div class="card-body">
+                                    <div class="row">
+                                      <div class="col-sm-6">
+                                        <!-- checkbox -->
+                                        <div class="form-group">
+                                          <div class="form-check">
+                                            @foreach ($service as $services)
+                                            <input class="form-check-input" type="checkbox" name="servicesTwo[]" value="{{$services->id}}"
+                                            @if ($stylist->services->contains($services->id))
+                                            checked
+                                            @endif 
+                                            >
+                                            <label class="form-check-label">{{$services->name}}</label><br>
+                                            @endforeach
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div> --}}
+                            @endforeach
+    
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Edit</button>
+                    </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      @endif
     </div><!-- /.container-fluid -->
   </section>
   <!-- /.content -->
