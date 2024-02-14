@@ -215,12 +215,14 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+              @if (Auth::user()->role_id == 1)
               <li class="nav-item">
                 <a href="/dashboard/users" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Users</p>
                 </a>
               </li>
+              @endif
               <li class="nav-item">
                 <a href="/logout" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>

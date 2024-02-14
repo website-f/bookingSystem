@@ -29,6 +29,9 @@
       @if (Session::has('status'))
        <div class="alert alert-success" role="alert">{{Session::get('message')}}</div>
       @endif
+      @if (Auth::user()->role_id == 1)
+          
+      @endif
       <div class="row mb-4">
         <div class="col-lg-2">
           <button type="button" class="btn btn-outline-primary w-100" data-toggle="modal" data-target="#addLocation">

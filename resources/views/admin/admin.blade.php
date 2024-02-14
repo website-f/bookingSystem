@@ -26,55 +26,43 @@
   <!-- Main content -->
   <section class="content">
     <div class="container-fluid">
-      
-      {{-- <div class="row">
-        <div class="col-12">
-        
-          <div class="card bg-gradient-info">
-            <div class="card-header border-0">
-              <h3 class="card-title">
-                <i class="fas fa-th mr-1"></i>
-                Sales Graph
-              </h3>
-
-              
-            </div>
-            <div class="card-body">
-              <canvas class="chart" id="line-chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-            </div>
-          
-            <div class="card-footer bg-transparent">
-              <div class="row">
-                <div class="col-4 text-center">
-                  <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60"
-                         data-fgColor="#39CCCC">
-
-                  <div class="text-white">Mail-Orders</div>
-                </div>
-              
-                <div class="col-4 text-center">
-                  <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60"
-                         data-fgColor="#39CCCC">
-
-                  <div class="text-white">Online</div>
-                </div>
-              
-                <div class="col-4 text-center">
-                  <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60"
-                         data-fgColor="#39CCCC">
-
-                  <div class="text-white">In-Store</div>
-                </div>
-              
-              </div>
-             
-            </div>
-           
+      <!-- Custom tabs (Charts with tabs)-->
+      <div class="card bg-gradient-info">
+        <div class="card-header">
+          <h3 class="card-title">
+            <i class="fas fa-chart-pie mr-1"></i>
+            Report
+          </h3>
+          <div class="card-tools">
+            <ul class="nav nav-pills ml-auto">
+              <li class="nav-item">
+                <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Overall</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#sales-chart" data-toggle="tab">Branch</a>
+              </li>
+            </ul>
           </div>
-
-        </div>
-
-      </div> --}}
+        </div><!-- /.card-header -->
+        <div class="card-body">
+          <div class="tab-content p-0">
+            <!-- Morris chart - Sales -->
+            <div class="chart tab-pane active" id="revenue-chart"
+                 style="position: relative; height: 300px;">
+                 <canvas class="chart" id="line-chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+             </div>
+            <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
+              <canvas class="chart" id="line-chart-branch" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+            </div>
+          </div>
+        </div><!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+     <div class="row">
+      <div class="col-lg-12">
+         
+      </div>
+     </div>
 
       <div class="row">
         <div class="col-12">
@@ -164,7 +152,8 @@
 <!-- /.content-wrapper -->
 
 <script src="{{asset('admin/plugins/jquery/jquery.min.js')}}"></script>
-
+<!-- ChartJS -->
+<script src="{{asset('admin/plugins/chart.js/Chart.min.js')}}"></script>
 <script>
   $(function () {
     $("#example1").DataTable({
@@ -173,37 +162,188 @@
       "order": [[1, "desc"]],
 
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-      "order": [[0, "desc"]]
-    });
-    $('#example3').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-      "order": [[0, "desc"]]
-    });
-    $('#example4').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-      "order": [[0, "desc"]]
-    });
+    
   });
 </script>
+<script>
+  // Sales graph chart
+  var bookingsCountPerDay = <?php echo json_encode($bookingsCountPerDay); ?>;
+  var salesGraphChartCanvas = $('#line-chart').get(0).getContext('2d');
+  var labels = Object.keys(bookingsCountPerDay); // Extracting the days as labels
+  var data = labels.map(function(day) {
+    return bookingsCountPerDay[day]; // Extracting the count for each day
+  });
+
+  var salesGraphChartData = {
+    labels: labels,
+    datasets: [
+      {
+        label: 'Bookings Count',
+        fill: false,
+        borderWidth: 2,
+        lineTension: 0,
+        spanGaps: true,
+        borderColor: 'white',
+        pointRadius: 3,
+        pointHoverRadius: 7,
+        pointColor: 'white',
+        pointBackgroundColor: 'white',
+        data: data
+      }
+    ]
+  };
+
+  var salesGraphChartOptions = {
+    maintainAspectRatio: false,
+    responsive: true,
+    legend: {
+      display: false
+    },
+    scales: {
+      xAxes: [{
+        ticks: {
+          fontColor: 'white'
+        },
+        gridLines: {
+          display: false,
+          color: 'white',
+          drawBorder: false
+        }
+      }],
+      yAxes: [{
+        ticks: {
+          stepSize: 2,
+          fontColor: 'white'
+        },
+        gridLines: {
+          display: true,
+          color: 'white',
+          drawBorder: false
+        }
+      }]
+    }
+  };
+
+  // This will get the first returned node in the jQuery collection.
+  var salesGraphChart = new Chart(salesGraphChartCanvas, {
+    type: 'line',
+    data: salesGraphChartData,
+    options: salesGraphChartOptions
+  });
+</script>
+<script>
+  var bookingsCountPerDayByBranch = <?php echo json_encode($bookingsCountPerDayByBranch); ?>;
+  
+  // Sales graph chart
+  var salesGraphChartCanvas = $('#line-chart-branch').get(0).getContext('2d');
+
+  var labels = Object.keys(bookingsCountPerDayByBranch).map(function(day) {
+    return day; // Extracting the day and month as labels
+  });
+
+  var datasets = [];
+  Object.keys(bookingsCountPerDayByBranch).forEach(function(day) {
+    var branchCounts = bookingsCountPerDayByBranch[day];
+    Object.keys(branchCounts).forEach(function(branchId) {
+        // Mapping branch IDs to branch names
+        var branchName;
+        switch (branchId) {
+            case "1":
+                branchName = "Bangsar Telawi";
+                break;
+            case "2":
+                branchName = "My Town";
+                break;
+            case "3":
+                branchName = "Bangsar Shopping Centre (Premium)";
+                break;
+            case "4":
+                branchName = "Pavilion Bukit Jalil";
+                break;
+            case "5":
+                branchName = "IOI City Mall";
+                break;
+            case "6":
+                branchName = "Publika";
+                break;
+            case "2":
+                branchName = "Setia City Mall";
+                break;
+            // Add more cases as needed for other branch IDs
+            default:
+                branchName = "Unknown";
+        }
+        var branchData = datasets.find(function(dataset) {
+            return dataset.label === branchName;
+        });
+        if (!branchData) {
+            branchData = {
+                label: branchName,
+                fill: false,
+                borderWidth: 2,
+                lineTension: 0,
+                spanGaps: true,
+                borderColor: getRandomColor(),
+                pointRadius: 3,
+                pointHoverRadius: 7,
+                pointColor: 'white',
+                pointBackgroundColor: 'white',
+                data: []
+            };
+            datasets.push(branchData);
+        }
+        branchData.data.push(branchCounts[branchId]);
+    });
+  });
+
+
+  var salesGraphChartData = {
+    labels: labels,
+    datasets: datasets
+  };
+
+  var salesGraphChartOptions = {
+    maintainAspectRatio: false,
+    responsive: true,
+    legend: {
+      display: true
+    },
+    scales: {
+      xAxes: [{
+        ticks: {
+          fontColor: 'white'
+        },
+        gridLines: {
+          display: false,
+          color: 'white',
+          drawBorder: false
+        }
+      }],
+      yAxes: [{
+        ticks: {
+          stepSize: 2,
+          fontColor: 'white'
+        },
+        gridLines: {
+          display: true,
+          color: 'white',
+          drawBorder: false
+        }
+      }]
+    }
+  };
+
+  // This will get the first returned node in the jQuery collection.
+  var salesGraphChart = new Chart(salesGraphChartCanvas, {
+    type: 'line',
+    data: salesGraphChartData,
+    options: salesGraphChartOptions
+  });
+
+  function getRandomColor() {
+    return '#' + Math.floor(Math.random() * 16777215).toString(16);
+  }
+</script>
+
 
 @endsection

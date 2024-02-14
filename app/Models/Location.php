@@ -15,4 +15,8 @@ class Location extends Model
         return $this->belongsToMany(Stylist::class, 'locations_stylists');
     }
 
+    public function bookings() {
+        return $this->hasMany(Booking::class);
+    }
+
 }

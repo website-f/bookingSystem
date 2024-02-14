@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Branch;
@@ -24,11 +25,49 @@ class AdminController extends Controller
         $stylists = Stylist::all();
         $services = Service::all();
         $customers = Customer::all();
+        // Get the current month and year
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
+        
+        // Get the first and last day of the current month
+        $firstDayOfMonth = Carbon::now()->startOfMonth();
+        $lastDayOfMonth = Carbon::now()->endOfMonth();
+    
+        // Fetch the total bookings per day for the current month
+        $bookingsCountPerDay = Booking::whereYear('created_at', $currentYear)
+            ->whereMonth('created_at', $currentMonth)
+            ->whereBetween('created_at', [$firstDayOfMonth, $lastDayOfMonth])
+            ->orderBy('created_at')
+            ->get()
+            ->groupBy(function($date) {
+                return Carbon::parse($date->created_at)->format('j M'); // Group by day
+            })
+            ->map(function($item) {
+                return $item->count(); // Get the count of bookings for each day
+            });
+
+        $bookingsCountPerDayByBranch = Booking::whereYear('created_at', $currentYear)
+            ->whereMonth('created_at', $currentMonth)
+            ->whereBetween('created_at', [$firstDayOfMonth, $lastDayOfMonth])
+            ->orderBy('created_at')
+            ->get()
+            ->groupBy(function($booking) {
+                return Carbon::parse($booking->created_at)->format('j M');
+            })
+            ->map(function($bookings) {
+                return $bookings->groupBy('location_id')->map(function($branchBookings) {
+                    return $branchBookings->count();
+                });
+            });
+        
+        // dd($bookingsCountPerDay);
         return view('admin.admin', ['bookings' => $bookings,
                                     'locations' => $locations,
                                     'stylists' => $stylists,
                                     'services' => $services,
-                                    'customers' => $customers
+                                    'customers' => $customers,
+                                    'bookingsCountPerDay' => $bookingsCountPerDay,
+                                    'bookingsCountPerDayByBranch' => $bookingsCountPerDayByBranch,
         ]);
     }
 
@@ -606,7 +645,29 @@ class AdminController extends Controller
 
     public function users() {
         $users = User::all();
-        return view('admin.users', ['users' => $users]);
+        $role = Role::all();
+        $branch = Branch::all();
+        return view('admin.users', ['users' => $users, 'role' => $role, 'branch' => $branch]);
+    }
+
+    public function addUser(Request $request) {
+        $user = new User;
+        $password = "Hairtric!2345";
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $hashedPassword;
+        $user->role_id = $request->role;
+        $user->branch_id = $request->branch;
+        $user->save();
+
+        if($user) {
+            Session::flash('status', 'success');
+            Session::flash('message', 'Successfulyy added !');
+        }
+
+        return redirect("/dashboard/users");
     }
 
     public function viewuser($id) {
