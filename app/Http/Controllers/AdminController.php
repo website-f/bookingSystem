@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Session;
 class AdminController extends Controller
 {
     public function home() {
-        $bookings = Booking::all();
+        $bookings;
         $locations = Location::all();
         $stylists = Stylist::all();
         $services = Service::all();
@@ -33,19 +33,41 @@ class AdminController extends Controller
         // Get the first and last day of the current month
         $firstDayOfMonth = Carbon::now()->startOfMonth();
         $lastDayOfMonth = Carbon::now()->endOfMonth();
-    
-        // Fetch the total bookings per day for the current month
-        $bookingsCountPerDay = Booking::whereYear('created_at', $currentYear)
-            ->whereMonth('created_at', $currentMonth)
-            ->whereBetween('created_at', [$firstDayOfMonth, $lastDayOfMonth])
-            ->orderBy('created_at')
-            ->get()
-            ->groupBy(function($date) {
-                return Carbon::parse($date->created_at)->format('j M'); // Group by day
-            })
-            ->map(function($item) {
-                return $item->count(); // Get the count of bookings for each day
+        $bookingsCountPerDay;
+
+        if (Auth::user()->role_id !== 1) {
+            $userBranch = Auth::user()->branch->branch;
+            $locationBranch = Location::where('name', 'LIKE', $userBranch)->first();
+            $bookings = Booking::where('location_id', $locationBranch->id)->get();
+
+            // Fetch the total bookings per day for the current month
+            $bookingsCountPerDay = Booking::where('location_id', $locationBranch->id)
+                ->whereYear('created_at', $currentYear)
+                ->whereMonth('created_at', $currentMonth)
+                ->whereBetween('created_at', [$firstDayOfMonth, $lastDayOfMonth])
+                ->orderBy('created_at')
+                ->get()
+                ->groupBy(function($date) {
+                    return Carbon::parse($date->created_at)->format('j M'); // Group by day
+                })
+                ->map(function($item) {
+                    return $item->count(); // Get the count of bookings for each day
             });
+        } else {
+            $bookings = Booking::all();
+
+            $bookingsCountPerDay = Booking::whereYear('created_at', $currentYear)
+                ->whereMonth('created_at', $currentMonth)
+                ->whereBetween('created_at', [$firstDayOfMonth, $lastDayOfMonth])
+                ->orderBy('created_at')
+                ->get()
+                ->groupBy(function($date) {
+                    return Carbon::parse($date->created_at)->format('j M'); // Group by day
+                })
+                ->map(function($item) {
+                    return $item->count(); // Get the count of bookings for each day
+            });
+        }
 
         $bookingsCountPerDayByBranch = Booking::whereYear('created_at', $currentYear)
             ->whereMonth('created_at', $currentMonth)
