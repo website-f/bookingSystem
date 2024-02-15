@@ -696,7 +696,7 @@ class AdminController extends Controller
         return redirect("/dashboard/users");
     }
 
-    public function viewuser($id) {
+    public function viewUser($id) {
         $user = User::findOrFail($id);
         $role = Role::all();
         $branch = Branch::all();

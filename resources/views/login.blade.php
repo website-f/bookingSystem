@@ -19,7 +19,7 @@
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-        <img src="{{asset('client/assets/img/logoCombo.png')}}" width="100" alt="Hairtricandlashility">
+        <a href="{{asset('client/assets/img/logoCombo.png')}}"><img src="{{asset('client/assets/img/logoCombo.png')}}" width="100" alt="Hairtricandlashility"></a>
     </div>
     <div class="card-body">
       <p class="login-box-msg">Sign in to start your session</p>

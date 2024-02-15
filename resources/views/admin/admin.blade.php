@@ -28,7 +28,7 @@
     <div class="container-fluid">
       @if (Auth::user()->role_id == 1)
           <!-- Custom tabs (Charts with tabs)-->
-      <div class="card bg-gradient-info">
+      <div class="card bg-gradient-light">
         <div class="card-header">
           <h3 class="card-title">
             <i class="fas fa-chart-pie mr-1"></i>
@@ -142,7 +142,7 @@
         <!-- ./col -->
       </div>
       @else
-      <div class="card bg-gradient-info">
+      <div class="card bg-gradient-light">
         <div class="card-header">
           <h3 class="card-title">
             <i class="fas fa-chart-pie mr-1"></i>
@@ -279,11 +279,11 @@
         borderWidth: 2,
         lineTension: 0,
         spanGaps: true,
-        borderColor: 'white',
+        borderColor: '#007bff',
         pointRadius: 3,
         pointHoverRadius: 7,
-        pointColor: 'white',
-        pointBackgroundColor: 'white',
+        pointColor: '#007bff',
+        pointBackgroundColor: '#007bff',
         data: data
       }
     ]
@@ -298,22 +298,22 @@
     scales: {
       xAxes: [{
         ticks: {
-          fontColor: 'white'
+          fontColor: '#007bff'
         },
         gridLines: {
           display: false,
-          color: 'white',
+          color: '#007bff',
           drawBorder: false
         }
       }],
       yAxes: [{
         ticks: {
           stepSize: 2,
-          fontColor: 'white'
+          fontColor: '#007bff'
         },
         gridLines: {
           display: true,
-          color: 'white',
+          color: '#007bff',
           drawBorder: false
         }
       }]
@@ -382,8 +382,8 @@
                 borderColor: getRandomColor(),
                 pointRadius: 3,
                 pointHoverRadius: 7,
-                pointColor: 'white',
-                pointBackgroundColor: 'white',
+                pointColor: 'black',
+                pointBackgroundColor: 'black',
                 data: []
             };
             datasets.push(branchData);
@@ -407,22 +407,22 @@
     scales: {
       xAxes: [{
         ticks: {
-          fontColor: 'white'
+          fontColor: 'black'
         },
         gridLines: {
           display: false,
-          color: 'white',
+          color: 'black',
           drawBorder: false
         }
       }],
       yAxes: [{
         ticks: {
           stepSize: 2,
-          fontColor: 'white'
+          fontColor: 'black'
         },
         gridLines: {
           display: true,
-          color: 'white',
+          color: 'black',
           drawBorder: false
         }
       }]
