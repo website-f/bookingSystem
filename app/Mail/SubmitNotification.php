@@ -14,12 +14,24 @@ class SubmitNotification extends Mailable
     use Queueable, SerializesModels;
 
     public $code;
+    public $location;
+    public $date;
+    public $service;
+    public $stylist;
+    public $fullname;
+    public $phone;
     /**
      * Create a new message instance.
      */
-    public function __construct($code)
+    public function __construct($code, $location, $date, $service, $stylist, $fullname, $phone)
     {
         $this->code = $code;
+        $this->location = $location;
+        $this->date = $date;
+        $this->service = $service;
+        $this->stylist = $stylist;
+        $this->fullname = $fullname;
+        $this->phone = $phone;
     }
 
     public function build()

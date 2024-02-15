@@ -21,10 +21,10 @@ class BookingController extends Controller
     {
         $location = Location::all();
         $category = ServiceCategory::all();
-        // $service1 = Service::where('category_id', 1)->get();
-        // $service2 = Service::where('category_id', 2)->get();
-        $service1 = Service::where('category_id', 3)->get();
-        $service2 = Service::where('category_id', 4)->get();
+        $service1 = Service::where('category_id', 1)->get();
+        $service2 = Service::where('category_id', 2)->get();
+        // $service1 = Service::where('category_id', 3)->get();
+        // $service2 = Service::where('category_id', 4)->get();
     
         // Fetch all stylists initially
         $stylists = Stylist::all();
@@ -159,7 +159,18 @@ class BookingController extends Controller
         $booking->comments = $comments;
         $booking->save();
 
-        Mail::to($email)->send(new SubmitNotification($bookingCode));
+        $locationEmail = Location::where('id', $locationId)->first();
+        $serviceEmail = Service::where('id', $serviceId)->first();
+        $stylistEmail = Stylist::where('id', $stylistId)->first();
+        $fullname = $first_name . $last_name;
+
+        Mail::to($email)->send(new SubmitNotification($bookingCode, 
+                                                      $locationEmail->name, 
+                                                      $date, 
+                                                      $serviceEmail->name, 
+                                                      $stylistEmail->display_name,
+                                                      $fullname,
+                                                      $phone ));
 
         return redirect("/thankyou/" . $booking->id);
 
