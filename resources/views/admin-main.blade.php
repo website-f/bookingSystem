@@ -120,9 +120,10 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="/dashboard" class="brand-link" style="background-color: white">
+    <a href="/dashboard" class="brand-link text-center" style="background-color: white">
       {{-- <img src="{{asset('assets/images/Ellipse-1-1.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> --}}
-      <span style="color: black" class="brand-text font-weight-bold">Hairtricandlashility</span>
+      {{-- <span style="color: black" class="brand-text font-weight-bold">Hairtricandlashility</span> --}}
+      <img class="text-center" src="{{asset('client/assets/img/logoCombo.png')}}" width="100" alt="Hairtricandlashility">
     </a>
 
     <!-- Sidebar -->

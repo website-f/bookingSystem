@@ -313,7 +313,7 @@
         },
         gridLines: {
           display: true,
-          color: '#007bff',
+          color: '#B4D4FF',
           drawBorder: false
         }
       }]
@@ -422,7 +422,7 @@
         },
         gridLines: {
           display: true,
-          color: 'black',
+          color: '#B4D4FF',
           drawBorder: false
         }
       }]
