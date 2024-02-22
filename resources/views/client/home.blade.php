@@ -175,7 +175,7 @@
                     <div class="card overflow-hidden border-0 shadow-sm card-hover mb-2">
                       <div class="row g-0">
                         @if ($stylist->image !== null)
-                        <div class="col-sm-4 bg-repeat-0" style="background-image: url({{ asset($stylist->image) }}); min-height: 12rem; background-size: cover; background-position: center;"></div>
+                        <div class="col-sm-4 bg-repeat-0" style="background-image: url({{ asset($stylist->image) }}); min-height: 12rem; background-repeat: no-repeat; background-attachment: fixed; background-position: center bottom;"></div>
                         @else
                         <div class="col-sm-4 bg-repeat-0 bg-size-cover"></div>
                         @endif
@@ -328,7 +328,7 @@
                                 var cardHtml = '<div class="card overflow-hidden border-0 shadow-sm card-hover mb-2">';
                                 cardHtml += '<div class="row g-0">';
                                 if (stylist.image !== null) {
-                                    cardHtml += '<div class="col-sm-4 bg-repeat-0" style="background-image: url(' + stylistImage + '); min-height: 12rem; background-size: cover; background-position: center;"></div>';
+                                    cardHtml += '<div class="col-sm-4 bg-repeat-0" style="background-image: url(' + stylistImage + '); min-height: 14rem; background-size: cover; background-position: center top;"></div>';
                                 } else {
                                     cardHtml += '<div class="col-sm-4 bg-repeat-0 bg-size-cover"></div>';
                                 }
