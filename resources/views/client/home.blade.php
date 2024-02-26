@@ -4,6 +4,10 @@
     
 @section('content')
     <!-- Page content -->
+    <!-- Loading overlay -->
+  <div id="loading-overlay">
+    <div class="loader"></div>
+  </div>
     <section class="container pt-5">
         <div class="row">
 
@@ -632,5 +636,20 @@
           }
         }
 
+      </script>
+      <script>
+        // Add event listener to the form submit event
+        document.getElementById('regForm').addEventListener('submit', function(event) {
+          // Prevent the default form submission behavior
+          event.preventDefault();
+    
+          // Show loading overlay
+          document.getElementById('loading-overlay').style.display = 'block';
+    
+          // Submit the form after a short delay to allow time for the loading overlay to appear
+          setTimeout(function() {
+            document.getElementById('regForm').submit();
+          }, 500); // Adjust delay as needed
+        });
       </script>
 @endsection
