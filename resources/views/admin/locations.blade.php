@@ -148,55 +148,68 @@
                       <hr>
                       <div class="row">
                         <div class="col-lg-12">
-                          <p class="font-weight-bold">Stylists</p>
-                            @foreach ($stylists as $stylist)
-                                <div class="row mb-2">
-                                    <div class="col-lg-12">
-                                        <div class="btn btn-block btn-outline-primary styleBtn clearfix
-                                        @if ($locations->stylists->contains($stylist->id))
-                                            btn-primary active
-                                        @else
-                                            btn-outline-primary
-                                        @endif
-                                        "
-                                        >
-                                            <div class="float-left">
-                                                <input type="checkbox" name="stylists[]" autocomplete="off" value="{{$stylist->id}}"
-                                                @if ($locations->stylists->contains($stylist->id))
-                                                checked
-                                                @endif 
-                                                >
-                                                <img class="img-fluid img-thumbnail" height="50px" width="50px" src="{{asset($stylist->image)}}" alt="">
-                                                {{$stylist->display_name}}
-                                            </div>
-                                            {{-- <a href="#collapseTwo-{{$stylist->id}}" class="float-right bg-primary p-1 rounded" onclick="handleLinkClickEdit(event)">services</a> --}}
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- <div id="collapseTwo-{{$stylist->id}}" class="collapse">
-                                  <div class="card-body">
-                                    <div class="row">
-                                      <div class="col-sm-6">
-                                        <!-- checkbox -->
-                                        <div class="form-group">
-                                          <div class="form-check">
-                                            @foreach ($service as $services)
-                                            <input class="form-check-input" type="checkbox" name="servicesTwo[]" value="{{$services->id}}"
-                                            @if ($stylist->services->contains($services->id))
-                                            checked
-                                            @endif 
-                                            >
-                                            <label class="form-check-label">{{$services->name}}</label><br>
-                                            @endforeach
+                          <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
+                            <li class="nav-item">
+                              <a class="nav-link active" id="custom-content-below-home-tab" data-toggle="pill" href="#custom-content-below-home-{{$locations->id}}" role="tab" aria-controls="custom-content-below-home" aria-selected="true">Stylists</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" id="custom-content-below-profile-tab" data-toggle="pill" href="#custom-content-below-profile-{{$locations->id}}" role="tab" aria-controls="custom-content-below-profile" aria-selected="false">Services</a>
+                            </li>
+                          </ul>
+                          <div class="tab-content mt-3" id="custom-content-below-tabContent">
+                            <div class="tab-pane fade show active" id="custom-content-below-home-{{$locations->id}}" role="tabpanel" aria-labelledby="custom-content-below-home-tab">
+                              @foreach ($stylists as $stylist)
+                                  <div class="row mb-2">
+                                      <div class="col-lg-12">
+                                          <div class="btn btn-block btn-outline-primary styleBtn clearfix
+                                          @if ($locations->stylists->contains($stylist->id))
+                                              btn-primary active
+                                          @else
+                                              btn-outline-primary
+                                          @endif
+                                          "
+                                          >
+                                              <div class="float-left">
+                                                  <input type="checkbox" name="stylists[]" autocomplete="off" value="{{$stylist->id}}"
+                                                  @if ($locations->stylists->contains($stylist->id))
+                                                  checked
+                                                  @endif 
+                                                  >
+                                                  <img class="img-fluid img-thumbnail" height="50px" width="50px" src="{{asset($stylist->image)}}" alt="">
+                                                  {{$stylist->display_name}}
+                                              </div>
+                                              {{-- <a href="#collapseTwo-{{$stylist->id}}" class="float-right bg-primary p-1 rounded" onclick="handleLinkClickEdit(event)">services</a> --}}
                                           </div>
-                                        </div>
                                       </div>
-                                    </div>
                                   </div>
-                                </div> --}}
-                            @endforeach
-    
-                        </div>
+                              @endforeach
+                            </div>
+                            <div class="tab-pane fade" id="custom-content-below-profile-{{$locations->id}}" role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
+                              @foreach ($services as $service)
+                                  <div class="row mb-2">
+                                      <div class="col-lg-12">
+                                          <div class="btn btn-block btn-outline-primary styleBtn clearfix
+                                              @if (in_array($locations->name, json_decode($service->branch ?? "[]")))
+                                                  btn-primary active
+                                              @else
+                                                  btn-outline-primary
+                                              @endif
+                                          ">
+                                              <div class="float-left">
+                                                  <input type="checkbox" name="services[]" autocomplete="off" value="{{$service->id}}"
+                                                      @if (in_array($locations->name, json_decode($service->branch ?? "[]")))
+                                                          checked
+                                                      @endif 
+                                                  >
+                                                  <label class="form-check-label">{{$service->name}}</label><br>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              @endforeach
+                            </div>
+                          </div>
+                      </div>
                       </div>
                     </div>
                     <div class="modal-footer">
@@ -252,54 +265,88 @@
                       <hr>
                       <div class="row">
                         <div class="col-lg-12">
-                          <p class="font-weight-bold">Stylists</p>
-                            @foreach ($stylists as $stylist)
-                                <div class="row mb-2">
-                                    <div class="col-lg-12">
-                                        <div class="btn btn-block btn-outline-primary styleBtn clearfix
-                                        @if ($locationBranch->stylists->contains($stylist->id))
-                                            btn-primary active
-                                        @else
-                                            btn-outline-primary
-                                        @endif
-                                        "
-                                        >
-                                            <div class="float-left">
-                                                <input type="checkbox" name="stylists[]" autocomplete="off" value="{{$stylist->id}}"
-                                                @if ($locationBranch->stylists->contains($stylist->id))
+                            <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
+                              <li class="nav-item">
+                                <a class="nav-link active" id="custom-content-below-home-tab" data-toggle="pill" href="#custom-content-below-home-{{$locationBranch->id}}" role="tab" aria-controls="custom-content-below-home" aria-selected="true">Stylists</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" id="custom-content-below-profile-tab" data-toggle="pill" href="#custom-content-below-profile-{{$locationBranch->id}}" role="tab" aria-controls="custom-content-below-profile" aria-selected="false">Services</a>
+                              </li>
+                            </ul>
+                            <div class="tab-content mt-3" id="custom-content-below-tabContent">
+                              <div class="tab-pane fade show active" id="custom-content-below-home-{{$locationBranch->id}}" role="tabpanel" aria-labelledby="custom-content-below-home-tab">
+                                @foreach ($stylists as $stylist)
+                                    <div class="row mb-2">
+                                        <div class="col-lg-12">
+                                            <div class="btn btn-block btn-outline-primary styleBtn clearfix
+                                            @if ($locationBranch->stylists->contains($stylist->id))
+                                                btn-primary active
+                                            @else
+                                                btn-outline-primary
+                                            @endif
+                                            "
+                                            >
+                                                <div class="float-left">
+                                                    <input type="checkbox" name="stylists[]" autocomplete="off" value="{{$stylist->id}}"
+                                                    @if ($locationBranch->stylists->contains($stylist->id))
+                                                    checked
+                                                    @endif 
+                                                    >
+                                                    <img class="img-fluid img-thumbnail" height="50px" width="50px" src="{{asset($stylist->image)}}" alt="">
+                                                    {{$stylist->display_name}}
+                                                </div>
+                                                {{-- <a href="#collapseTwo-{{$stylist->id}}" class="float-right bg-primary p-1 rounded" onclick="handleLinkClickEdit(event)">services</a> --}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- <div id="collapseTwo-{{$stylist->id}}" class="collapse">
+                                      <div class="card-body">
+                                        <div class="row">
+                                          <div class="col-sm-6">
+                                            <!-- checkbox -->
+                                            <div class="form-group">
+                                              <div class="form-check">
+                                                @foreach ($service as $services)
+                                                <input class="form-check-input" type="checkbox" name="servicesTwo[]" value="{{$services->id}}"
+                                                @if ($stylist->services->contains($services->id))
                                                 checked
                                                 @endif 
                                                 >
-                                                <img class="img-fluid img-thumbnail" height="50px" width="50px" src="{{asset($stylist->image)}}" alt="">
-                                                {{$stylist->display_name}}
+                                                <label class="form-check-label">{{$services->name}}</label><br>
+                                                @endforeach
+                                              </div>
                                             </div>
-                                            {{-- <a href="#collapseTwo-{{$stylist->id}}" class="float-right bg-primary p-1 rounded" onclick="handleLinkClickEdit(event)">services</a> --}}
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- <div id="collapseTwo-{{$stylist->id}}" class="collapse">
-                                  <div class="card-body">
-                                    <div class="row">
-                                      <div class="col-sm-6">
-                                        <!-- checkbox -->
-                                        <div class="form-group">
-                                          <div class="form-check">
-                                            @foreach ($service as $services)
-                                            <input class="form-check-input" type="checkbox" name="servicesTwo[]" value="{{$services->id}}"
-                                            @if ($stylist->services->contains($services->id))
-                                            checked
-                                            @endif 
-                                            >
-                                            <label class="form-check-label">{{$services->name}}</label><br>
-                                            @endforeach
                                           </div>
                                         </div>
                                       </div>
+                                    </div> --}}
+                                @endforeach
+                              </div>
+                              <div class="tab-pane fade" id="custom-content-below-profile-{{$locationBranch->id}}" role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
+                                @foreach ($services as $service)
+                                    <div class="row mb-2">
+                                        <div class="col-lg-12">
+                                            <div class="btn btn-block btn-outline-primary styleBtn clearfix
+                                                @if (in_array($locationBranch->name, $service->branch ?? []))
+                                                    btn-primary active
+                                                @else
+                                                    btn-outline-primary
+                                                @endif
+                                            ">
+                                                <div class="float-left">
+                                                    <input type="checkbox" name="services[]" autocomplete="off" value="{{$service->id}}"
+                                                        @if (in_array($locationBranch->name, $service->branch ?? []))
+                                                            checked
+                                                        @endif 
+                                                    >
+                                                    <label class="form-check-label">{{$service->name}}</label><br>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                  </div>
-                                </div> --}}
-                            @endforeach
-    
+                                @endforeach
+                              </div>
+                            </div>
                         </div>
                       </div>
                     </div>

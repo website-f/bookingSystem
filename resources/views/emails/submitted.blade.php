@@ -175,7 +175,6 @@
         <td style="overflow-wrap:break-word;word-break:break-word;padding:30px 20px 20px;font-family:'Lato',sans-serif;" align="left">
           
     <div style="font-size: 14px; color: #333333; line-height: 120%; text-align: left; word-wrap: break-word;">
-      <p style="line-height: 120%;">Hi,</p>
   <p style="line-height: 120%;">Thank you for choosing the Hairtric &amp; Lashility ! We're thrilled to let you know that your booking is now complete and we can't wait to welcome you. </p>
     </div>
   
@@ -806,7 +805,7 @@
   
     
     
-  <div class="u-row-container" style="padding: 0px 10px;background-color: rgba(255,255,255,0)">
+  <div class="u-row-container" style="padding: 0px 10px;background-color: rgba(255,255,255,0); margin-top: 20px">
     <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #ffffff;">
       <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
         <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px 10px;background-color: rgba(255,255,255,0);" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #ffffff;"><![endif]-->

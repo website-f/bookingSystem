@@ -17,6 +17,8 @@ use App\Http\Controllers\BookingController;
 */
 
 Route::get('/', [BookingController::class, 'home']);
+Route::post('/get-updated-value', [BookingController::class, 'getUpdatedValue']);
+Route::get('/get-services/{locationId}', [BookingController::class, 'getServices']);
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login-fill', [AuthController::class, 'loginAuth']);
 Route::get('/logout', [AuthController::class, "logout"])->middleware('auth');
@@ -47,3 +49,5 @@ Route::prefix('dashboard')->group(function() {
     Route::get('/view-user/{id}', [AdminController::class, 'viewUser'])->middleware('auth');
     Route::put('/edit-user/{id}', [AdminController::class, 'editUser'])->middleware('auth');
 });
+
+Route::get('/masUpdate', [AdminController::class, 'massUpdateService']);

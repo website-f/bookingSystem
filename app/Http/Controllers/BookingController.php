@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Mail;
 
 class BookingController extends Controller
 {
-    public function home()
+    public function home(Request $request)
     {
         $location = Location::all();
         $category = ServiceCategory::all();
@@ -28,6 +28,13 @@ class BookingController extends Controller
     
         // Fetch all stylists initially
         $stylists = Stylist::all();
+
+        // Retrieve the location value from the request
+        $locationValue = $request->query('locationValue');
+        
+        // Process the location value as needed to get $currentBranchName
+        // For simplicity, let's assume $currentBranchName is set here
+        $currentBranchName = $locationValue;
     
         return view('client.home', [
             'location' => $location,
@@ -35,7 +42,20 @@ class BookingController extends Controller
             'service1' => $service1,
             'service2' => $service2,
             'stylists' => $stylists, // Include the stylists in the view
+            'currentBranchName' => $currentBranchName,
         ]);
+    }
+    
+    public function getServices($locationId)
+    {
+        // Retrieve services based on location and category
+        $services = Service::where('category_id', 1)
+                   ->whereJsonContains('branch', $locationId)
+                   ->get();
+    
+
+        // Return services as JSON response
+        return response()->json(['services' => $services]);
     }
 
 

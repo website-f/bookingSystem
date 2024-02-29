@@ -2,12 +2,13 @@
 
 namespace App\Mail;
 
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class SubmitNotification extends Mailable
 {
@@ -36,7 +37,8 @@ class SubmitNotification extends Mailable
 
     public function build()
     {
+        $currentDate = Carbon::now()->toDateString();
         return $this->view('emails.submitted')
-                    ->subject('Your Booking  with Hairtricandlashility'); // Create a blade template in resources/views/emails/marketing.blade.php
+                    ->subject('Booking with Hairtricandlashility - ' . $currentDate); // Create a blade template in resources/views/emails/marketing.blade.php
     }
 }

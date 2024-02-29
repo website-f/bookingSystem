@@ -97,12 +97,12 @@ class AdminController extends Controller
     public function location() {
         $location = Location::with('stylists')->get();
         $stylists = Stylist::with('services')->get();
-        $service = Service::all();
+        $services = Service::all();
         $userBranch = Auth::user()->branch->branch;
         $locationBranch = Location::where('name', 'LIKE', $userBranch)->first();
         return view('admin.locations', ['location' => $location,
                                         'stylists' => $stylists,
-                                        'service' => $service,
+                                        'services' => $services,
                                         'locationBranch' => $locationBranch]);
     }
 
@@ -188,6 +188,34 @@ class AdminController extends Controller
                 // Synchronize the stylists and services for the location
                 $location->stylists()->sync($stylists);
             }
+            if ($request->has('services')) {
+                // Get all services
+                $services = Service::all();
+                
+                // Get the branch name from the request
+                $branchName = $request->name; // Assuming you have a way to get the branch name
+                
+                foreach ($services as $service) {
+                    // Decode the JSON branch array and ensure it's an array
+                    $branchArray = json_decode($service->branch, true) ?: [];
+                    
+                    // Check if the service is checked in the form submission
+                    $isChecked = in_array($service->id, $request->input('services', []));
+                    
+                    // If the service is checked, add the branch name to the JSON array
+                    if ($isChecked && !in_array($branchName, $branchArray)) {
+                        $branchArray[] = $branchName;
+                    } elseif (!$isChecked) {
+                        // If the service is not checked, remove the branch name from the JSON array
+                        $branchArray = array_values(array_diff($branchArray, [$branchName]));
+                    }
+                    
+                    // Encode the modified branch array back to JSON maintaining the array format
+                    $service->branch = json_encode(array_values($branchArray), JSON_UNESCAPED_UNICODE);
+                    $service->save();
+                }
+            }
+            
   
         } else {
             $location = Location::findOrFail($id);
@@ -199,6 +227,33 @@ class AdminController extends Controller
             
                 // Synchronize the stylists and services for the location
                 $location->stylists()->sync($stylists);
+            }
+            if ($request->has('services')) {
+                // Get all services
+                $services = Service::all();
+                
+                // Get the branch name from the request
+                $branchName = $request->name; // Assuming you have a way to get the branch name
+                
+                foreach ($services as $service) {
+                    // Decode the JSON branch array and ensure it's an array
+                    $branchArray = json_decode($service->branch, true) ?: [];
+                    
+                    // Check if the service is checked in the form submission
+                    $isChecked = in_array($service->id, $request->input('services', []));
+                    
+                    // If the service is checked, add the branch name to the JSON array
+                    if ($isChecked && !in_array($branchName, $branchArray)) {
+                        $branchArray[] = $branchName;
+                    } elseif (!$isChecked) {
+                        // If the service is not checked, remove the branch name from the JSON array
+                        $branchArray = array_values(array_diff($branchArray, [$branchName]));
+                    }
+                    
+                    // Encode the modified branch array back to JSON maintaining the array format
+                    $service->branch = json_encode(array_values($branchArray), JSON_UNESCAPED_UNICODE);
+                    $service->save();
+                }
             }
             
             
@@ -717,5 +772,12 @@ class AdminController extends Controller
         }
 
         return redirect('/dashboard/view-user/' . $id);
+    }
+
+    public function massUpdateService() {
+        $defaultBranch = ["Bangsar Telawi", "My Town", "Pavilion Bukit Jalil", "IOI City Mall", "Bangsar Shopping Centre (Premium)", "Publika", "Setia City Mall"];
+
+        // Mass update existing records with the default branch value
+        Service::whereNull('branch')->update(['branch' => $defaultBranch]);
     }
 }

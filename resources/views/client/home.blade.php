@@ -125,24 +125,7 @@
                   <input type="hidden" id="serviceDetails" name="serviceDetails">
                   <input type="hidden" id="serviceDetailsId" name="serviceDetailsId">
                   <div id="serviceIdOne">
-                  @foreach ($service1 as $services1)
-                  <div class="card overflow-hidden border-0 shadow-sm card-hover mb-2">
-                    <div class="row g-0">
-                      @if ($services1->selection_image !== null)
-                      <div class="col-sm-4 bg-repeat-0" style="background-image: url({{ asset($services1->selection_image) }}); min-height: 12rem; background-size: cover; background-position: center;"></div>
-                      @else
-                      <div class="col-sm-4 bg-repeat-0 bg-size-cover"></div>
-                      @endif
-                      <div class="col-sm-8">
-                        <div class="card-body">
-                          <h5 class="card-title">{{$services1->name}}</h5>
-                          <p class="card-text fs-sm">RM{{ number_format($services1->charge_amount, 2) }}</p>
-                          <button type="button" data-serviceDetails="{{$services1->name}}" data-serviceId="{{$services1->id}}" class="btn btn-sm btn-primary nextBtn getStylistsbtn"  onclick="nextPrev(1)">Select This Service</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  @endforeach 
+                    
                   </div>
                   <div id="serviceIdTwo">
                     @foreach ($service2 as $services2)
@@ -316,9 +299,12 @@
       <script src="{{asset('admin/plugins/jquery/jquery.min.js')}}"></script>
       <script>
         $(document).ready(function () {
-            $('.getStylistsbtn').on('click', function () {
+            // Attach click event handler to a parent element that exists when the page is loaded
+            // and delegate the event to elements with the class 'getStylistsbtn'
+            $(document).on('click', '.getStylistsbtn', function () {
                 var locationId = $('#location').val();
                 var serviceId = $('#serviceDetailsId').val();
+                console.log("clicked")
         
                 $.ajax({
                     url: '/get-stylist/' + locationId + '/' + serviceId,
@@ -328,7 +314,7 @@
                         $('#stylistContainer').html(''); // Clear previous content
                         if (data.stylists.length > 0) {
                             $.each(data.stylists, function (index, stylist) {
-                              var stylistImage = stylist.image ? '{{ asset('') }}' + stylist.image : '';
+                                var stylistImage = stylist.image ? '{{ asset('') }}' + stylist.image : '';
                                 var cardHtml = '<div class="card overflow-hidden border-0 shadow-sm card-hover mb-2">';
                                 cardHtml += '<div class="row g-0">';
                                 if (stylist.image !== null) {
@@ -355,7 +341,6 @@
                 });
             });
         });
-
       </script>
       <script>
 
@@ -585,6 +570,41 @@
             locationInput.value = dataLocationValue;
             locationInputName.value = dataLocationNameValue;
             locationInputVerify.innerHTML = dataLocationNameValue;
+            console.log(dataLocationValue);
+
+            $.ajax({
+                url: '/get-services/' + dataLocationNameValue,
+                type: 'GET',
+                success: function (data) {
+                    // Assuming you have a container with the ID 'serviceContainer'
+                    $('#serviceIdOne').html(''); // Clear previous content
+                    if (data.services.length > 0) {
+                        $.each(data.services, function (index, service) {
+                            var cardHtml = '<div class="card overflow-hidden border-0 shadow-sm card-hover mb-2">';
+                            cardHtml += '<div class="row g-0">';
+                            if (service.selection_image !== null) {
+                                cardHtml += '<div class="col-sm-4 bg-repeat-0" style="background-image: url(' + service.selection_image + '); min-height: 12rem; background-size: cover; background-position: center;"></div>';
+                            } else {
+                                cardHtml += '<div class="col-sm-4 bg-repeat-0 bg-size-cover"></div>';
+                            }
+                            cardHtml += '<div class="col-sm-8">';
+                            cardHtml += '<div class="card-body">';
+                            cardHtml += '<h5 class="card-title">' + service.name + '</h5>';
+                            cardHtml += '<p class="card-text fs-sm">RM' + parseFloat(service.charge_amount).toFixed(2) + '</p>';
+                            cardHtml += '<button type="button" data-serviceDetails="' + service.name + '" data-serviceId="' + service.id + '" class="btn btn-sm btn-primary nextBtn getStylistsbtn" onclick="nextPrev(1)">Select This Service</button>';
+                            cardHtml += '</div></div></div></div>';
+                            $('#serviceIdOne').append(cardHtml);
+                        });
+                    } else {
+                        // Handle case where no services are returned
+                        $('#serviceIdOne').html('<p>No services available for the selected location and category.</p>');
+                    }
+                    // Continue with the logic for the next step or any additional actions
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
           }
 
           if (dataServiceValue == "Hair Service") {
