@@ -61,21 +61,21 @@
                   <div class="row mb-2">
                     <div class="col-lg-6">
                       <label class="form-label">Price Min</label>
-                      <input type="number" name="price_min" class="form-control"><br>
+                      <input type="text" name="price_min" class="form-control"><br>
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label">Price Max</label>
-                      <input type="number" name="price_max" class="form-control"><br>
+                      <input type="text" name="price_max" class="form-control"><br>
                     </div>
                   </div>
                   <div class="row mb-2">
                     <div class="col-lg-6">
                       <label class="form-label">Charge Amount</label>
-                      <input type="number" name="charge_amount" class="form-control"><br>
+                      <input type="text" name="charge_amount" class="form-control"><br>
                     </div>
                     <div class="col-lg-6">
                       <label class="form-label">Duration</label>
-                      <input type="number" name="duration" class="form-control"><br>
+                      <input type="text" name="duration" class="form-control"><br>
                     </div>
                   </div>
                   <div class="form-group">
@@ -134,7 +134,7 @@
             <div class="card-body d-flex flex-column">
               <h5 class="card-title"><b>{{$services->name}}</b></h5>
               <p class="card-text">{{$services->short_description}}</p>
-              <p class="card-text">RM{{number_format($services->charge_amount, 2)}}</p>
+              <p class="card-text">RM{{$services->charge_amount}}</p>
               <button type="button" class="btn btn-primary w-100 mb-2 mt-auto btn-sm" data-toggle="modal" data-target="#editServices-{{$services->id}}">
                 <i class="fas fa-edit"></i> Edit Services
               </button>
@@ -166,21 +166,21 @@
                         <div class="row mb-2">
                           <div class="col-lg-6">
                             <label class="form-label">Price Min</label>
-                            <input type="number" name="price_min" class="form-control" value="{{$services->price_min}}"><br>
+                            <input type="text" name="price_min" class="form-control" value="{{$services->price_min}}"><br>
                           </div>
                           <div class="col-lg-6">
                             <label class="form-label">Price Max</label>
-                            <input type="number" name="price_max" class="form-control" value="{{$services->price_max}}"><br>
+                            <input type="text" name="price_max" class="form-control" value="{{$services->price_max}}"><br>
                           </div>
                         </div>
                         <div class="row mb-2">
                           <div class="col-lg-6">
                             <label class="form-label">Charge Amount</label>
-                            <input type="number" name="charge_amount" class="form-control" value="{{$services->charge_amount}}"><br>
+                            <input type="text" name="charge_amount" class="form-control" value="{{$services->charge_amount}}"><br>
                           </div>
                           <div class="col-lg-6">
                             <label class="form-label">Duration</label>
-                            <input type="number" name="duration" class="form-control" value="{{$services->duration}}"><br>
+                            <input type="text" name="duration" class="form-control" value="{{$services->duration}}"><br>
                           </div>
                         </div>
                         <div class="form-group">
@@ -240,7 +240,7 @@
               </div>
 
               <button type="button" class="btn btn-danger w-100 btn-sm" data-toggle="modal" data-target="#removeSServices-{{$services->id}}">
-                <i class="fas fa-trash-alt"></i> Remove Stylist
+                <i class="fas fa-trash-alt"></i> Remove Services
               </button>
 
                <!-- Modal -->

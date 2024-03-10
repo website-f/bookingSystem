@@ -139,7 +139,7 @@
                         <div class="col-sm-8">
                           <div class="card-body">
                             <h5 class="card-title">{{$services2->name}}</h5>
-                            <p class="card-text fs-sm">RM{{ number_format($services2->charge_amount, 2) }}</p>
+                            <p class="card-text fs-sm">RM{{ $services2->charge_amount }}</p>
                             <button type="button" data-serviceDetails="{{$services2->name}}" data-serviceId="{{$services2->id}}" class="btn btn-sm btn-primary nextBtn getStylistsbtn"  onclick="nextPrev(1)">Select This Service</button>
                           </div>
                         </div>
@@ -591,7 +591,7 @@
                             cardHtml += '<div class="col-sm-8">';
                             cardHtml += '<div class="card-body">';
                             cardHtml += '<h5 class="card-title">' + service.name + '</h5>';
-                            cardHtml += '<p class="card-text fs-sm">RM' + parseFloat(service.charge_amount).toFixed(2) + '</p>';
+                            cardHtml += '<p class="card-text fs-sm">RM' + service.charge_amount + '</p>';
                             cardHtml += '<button type="button" data-serviceDetails="' + service.name + '" data-serviceId="' + service.id + '" class="btn btn-sm btn-primary nextBtn getStylistsbtn" onclick="nextPrev(1)">Select This Service</button>';
                             cardHtml += '</div></div></div></div>';
                             $('#serviceIdOne').append(cardHtml);
