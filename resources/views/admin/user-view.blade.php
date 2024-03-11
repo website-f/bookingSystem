@@ -30,7 +30,9 @@
         <div class="col-md-3">
           @if (Session::has('status'))
           <div class="alert alert-success" role="alert">{{Session::get('message')}}</div>
-         @endif
+          @elseif (Session::has('danger'))
+          <div class="alert alert-danger" role="alert">{{Session::get('message')}}</div>
+          @endif
           <!-- Profile Image -->
           <div class="card card-primary card-outline">
             <div class="card-body box-profile">
@@ -71,6 +73,7 @@
               <ul class="nav nav-pills">
                 <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Profile</a></li>
                 <li class="nav-item"><a class="nav-link" href="#edit" data-toggle="tab">Edit</a></li>
+                <li class="nav-item"><a class="nav-link" href="#changePass" data-toggle="tab">Change Password</a></li>
               </ul>
             </div><!-- /.card-header -->
             <div class="card-body">
@@ -152,6 +155,40 @@
                   </form>
                 </div>
 
+                <div class="tab-pane" id="changePass">
+                  <div id="passwordNotSame" class="alert alert-danger" style="display: none;">Re-enter New Password and New Password not match</div>
+                  <form action="/dashboard/edit-password/{{$user->id}}" method="POST" class="form-horizontal">
+                    @csrf
+                    @method('PUT')
+                    
+                    <div class="form-group row">
+                      <label for="inputName" class="col-sm-2 col-form-label">Current Password</label>
+                      <div class="col-sm-10">
+                        <input type="password" name="currentPassword" class="form-control" id="currentPassword">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputName" class="col-sm-2 col-form-label">New Password</label>
+                      <div class="col-sm-10">
+                        <input type="password" name="password" class="form-control" id="newPassword">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputEmail" class="col-sm-2 col-form-label">Re-Enter New Password</label>
+                      <div class="col-sm-10">
+                        <input type="password" name="passwordenter" class="form-control" id="renewPassword">
+                      </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                      <div class="offset-sm-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary">Change Password</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                
+
               </div>
               <!-- /.tab-content -->
             </div><!-- /.card-body -->
@@ -168,7 +205,22 @@
 <!-- /.content-wrapper -->
 
 <script src="{{asset('admin/plugins/jquery/jquery.min.js')}}"></script>
+<script>
+    
+  const password = document.getElementById('newPassword');
+  const repassword = document.getElementById('renewPassword');
+  const err = document.getElementById('passwordNotSame');
 
+  repassword.addEventListener("input", function(event) {
+    if (password.value !== event.target.value) {
+      err.style.display = "block"
+    } else {
+      err.style.display = "none"
+    }
+  })
+  
+
+</script>
 
 
 @endsection

@@ -16,6 +16,7 @@ use App\Models\ServiceCategory;
 use App\Models\StylistSchedule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
@@ -807,6 +808,23 @@ class AdminController extends Controller
         }
 
         return redirect('/dashboard/view-user/' . $id);
+    }
+
+    public function changePasswordUser(Request $request, $id) {
+        $user = User::findOrFail($id);
+        $currentPassword = $request->currentPassword;
+
+        if (Hash::check($currentPassword, $user->password)) {
+            $user->password = $request->password;
+            $user->save();
+            Session::flash('status', 'success');
+            Session::flash('message', 'Successfully changed password');
+            return redirect('/dashboard/view-user/'. $id);
+        } else {
+            Session::flash('status', 'danger');
+            Session::flash('message', 'old password not match with current password');
+            return redirect('/dashboard/view-user/'. $id);
+        }
     }
 
     public function massUpdateService() {

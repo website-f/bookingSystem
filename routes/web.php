@@ -50,6 +50,7 @@ Route::prefix('dashboard')->group(function() {
     Route::post('/add-user', [AdminController::class, 'addUser'])->middleware('auth');
     Route::get('/view-user/{id}', [AdminController::class, 'viewUser'])->middleware('auth');
     Route::put('/edit-user/{id}', [AdminController::class, 'editUser'])->middleware('auth');
+    Route::put('/edit-password/{id}', [AdminController::class, 'changePasswordUser'])->middleware('auth');
 });
 
 Route::get('/masUpdate', [AdminController::class, 'massUpdateService']);
