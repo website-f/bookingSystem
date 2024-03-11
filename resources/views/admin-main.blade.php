@@ -168,6 +168,7 @@
               </p>
             </a>
           </li>
+          @if (Auth::user()->role_id == 1)
           <li class="nav-item">
             <a href="/dashboard/customer" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
@@ -176,7 +177,7 @@
               </p>
             </a>
           </li>
-
+          @endif
           <li class="nav-item">
             <a href="/dashboard/location" class="nav-link">
               <i class="nav-icon fas fa-map-marked-alt"></i>
