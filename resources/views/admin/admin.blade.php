@@ -64,7 +64,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Appointments</h3>
+              <h3 class="card-title">Today's Appointment</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -80,6 +80,7 @@
                   <th>Date</th>
                   <th>Customer Name</th>
                   <th>Customer Phone</th>
+                  <th>Customer Email</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -130,6 +131,9 @@
                       </td>
                       <td>
                         {{$customer->phone}}
+                      </td>
+                      <td>
+                        {{$customer->email}}
                       </td>
                     </tr>
                   @endforeach
@@ -163,7 +167,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Appointments</h3>
+              <h3 class="card-title">Today's Appointment</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -179,6 +183,7 @@
                   <th>Date</th>
                   <th>Customer Name</th>
                   <th>Customer Phone</th>
+                  <th>Customer Email</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -229,6 +234,9 @@
                       </td>
                       <td>
                         {{$customer->phone}}
+                      </td>
+                      <td>
+                        {{$customer->email}}
                       </td>
                     </tr>
                   @endforeach

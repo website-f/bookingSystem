@@ -29,6 +29,7 @@ class AdminController extends Controller
         // Get the current month and year
         $currentMonth = Carbon::now()->month;
         $currentYear = Carbon::now()->year;
+        $currentDate = Carbon::now()->toDateString();
         
         // Get the first and last day of the current month
         $firstDayOfMonth = Carbon::now()->startOfMonth();
@@ -38,7 +39,9 @@ class AdminController extends Controller
         if (Auth::user()->role_id !== 1) {
             $userBranch = Auth::user()->branch->branch;
             $locationBranch = Location::where('name', 'LIKE', $userBranch)->first();
-            $bookings = Booking::where('location_id', $locationBranch->id)->get();
+            $bookings = Booking::where('location_id', $locationBranch->id)
+                                 ->whereDate('created_at', $currentDate)
+                                 ->get();
 
             // Fetch the total bookings per day for the current month
             $bookingsCountPerDay = Booking::where('location_id', $locationBranch->id)
@@ -54,7 +57,7 @@ class AdminController extends Controller
                     return $item->count(); // Get the count of bookings for each day
             });
         } else {
-            $bookings = Booking::all();
+            $bookings = Booking::whereDate('created_at', $currentDate)->get();
 
             $bookingsCountPerDay = Booking::whereYear('created_at', $currentYear)
                 ->whereMonth('created_at', $currentMonth)
@@ -91,6 +94,38 @@ class AdminController extends Controller
                                     'customers' => $customers,
                                     'bookingsCountPerDay' => $bookingsCountPerDay,
                                     'bookingsCountPerDayByBranch' => $bookingsCountPerDayByBranch,
+        ]);
+    }
+
+    public function customer() {
+        $customers = Customer::orderBy('created_at', 'desc')->get();
+        $booking = Booking::all();
+
+        return view('admin.customer', ['customers' => $customers, 'booking' => $booking]);
+    }
+
+    public function appointment() {
+        $bookings;
+        $locations = Location::all();
+        $stylists = Stylist::all();
+        $services = Service::all();
+        $customers = Customer::all();
+        // Get the current month and year
+
+        if (Auth::user()->role_id !== 1) {
+            $userBranch = Auth::user()->branch->branch;
+            $locationBranch = Location::where('name', 'LIKE', $userBranch)->first();
+            $bookings = Booking::where('location_id', $locationBranch->id)->get();
+
+        } else {
+            $bookings = Booking::all();
+        }
+
+        return view('admin.appointment', ['bookings' => $bookings,
+                                    'locations' => $locations,
+                                    'stylists' => $stylists,
+                                    'services' => $services,
+                                    'customers' => $customers,
         ]);
     }
 

@@ -161,7 +161,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/dashboard" class="nav-link">
+            <a href="/dashboard/appointment" class="nav-link">
               <i class="nav-icon fas fa-calendar"></i>
               <p>
                 Appointment
@@ -169,7 +169,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/dashboard" class="nav-link">
+            <a href="/dashboard/customer" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
               <p>
                 Customer

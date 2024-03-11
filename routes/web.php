@@ -30,6 +30,8 @@ Route::post('/remove-offday', [AdminController::class, 'removeOffday'])->middlew
 
 Route::prefix('dashboard')->group(function() {
     Route::get('/', [AdminController::class, 'home'])->middleware('auth');
+    Route::get('/customer', [AdminController::class, 'customer'])->middleware('auth');
+    Route::get('/appointment', [AdminController::class, 'appointment'])->middleware('auth');
     Route::get('/location', [AdminController::class, 'location'])->middleware('auth');
     Route::post('/add-location', [AdminController::class, 'Addlocation'])->middleware('auth');
     Route::put('/edit-location/{id}', [AdminController::class, 'Editlocation'])->middleware('auth');

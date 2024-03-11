@@ -352,7 +352,7 @@
           var stylistContainer = document.getElementById('stylistContainer');
           stylistContainer.addEventListener('click', function(event) {
               if (event.target.classList.contains('nextBtn')) {
-                  switchTab();
+                  updateUI();
               }
           });
           // Example: Switch to the "datetime" tab
