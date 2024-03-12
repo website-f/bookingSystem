@@ -287,7 +287,7 @@
               <div style="overflow:auto;">
                 <div style="float:right;">
                   <button type="button" class="btn btn-outline-primary" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-                  <button type="submit" class="btn btn-success" id="nextBtn" onclick="nextPrev(1)">Submit</button>
+                  <button type="submit" class="btn btn-success" id="nextBtn">Submit</button>
                 </div>
               </div>
               
@@ -352,7 +352,7 @@
           var stylistContainer = document.getElementById('stylistContainer');
           stylistContainer.addEventListener('click', function(event) {
               if (event.target.classList.contains('nextBtn')) {
-                  updateUI();
+                switchTab();
               }
           });
           // Example: Switch to the "datetime" tab

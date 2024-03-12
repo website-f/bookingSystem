@@ -64,7 +64,7 @@
                           {{$booking->status}}
                         @endif
                       </td>
-                      <td>{{$booking->created_at->format('d-m-Y')}}</td>
+                      <td>{{$booking->created_at}}</td>
                       <td>{{$booking->booking_code}}</td>
                       <td>
                         @php
