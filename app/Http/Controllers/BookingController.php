@@ -21,10 +21,10 @@ class BookingController extends Controller
     {
         $location = Location::all();
         $category = ServiceCategory::all();
-        // $service1 = Service::where('category_id', 1)->get();
-        // $service2 = Service::where('category_id', 2)->get();
-        $service1 = Service::where('category_id', 3)->get();
-        $service2 = Service::where('category_id', 4)->get();
+        $service1 = Service::where('category_id', 1)->get();
+        $service2 = Service::where('category_id', 2)->get();
+        // $service1 = Service::where('category_id', 3)->get();
+        // $service2 = Service::where('category_id', 4)->get();
     
         // Fetch all stylists initially
         $stylists = Stylist::all();
@@ -49,7 +49,7 @@ class BookingController extends Controller
     public function getServices($locationId)
     {
         // Retrieve services based on location and category
-        $services = Service::where('category_id', 3)
+        $services = Service::where('category_id', 1)
                    ->whereJsonContains('branch', $locationId)
                    ->get();
     
