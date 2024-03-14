@@ -336,118 +336,111 @@
   });
 </script>
 <script>
-  var bookingsCountPerDayByBranch = <?php echo json_encode($bookingsCountPerDayByBranch); ?>;
-  
-  // Sales graph chart
-  var salesGraphChartCanvas = $('#line-chart-branch').get(0).getContext('2d');
+    var bookingsCountPerDayByBranch = <?php echo json_encode($bookingsCountPerDayByBranch); ?>;
+    
+    // Sales graph chart
+    var salesGraphChartCanvas = $('#line-chart-branch').get(0).getContext('2d');
 
-  var labels = Object.keys(bookingsCountPerDayByBranch).map(function(day) {
-    return day; // Extracting the day and month as labels
-  });
-
-  var datasets = [];
-  Object.keys(bookingsCountPerDayByBranch).forEach(function(day) {
-    var branchCounts = bookingsCountPerDayByBranch[day];
-    Object.keys(branchCounts).forEach(function(branchId) {
-        // Mapping branch IDs to branch names
-        var branchName;
-        switch (branchId) {
-            case "1":
-                branchName = "Bangsar Telawi";
-                break;
-            case "2":
-                branchName = "My Town";
-                break;
-            case "3":
-                branchName = "Bangsar Shopping Centre (Premium)";
-                break;
-            case "4":
-                branchName = "Pavilion Bukit Jalil";
-                break;
-            case "5":
-                branchName = "IOI City Mall";
-                break;
-            case "6":
-                branchName = "Publika";
-                break;
-            case "7":
-                branchName = "Setia City Mall";
-                break;
-            // Add more cases as needed for other branch IDs
-            default:
-                branchName = "Unknown";
-        }
-        var branchData = datasets.find(function(dataset) {
-            return dataset.label === branchName;
-        });
-        if (!branchData) {
-            branchData = {
-                label: branchName,
-                fill: false,
-                borderWidth: 2,
-                lineTension: 0,
-                spanGaps: true,
-                borderColor: getRandomColor(),
-                pointRadius: 3,
-                pointHoverRadius: 7,
-                pointColor: 'black',
-                pointBackgroundColor: 'black',
-                data: []
-            };
-            datasets.push(branchData);
-        }
-        branchData.data.push(branchCounts[branchId]);
+    // Extracting and sorting the dates
+    var dates = Object.keys(bookingsCountPerDayByBranch).sort(function(a, b) {
+        return new Date(a) - new Date(b);
     });
-  });
 
+    // Extracting branch IDs
+    var branchIds = [];
+    dates.forEach(function(day) {
+        var branchCounts = bookingsCountPerDayByBranch[day];
+        Object.keys(branchCounts).forEach(function(branchId) {
+            if (!branchIds.includes(branchId)) {
+                branchIds.push(branchId);
+            }
+        });
+    });
 
-  var salesGraphChartData = {
-    labels: labels,
-    datasets: datasets
-  };
+    // Mapping branch IDs to branch names
+    var branchNames = {
+        "1": "Bangsar Telawi",
+        "2": "My Town",
+        "3": "Bangsar Shopping Centre (Premium)",
+        "4": "Pavilion Bukit Jalil",
+        "5": "IOI City Mall",
+        "6": "Publika",
+        "7": "Setia City Mall"
+        // Add more branch IDs and names as needed
+    };
 
-  var salesGraphChartOptions = {
-    maintainAspectRatio: false,
-    responsive: true,
-    legend: {
-      display: true
-    },
-    scales: {
-      xAxes: [{
-        ticks: {
-          fontColor: 'black'
+    // Initialize datasets
+    var datasets = branchIds.map(function(branchId) {
+        return {
+            label: branchNames[branchId] || "Unknown",
+            fill: false,
+            borderWidth: 2,
+            lineTension: 0,
+            spanGaps: true,
+            borderColor: getRandomColor(),
+            pointRadius: 3,
+            pointHoverRadius: 7,
+            pointColor: 'black',
+            pointBackgroundColor: 'black',
+            data: dates.map(function(day) {
+                return bookingsCountPerDayByBranch[day][branchId] || 0;
+            })
+        };
+    });
+
+    var salesGraphChartData = {
+        labels: dates,
+        datasets: datasets
+    };
+
+    var salesGraphChartOptions = {
+        maintainAspectRatio: false,
+        responsive: true,
+        legend: {
+            display: true
         },
-        gridLines: {
-          display: false,
-          color: 'black',
-          drawBorder: false
+        scales: {
+            xAxes: [{
+                ticks: {
+                    fontColor: 'black'
+                },
+                gridLines: {
+                    display: false,
+                    color: 'black',
+                    drawBorder: false
+                }
+            }],
+            yAxes: [{
+                ticks: {
+                    stepSize: 2,
+                    fontColor: 'black'
+                },
+                gridLines: {
+                    display: true,
+                    color: '#B4D4FF',
+                    drawBorder: false
+                }
+            }]
         }
-      }],
-      yAxes: [{
-        ticks: {
-          stepSize: 2,
-          fontColor: 'black'
-        },
-        gridLines: {
-          display: true,
-          color: '#B4D4FF',
-          drawBorder: false
-        }
-      }]
+    };
+
+    // This will get the first returned node in the jQuery collection.
+    var salesGraphChart = new Chart(salesGraphChartCanvas, {
+        type: 'line',
+        data: salesGraphChartData,
+        options: salesGraphChartOptions
+    });
+
+    // Generate random color
+    function getRandomColor() {
+        return '#' + Math.floor(Math.random() * 16777215).toString(16);
     }
-  };
-
-  // This will get the first returned node in the jQuery collection.
-  var salesGraphChart = new Chart(salesGraphChartCanvas, {
-    type: 'line',
-    data: salesGraphChartData,
-    options: salesGraphChartOptions
-  });
-
-  function getRandomColor() {
-    return '#' + Math.floor(Math.random() * 16777215).toString(16);
-  }
 </script>
+
+
+
+
+
 
 
 @endsection
