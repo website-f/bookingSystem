@@ -327,7 +327,7 @@
                                     <div class="row mb-2">
                                         <div class="col-lg-12">
                                             <div class="btn btn-block btn-outline-primary styleBtn clearfix
-                                                @if (in_array($locationBranch->name, $service->branch ?? []))
+                                                @if (in_array($locationBranch->name, json_decode($service->branch ?? "[]")))
                                                     btn-primary active
                                                 @else
                                                     btn-outline-primary
@@ -335,7 +335,7 @@
                                             ">
                                                 <div class="float-left">
                                                     <input type="checkbox" name="services[]" autocomplete="off" value="{{$service->id}}"
-                                                        @if (in_array($locationBranch->name, $service->branch ?? []))
+                                                        @if (in_array($locationBranch->name, json_decode($service->branch ?? "[]")))
                                                             checked
                                                         @endif 
                                                     >

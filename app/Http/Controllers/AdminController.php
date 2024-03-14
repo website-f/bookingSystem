@@ -87,7 +87,7 @@ class AdminController extends Controller
                 });
             });
         
-        // dd($bookingsCountPerDay);
+        // dd($bookingsCountPerDayByBranch);
         return view('admin.admin', ['bookings' => $bookings,
                                     'locations' => $locations,
                                     'stylists' => $stylists,
