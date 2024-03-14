@@ -582,7 +582,7 @@
                         $.each(data.services, function (index, service) {
                             var cardHtml = '<div class="card overflow-hidden border-0 shadow-sm card-hover mb-2">';
                             cardHtml += '<div class="row g-0">';
-                            var serviceImage = service.selection_image ? '{{ asset('') }}' + service.selection_image + '" loading="lazy"' : '';
+                            var serviceImage = service.selection_image ? '{{ asset('') }}' + service.selection_image : '';
                             if (service.selection_image !== null) {
                                 cardHtml += '<div class="col-sm-4 bg-repeat-0" style="background-image: url(' + serviceImage + '); min-height: 12rem; background-size: cover; background-position: center;"></div>';
                             } else {
