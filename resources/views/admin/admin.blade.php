@@ -370,7 +370,7 @@
             case "6":
                 branchName = "Publika";
                 break;
-            case "2":
+            case "7":
                 branchName = "Setia City Mall";
                 break;
             // Add more cases as needed for other branch IDs
