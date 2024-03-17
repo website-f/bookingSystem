@@ -41,6 +41,7 @@ class AdminController extends Controller
             $userBranch = Auth::user()->branch->branch;
             dd($userBranch);
             $locationBranch = Location::where('name', 'LIKE', $userBranch)->first();
+            dd($locationBranch->id);
             $bookings = Booking::where('location_id', $locationBranch->id)
                                  ->whereDate('created_at', $currentDate)
                                  ->get();
