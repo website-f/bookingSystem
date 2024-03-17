@@ -40,7 +40,7 @@ class AdminController extends Controller
         if (Auth::user()->role_id !== 1) {
             $userBranch = Auth::user()->branch->branch;
             $locationBranch = Location::where('name', 'LIKE', $userBranch)->first();
-            dd($locationBranch->id);
+            dd($locationBranch);
             $bookings = Booking::where('location_id', $locationBranch->id)
                                  ->whereDate('created_at', $currentDate)
                                  ->get();
