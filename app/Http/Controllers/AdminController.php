@@ -834,7 +834,7 @@ class AdminController extends Controller
     }
 
     public function massUpdateService() {
-        $defaultBranch = [1, 2, 3, 4, 5, 6];
+        $defaultBranch = [1, 2, 3, 4, 5, 6, 7];
 
         // Mass update existing records with the default branch value
         Stylist::whereNull('branch')->update(['branch' => $defaultBranch]);
