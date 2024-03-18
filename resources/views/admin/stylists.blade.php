@@ -285,6 +285,34 @@
                       <label>Add +</label>
                       <input type="date" name="off_days" class="form-control">
                       <hr>
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <p class="font-weight-bold">Location Activeness</p>
+                            @foreach ($locations as $location)
+                                <div class="row mb-2">
+                                    <div class="col-lg-12">
+                                        <div class="btn btn-block btn-outline-primary styleBtn clearfix
+                                      @if (in_array($location->id, json_decode($stylists->branch ?? "[]")))
+                                          btn-primary active
+                                      @else
+                                          btn-outline-primary
+                                      @endif
+                                        ">
+                                            <div class="float-left">
+                                                <input type="checkbox" name="branch[]" autocomplete="off" value="{{$location->id}}"
+                                                @if (in_array($location->id, json_decode($stylists->branch ?? "[]")))
+                                              checked
+                                              @endif
+                                                >
+                                                {{$location->name}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                      </div>
+                      <hr>
                         <div class="row">
                           <div class="col-lg-12">
                             <p class="font-weight-bold">Services</p>

@@ -308,8 +308,9 @@ class AdminController extends Controller
     public function stylist() {
         $stylist = Stylist::with('services')->get();
         $service = Service::with('stylists')->get();
+        $locations = Location::all();
         $stylistSchedule = StylistSchedule::all();
-        return view('admin.stylists', ['stylist' => $stylist, 'service' => $service, 'stylistSchedule' => $stylistSchedule]);
+        return view('admin.stylists', ['stylist' => $stylist, 'service' => $service, 'stylistSchedule' => $stylistSchedule, 'locations' => $locations]);
     }
 
     public function addStylist(Request $request) {
@@ -405,6 +406,8 @@ class AdminController extends Controller
             // Save the path to the database
             $fullpath = 'photo/' . $newName;
 
+            $checkedLocations = $request->input('branch', []);
+
             $stylist = Stylist::findOrFail($id);
             $stylist->first_name = $request->first_name;
             $stylist->last_name = $request->last_name;
@@ -413,8 +416,10 @@ class AdminController extends Controller
             $stylist->bio = $request->bio;
             $stylist->email = $request->email;
             $stylist->image = $fullpath;
+            $stylist->branch = json_encode($checkedLocations);
             $stylist->save();
         } else {
+            $checkedLocations = $request->input('branch', []);
             $stylist = Stylist::findOrFail($id);
             $stylist->first_name = $request->first_name;
             $stylist->last_name = $request->last_name;
@@ -422,6 +427,7 @@ class AdminController extends Controller
             $stylist->title = $request->title;
             $stylist->bio = $request->bio;
             $stylist->email = $request->email;
+            $stylist->branch = json_encode($checkedLocations);
             $stylist->save();
 
         }
@@ -828,9 +834,9 @@ class AdminController extends Controller
     }
 
     public function massUpdateService() {
-        $defaultBranch = ["Bangsar Telawi", "My Town", "Pavilion Bukit Jalil", "IOI City Mall", "Bangsar Shopping Centre (Premium)", "Publika", "Setia City Mall"];
+        $defaultBranch = [1, 2, 3, 4, 5, 6];
 
         // Mass update existing records with the default branch value
-        Service::whereNull('branch')->update(['branch' => $defaultBranch]);
+        Stylist::whereNull('branch')->update(['branch' => $defaultBranch]);
     }
 }

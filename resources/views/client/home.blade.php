@@ -315,17 +315,22 @@
                         if (data.stylists.length > 0) {
                             $.each(data.stylists, function (index, stylist) {
                                 var stylistImage = stylist.image ? '{{ asset('') }}' + stylist.image : '';
+                                var opacityStyle = stylist.branch.includes(locationId) ? '' : 'opacity: 0.3;';
                                 var cardHtml = '<div class="card overflow-hidden border-0 shadow-sm card-hover mb-2">';
                                 cardHtml += '<div class="row g-0">';
                                 if (stylist.image !== null) {
-                                    cardHtml += '<div class="col-sm-4 bg-repeat-0" style="background-image: url(' + stylistImage + '); min-height: 14rem; background-size: cover; background-position: center top;"></div>';
+                                    cardHtml += '<div class="col-sm-4 bg-repeat-0" style="background-image: url(' + stylistImage + '); min-height: 14rem; background-size: cover; background-position: center top; ' + opacityStyle + '"></div>';
                                 } else {
                                     cardHtml += '<div class="col-sm-4 bg-repeat-0 bg-size-cover"></div>';
                                 }
                                 cardHtml += '<div class="col-sm-8">';
                                 cardHtml += '<div class="card-body">';
-                                cardHtml += '<h5 class="card-title">' + stylist.display_name + '</h5>';
-                                cardHtml += '<button type="button" data-stylist="' + stylist.display_name + '" data-stylist-id="' + stylist.id + '" class="btn btn-sm btn-primary nextBtn"  onclick="nextPrev(1)">Select This</button>';
+                                cardHtml += '<h5 class="card-title" style="'+ opacityStyle +'">' + stylist.display_name + '</h5>';
+                                if (stylist.branch.includes(locationId)) {
+                                  cardHtml += '<button style="'+ opacityStyle +'" type="button" data-stylist="' + stylist.display_name + '" data-stylist-id="' + stylist.id + '" class="btn btn-sm btn-primary nextBtn"  onclick="nextPrev(1)">Select This</button>';
+                                } else {
+                                  cardHtml += '<button style="'+ opacityStyle +'" type="button" class="btn btn-sm btn-primary nextBtn">Select This</button>';
+                                }
                                 cardHtml += '</div></div></div></div>';
                                 $('#stylistContainer').append(cardHtml);
                             });
