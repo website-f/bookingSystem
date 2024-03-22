@@ -77,7 +77,7 @@
                   <th>Location</th>
                   <th>Service</th>
                   <th>Stylist</th>
-                  <th>Date</th>
+                  <th>Booking Date</th>
                   <th>Customer Name</th>
                   <th>Customer Phone</th>
                   <th>Customer Email</th>
@@ -87,8 +87,8 @@
                   @foreach ($bookings as $booking)
                     <tr>
                       <td>
-                        @if ($booking->status == "active")
-                          <button class="btn btn-primary">Active</button>
+                        @if ($booking->status == "pending")
+                          <button class="btn btn-primary">Pending</button>
                         @elseif ($booking->status == "complete")
                           <button class="btn btn-success">Complete</button>
                         @elseif ($booking->status == "cancelled")
@@ -180,7 +180,7 @@
                   <th>Location</th>
                   <th>Service</th>
                   <th>Stylist</th>
-                  <th>Date</th>
+                  <th>Booking Date</th>
                   <th>Customer Name</th>
                   <th>Customer Phone</th>
                   <th>Customer Email</th>
@@ -190,8 +190,8 @@
                   @foreach ($bookings as $booking)
                     <tr>
                       <td>
-                        @if ($booking->status == "active")
-                          <button class="btn btn-primary">Active</button>
+                        @if ($booking->status == "pending")
+                          <button class="btn btn-primary">Pending</button>
                         @elseif ($booking->status == "complete")
                           <button class="btn btn-success">Complete</button>
                         @elseif ($booking->status == "cancelled")

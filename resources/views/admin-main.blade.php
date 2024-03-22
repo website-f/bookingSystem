@@ -164,7 +164,7 @@
             <a href="/dashboard/appointment" class="nav-link">
               <i class="nav-icon fas fa-calendar"></i>
               <p>
-                Appointment
+                All Appointments
               </p>
             </a>
           </li>

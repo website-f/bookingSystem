@@ -10,12 +10,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Appointment</h1>
+          <h1 class="m-0">All Appointments</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Appointment</li>
+            <li class="breadcrumb-item active">All Appointments</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -44,7 +44,7 @@
                   <th>Location</th>
                   <th>Service</th>
                   <th>Stylist</th>
-                  <th>Date</th>
+                  <th>Booking Date</th>
                   <th>Customer Name</th>
                   <th>Customer Phone</th>
                   <th>Customer Email</th>
@@ -54,8 +54,8 @@
                   @foreach ($bookings as $booking)
                     <tr>
                       <td>
-                        @if ($booking->status == "active")
-                          <button class="btn btn-primary">Active</button>
+                        @if ($booking->status == "pending")
+                          <button class="btn btn-primary">Pending</button>
                         @elseif ($booking->status == "complete")
                           <button class="btn btn-success">Complete</button>
                         @elseif ($booking->status == "cancelled")

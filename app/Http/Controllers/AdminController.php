@@ -14,6 +14,7 @@ use App\Models\Location;
 use Illuminate\Http\Request;
 use App\Models\ServiceCategory;
 use App\Models\StylistSchedule;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -30,7 +31,7 @@ class AdminController extends Controller
         // Get the current month and year
         $currentMonth = Carbon::now()->month;
         $currentYear = Carbon::now()->year;
-        $currentDate = Carbon::now()->toDateString();
+        $currentDate = Carbon::now()->format('d/m/Y');
         
         // Get the first and last day of the current month
         $firstDayOfMonth = Carbon::now()->startOfMonth();
@@ -41,7 +42,7 @@ class AdminController extends Controller
             $userBranch = Auth::user()->branch->branch;
             $locationBranch = Location::where('name', 'LIKE', $userBranch)->first();
             $bookings = Booking::where('location_id', $locationBranch->id)
-                                 ->whereDate('created_at', $currentDate)
+                                 ->whereRaw("SUBSTRING_INDEX(date, ' ', 1) = ?", [$currentDate])
                                  ->get();
 
             // Fetch the total bookings per day for the current month
@@ -58,7 +59,7 @@ class AdminController extends Controller
                     return $item->count(); // Get the count of bookings for each day
             });
         } else {
-            $bookings = Booking::whereDate('created_at', $currentDate)->get();
+            $bookings = Booking::whereRaw("SUBSTRING_INDEX(SUBSTRING_INDEX(JSON_UNQUOTE(date), ' ', 1), ',', -1) = ?", [$currentDate])->get();
 
             $bookingsCountPerDay = Booking::whereYear('created_at', $currentYear)
                 ->whereMonth('created_at', $currentMonth)

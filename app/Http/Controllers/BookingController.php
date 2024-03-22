@@ -132,7 +132,7 @@ class BookingController extends Controller
         $locationId = $request->location;
         $date = $request->datetime;
         $booked = $this->parseBookedString($date);
-        $status = "active";
+        $status = "pending";
         $comments = $request->comments;
 
         // Check if a StylistSchedule already exists for the given stylist and date
