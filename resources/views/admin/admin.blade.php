@@ -91,13 +91,146 @@
                       <td></td>
                       <td>
                         @if ($booking->status == "pending")
-                          <button class="btn btn-primary">Pending</button>
+                          <!-- Button trigger modal -->
+                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pending{{$booking->id}}">
+                             Pending
+                           </button>
+                           
+                           <!-- Modal -->
+                           <div class="modal fade" id="pending{{$booking->id}}" tabindex="-1" role="dialog" aria-labelledby="pending{{$booking->id}}" aria-hidden="true">
+                             <div class="modal-dialog modal-dialog-centered" role="document">
+                               <div class="modal-content">
+                                 <div class="modal-header">
+                                   <h5 class="modal-title" id="exampleModalLongTitle">Change Status</h5>
+                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                     <span aria-hidden="true">&times;</span>
+                                   </button>
+                                 </div>
+                                 <div class="modal-body">
+                                  <form action="/change-status/{{$booking->id}}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <label class="form-label">Current Status:</label>
+                                    <select name="status" class="form-control mb-2">
+                                      <option value="pending" {{$booking->status == "pending" ? 'selected' : ''}}>Pending</option>
+                                      <option value="approved" {{$booking->status == "approved" ? 'selected' : ''}}>Approved</option>
+                                      <option value="complete" {{$booking->status == "complete" ? 'selected' : ''}}>Complete</option>
+                                      <option value="cancelled" {{$booking->status == "cancelled" ? 'selected' : ''}}>Cancelled</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                   </form>
+                                 </div>
+                                 <div class="modal-footer">
+                                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                 </div>
+                               </div>
+                             </div>
+                           </div>
                         @elseif ($booking->status == "complete")
-                          <button class="btn btn-success">Complete</button>
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#complete{{$booking->id}}">
+                          Complete
+                        </button>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="complete{{$booking->id}}" tabindex="-1" role="dialog" aria-labelledby="complete{{$booking->id}}" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Change Status</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <form action="/change-status/{{$booking->id}}" method="POST">
+                                  @csrf
+                                  @method('PUT')
+                                  <label class="form-label">Current Status:</label>
+                                  <select name="status" class="form-control mb-2">
+                                    <option value="pending" {{$booking->status == "pending" ? 'selected' : ''}}>Pending</option>
+                                    <option value="approved" {{$booking->status == "approved" ? 'selected' : ''}}>Approved</option>
+                                    <option value="complete" {{$booking->status == "complete" ? 'selected' : ''}}>Complete</option>
+                                    <option value="cancelled" {{$booking->status == "cancelled" ? 'selected' : ''}}>Cancelled</option>
+                                  </select>
+                                  <button type="submit" class="btn btn-primary">Save changes</button>
+                                 </form>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                         @elseif ($booking->status == "cancelled")
-                          <button class="btn btn-danger">Cancelled</button>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelled{{$booking->id}}">
+                          Cancelled
+                        </button>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="cancelled{{$booking->id}}" tabindex="-1" role="dialog" aria-labelledby="cancelled{{$booking->id}}" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Change Status</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <form action="/change-status/{{$booking->id}}" method="POST">
+                                  @csrf
+                                  @method('PUT')
+                                  <label class="form-label">Current Status:</label>
+                                  <select name="status" class="form-control mb-2">
+                                    <option value="pending" {{$booking->status == "pending" ? 'selected' : ''}}>Pending</option>
+                                    <option value="approved" {{$booking->status == "approved" ? 'selected' : ''}}>Approved</option>
+                                    <option value="complete" {{$booking->status == "complete" ? 'selected' : ''}}>Complete</option>
+                                    <option value="cancelled" {{$booking->status == "cancelled" ? 'selected' : ''}}>Cancelled</option>
+                                  </select>
+                                  <button type="submit" class="btn btn-primary">Save changes</button>
+                                 </form>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                         @else
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#approve{{$booking->id}}">
                           {{$booking->status}}
+                        </button>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="approve{{$booking->id}}" tabindex="-1" role="dialog" aria-labelledby="approve{{$booking->id}}" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Change Status</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <form action="/change-status/{{$booking->id}}" method="POST">
+                                  @csrf
+                                  @method('PUT')
+                                  <label class="form-label">Current Status:</label>
+                                  <select name="status" class="form-control mb-2">
+                                    <option value="pending" {{$booking->status == "pending" ? 'selected' : ''}}>Pending</option>
+                                    <option value="approved" {{$booking->status == "approved" ? 'selected' : ''}}>Approved</option>
+                                    <option value="complete" {{$booking->status == "complete" ? 'selected' : ''}}>Complete</option>
+                                    <option value="cancelled" {{$booking->status == "cancelled" ? 'selected' : ''}}>Cancelled</option>
+                                  </select>
+                                  <button type="submit" class="btn btn-primary">Save changes</button>
+                                 </form>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                         @endif
                       </td>
                       <td>{{$booking->created_at->format('d-m-Y')}}</td>
@@ -200,13 +333,146 @@
                       <td></td>
                       <td>
                         @if ($booking->status == "pending")
-                          <button class="btn btn-primary">Pending</button>
+                          <!-- Button trigger modal -->
+                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pending{{$booking->id}}">
+                             Pending
+                           </button>
+                           
+                           <!-- Modal -->
+                           <div class="modal fade" id="pending{{$booking->id}}" tabindex="-1" role="dialog" aria-labelledby="pending{{$booking->id}}" aria-hidden="true">
+                             <div class="modal-dialog modal-dialog-centered" role="document">
+                               <div class="modal-content">
+                                 <div class="modal-header">
+                                   <h5 class="modal-title" id="exampleModalLongTitle">Change Status</h5>
+                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                     <span aria-hidden="true">&times;</span>
+                                   </button>
+                                 </div>
+                                 <div class="modal-body">
+                                  <form action="/change-status/{{$booking->id}}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <label class="form-label">Current Status:</label>
+                                    <select name="status" class="form-control mb-2">
+                                      <option value="pending" {{$booking->status == "pending" ? 'selected' : ''}}>Pending</option>
+                                      <option value="approved" {{$booking->status == "approved" ? 'selected' : ''}}>Approved</option>
+                                      <option value="complete" {{$booking->status == "complete" ? 'selected' : ''}}>Complete</option>
+                                      <option value="cancelled" {{$booking->status == "cancelled" ? 'selected' : ''}}>Cancelled</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                   </form>
+                                 </div>
+                                 <div class="modal-footer">
+                                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                 </div>
+                               </div>
+                             </div>
+                           </div>
                         @elseif ($booking->status == "complete")
-                          <button class="btn btn-success">Complete</button>
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#complete{{$booking->id}}">
+                          Complete
+                        </button>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="complete{{$booking->id}}" tabindex="-1" role="dialog" aria-labelledby="complete{{$booking->id}}" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Change Status</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <form action="/change-status/{{$booking->id}}" method="POST">
+                                  @csrf
+                                  @method('PUT')
+                                  <label class="form-label">Current Status:</label>
+                                  <select name="status" class="form-control mb-2">
+                                    <option value="pending" {{$booking->status == "pending" ? 'selected' : ''}}>Pending</option>
+                                    <option value="approved" {{$booking->status == "approved" ? 'selected' : ''}}>Approved</option>
+                                    <option value="complete" {{$booking->status == "complete" ? 'selected' : ''}}>Complete</option>
+                                    <option value="cancelled" {{$booking->status == "cancelled" ? 'selected' : ''}}>Cancelled</option>
+                                  </select>
+                                  <button type="submit" class="btn btn-primary">Save changes</button>
+                                 </form>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                         @elseif ($booking->status == "cancelled")
-                          <button class="btn btn-danger">Cancelled</button>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelled{{$booking->id}}">
+                          Cancelled
+                        </button>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="cancelled{{$booking->id}}" tabindex="-1" role="dialog" aria-labelledby="cancelled{{$booking->id}}" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Change Status</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <form action="/change-status/{{$booking->id}}" method="POST">
+                                  @csrf
+                                  @method('PUT')
+                                  <label class="form-label">Current Status:</label>
+                                  <select name="status" class="form-control mb-2">
+                                    <option value="pending" {{$booking->status == "pending" ? 'selected' : ''}}>Pending</option>
+                                    <option value="approved" {{$booking->status == "approved" ? 'selected' : ''}}>Approved</option>
+                                    <option value="complete" {{$booking->status == "complete" ? 'selected' : ''}}>Complete</option>
+                                    <option value="cancelled" {{$booking->status == "cancelled" ? 'selected' : ''}}>Cancelled</option>
+                                  </select>
+                                  <button type="submit" class="btn btn-primary">Save changes</button>
+                                 </form>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                         @else
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#approve{{$booking->id}}">
                           {{$booking->status}}
+                        </button>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="approve{{$booking->id}}" tabindex="-1" role="dialog" aria-labelledby="approve{{$booking->id}}" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Change Status</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <form action="/change-status/{{$booking->id}}" method="POST">
+                                  @csrf
+                                  @method('PUT')
+                                  <label class="form-label">Current Status:</label>
+                                  <select name="status" class="form-control mb-2">
+                                    <option value="pending" {{$booking->status == "pending" ? 'selected' : ''}}>Pending</option>
+                                    <option value="approved" {{$booking->status == "approved" ? 'selected' : ''}}>Approved</option>
+                                    <option value="complete" {{$booking->status == "complete" ? 'selected' : ''}}>Complete</option>
+                                    <option value="cancelled" {{$booking->status == "cancelled" ? 'selected' : ''}}>Cancelled</option>
+                                  </select>
+                                  <button type="submit" class="btn btn-primary">Save changes</button>
+                                 </form>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                         @endif
                       </td>
                       <td>{{$booking->created_at->format('d-m-Y')}}</td>
