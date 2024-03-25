@@ -71,6 +71,7 @@
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                  <th>#</th>
                   <th>Status</th>
                   <th>Submission Date</th>
                   <th>Booking Code</th>
@@ -81,11 +82,13 @@
                   <th>Customer Name</th>
                   <th>Customer Phone</th>
                   <th>Customer Email</th>
+                  <th>Customer Comments</th>
                 </tr>
                 </thead>
                 <tbody>
                   @foreach ($bookings as $booking)
                     <tr>
+                      <td></td>
                       <td>
                         @if ($booking->status == "pending")
                           <button class="btn btn-primary">Pending</button>
@@ -134,6 +137,9 @@
                       </td>
                       <td>
                         {{$customer->email}}
+                      </td>
+                      <td>
+                        {{$booking->comments}}
                       </td>
                     </tr>
                   @endforeach
@@ -174,6 +180,7 @@
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                  <th>#</th>
                   <th>Status</th>
                   <th>Submission Date</th>
                   <th>Booking Code</th>
@@ -184,11 +191,13 @@
                   <th>Customer Name</th>
                   <th>Customer Phone</th>
                   <th>Customer Email</th>
+                  <th>Customer Comments</th>
                 </tr>
                 </thead>
                 <tbody>
                   @foreach ($bookings as $booking)
                     <tr>
+                      <td></td>
                       <td>
                         @if ($booking->status == "pending")
                           <button class="btn btn-primary">Pending</button>
@@ -238,6 +247,9 @@
                       <td>
                         {{$customer->email}}
                       </td>
+                      <td>
+                        {{$booking->comments}}
+                      </td>
                     </tr>
                   @endforeach
                 </tbody>
@@ -263,7 +275,7 @@
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false, "pageLength": 30,
       "buttons": ["copy", "excel", "pdf", "print"],
-      "order": [[1, "desc"]],
+      "order": [[2, "desc"]],
 
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     

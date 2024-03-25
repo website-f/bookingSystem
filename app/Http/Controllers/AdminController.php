@@ -42,7 +42,7 @@ class AdminController extends Controller
             $userBranch = Auth::user()->branch->branch;
             $locationBranch = Location::where('name', 'LIKE', $userBranch)->first();
             $bookings = Booking::where('location_id', $locationBranch->id)
-                                 ->whereRaw("SUBSTRING_INDEX(date, ' ', 1) = ?", [$currentDate])
+                                 ->whereRaw("SUBSTRING_INDEX(SUBSTRING_INDEX(JSON_UNQUOTE(date), ' ', 1), ',', -1) = ?", [$currentDate])
                                  ->get();
 
             // Fetch the total bookings per day for the current month
@@ -839,5 +839,13 @@ class AdminController extends Controller
 
         // Mass update existing records with the default branch value
         Stylist::whereNull('branch')->update(['branch' => $defaultBranch]);
+    }
+
+    public function changeStatus(Request $request, $id) {
+        $booking = Booking::findOrFail($id);
+        $booking->status = $request->status;
+        $booking->save();
+
+        return redirect('/dashboard/appointment');
     }
 }

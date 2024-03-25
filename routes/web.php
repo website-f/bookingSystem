@@ -54,3 +54,4 @@ Route::prefix('dashboard')->group(function() {
 });
 
 Route::get('/masUpdate', [AdminController::class, 'massUpdateService']);
+Route::put('/change-status/{id}', [AdminController::class, 'changeStatus'])->middleware('auth');
