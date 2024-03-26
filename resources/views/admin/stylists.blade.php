@@ -282,8 +282,18 @@
                         });
                       </script>
                       </div>
-                      <label>Add +</label>
-                      <input type="date" name="off_days" class="form-control">
+                      <label>Add +</label><br>
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <label>From Date:</label>
+                          <input type="date" name="from_date" class="form-control mb-2">
+                        </div>
+                        <div class="col-lg-6">
+                          <label>To Date:</label>
+                          <input type="date" name="to_date" class="form-control mb-2">
+                        </div>
+                      </div>
+
                       <hr>
                       <div class="row">
                         <div class="col-lg-12">

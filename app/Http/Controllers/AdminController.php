@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
+use DatePeriod;
+use DateInterval;
 use Carbon\Carbon;
 use App\Models\Role;
 use App\Models\User;
@@ -433,13 +436,22 @@ class AdminController extends Controller
 
         }
 
-        $offDaysString = $request->input('off_days');
-        $offDays = "";
+        $fromDate = $request->input('from_date');
+        $toDate = $request->input('to_date');
+        $offDays = [];
 
-        if ($offDaysString) {
-            $offDays = $this->parseOffDaysString($offDaysString);
-        } else {
-            $offDays = [];
+        if ($fromDate && $toDate) {
+            // Convert dates to DateTime objects for iteration
+            $startDate = new DateTime($fromDate);
+            $endDate = new DateTime($toDate);
+        
+            // Loop through the date range and populate the offDays array
+            $interval = new DateInterval('P1D'); // 1 day interval
+            $dateRange = new DatePeriod($startDate, $interval, $endDate);
+        
+            foreach ($dateRange as $date) {
+                $offDays[] = $date->format('m-j-Y');
+            }
         }
 
         $stylistSchedule = StylistSchedule::where('stylist_id', $id)->first();
