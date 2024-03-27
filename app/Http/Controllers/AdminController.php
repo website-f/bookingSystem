@@ -318,6 +318,13 @@ class AdminController extends Controller
         $service = Service::with('stylists')->get();
         $locations = Location::all();
         $stylistSchedule = StylistSchedule::all();
+
+        $userBranch = Auth::user()->branch->branch;
+        $locationBranch = Location::where('name', 'LIKE', $userBranch)->first();
+
+        if (Auth::user()->role_id !== 1) {
+            $stylist = $locationBranch->stylists()->with('services')->get();
+        }
         return view('admin.stylists', ['stylist' => $stylist, 'service' => $service, 'stylistSchedule' => $stylistSchedule, 'locations' => $locations]);
     }
 

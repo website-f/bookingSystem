@@ -186,7 +186,6 @@
               </p>
             </a>
           </li>
-          @if (Auth::user()->role_id == 1)
           <li class="nav-item">
             <a href="/dashboard/stylist" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
@@ -196,6 +195,7 @@
               </p>
             </a>
           </li>
+          @if (Auth::user()->role_id == 1)
        
           <li class="nav-item">
             <a href="#" class="nav-link">
