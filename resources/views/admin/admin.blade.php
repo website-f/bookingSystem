@@ -150,7 +150,7 @@
                                     <option value="pending" {{$booking->status == "pending" ? 'selected' : ''}}>Pending</option>
                                     <option value="approved" {{$booking->status == "approved" ? 'selected' : ''}}>Approved</option>
                                     <option value="complete" {{$booking->status == "complete" ? 'selected' : ''}}>Complete</option>
-                                    <option value="cancelled" {{$booking->status == "cancelled" ? 'selected' : ''}}>Cancelled</option>
+                                    <option value="cancelled" {{$booking->status == "cancelled" ? 'selected' : ''}}>Canceled</option>
                                   </select>
                                   <button type="submit" class="btn btn-primary">Save changes</button>
                                  </form>
@@ -185,7 +185,7 @@
                                     <option value="pending" {{$booking->status == "pending" ? 'selected' : ''}}>Pending</option>
                                     <option value="approved" {{$booking->status == "approved" ? 'selected' : ''}}>Approved</option>
                                     <option value="complete" {{$booking->status == "complete" ? 'selected' : ''}}>Complete</option>
-                                    <option value="cancelled" {{$booking->status == "cancelled" ? 'selected' : ''}}>Cancelled</option>
+                                    <option value="cancelled" {{$booking->status == "cancelled" ? 'selected' : ''}}>Canceled</option>
                                   </select>
                                   <button type="submit" class="btn btn-primary">Save changes</button>
                                  </form>
@@ -220,7 +220,7 @@
                                     <option value="pending" {{$booking->status == "pending" ? 'selected' : ''}}>Pending</option>
                                     <option value="approved" {{$booking->status == "approved" ? 'selected' : ''}}>Approved</option>
                                     <option value="complete" {{$booking->status == "complete" ? 'selected' : ''}}>Complete</option>
-                                    <option value="cancelled" {{$booking->status == "cancelled" ? 'selected' : ''}}>Cancelled</option>
+                                    <option value="cancelled" {{$booking->status == "cancelled" ? 'selected' : ''}}>Canceled</option>
                                   </select>
                                   <button type="submit" class="btn btn-primary">Save changes</button>
                                  </form>
@@ -357,7 +357,7 @@
                                       <option value="pending" {{$booking->status == "pending" ? 'selected' : ''}}>Pending</option>
                                       <option value="approved" {{$booking->status == "approved" ? 'selected' : ''}}>Approved</option>
                                       <option value="complete" {{$booking->status == "complete" ? 'selected' : ''}}>Complete</option>
-                                      <option value="cancelled" {{$booking->status == "cancelled" ? 'selected' : ''}}>Cancelled</option>
+                                      <option value="cancelled" {{$booking->status == "cancelled" ? 'selected' : ''}}>Canceled</option>
                                     </select>
                                     <button type="submit" class="btn btn-primary">Save changes</button>
                                    </form>
@@ -392,7 +392,7 @@
                                     <option value="pending" {{$booking->status == "pending" ? 'selected' : ''}}>Pending</option>
                                     <option value="approved" {{$booking->status == "approved" ? 'selected' : ''}}>Approved</option>
                                     <option value="complete" {{$booking->status == "complete" ? 'selected' : ''}}>Complete</option>
-                                    <option value="cancelled" {{$booking->status == "cancelled" ? 'selected' : ''}}>Cancelled</option>
+                                    <option value="cancelled" {{$booking->status == "cancelled" ? 'selected' : ''}}>Canceled</option>
                                   </select>
                                   <button type="submit" class="btn btn-primary">Save changes</button>
                                  </form>
@@ -427,7 +427,7 @@
                                     <option value="pending" {{$booking->status == "pending" ? 'selected' : ''}}>Pending</option>
                                     <option value="approved" {{$booking->status == "approved" ? 'selected' : ''}}>Approved</option>
                                     <option value="complete" {{$booking->status == "complete" ? 'selected' : ''}}>Complete</option>
-                                    <option value="cancelled" {{$booking->status == "cancelled" ? 'selected' : ''}}>Cancelled</option>
+                                    <option value="cancelled" {{$booking->status == "cancelled" ? 'selected' : ''}}>Canceled</option>
                                   </select>
                                   <button type="submit" class="btn btn-primary">Save changes</button>
                                  </form>
@@ -462,7 +462,7 @@
                                     <option value="pending" {{$booking->status == "pending" ? 'selected' : ''}}>Pending</option>
                                     <option value="approved" {{$booking->status == "approved" ? 'selected' : ''}}>Approved</option>
                                     <option value="complete" {{$booking->status == "complete" ? 'selected' : ''}}>Complete</option>
-                                    <option value="cancelled" {{$booking->status == "cancelled" ? 'selected' : ''}}>Cancelled</option>
+                                    <option value="cancelled" {{$booking->status == "cancelled" ? 'selected' : ''}}>Canceled</option>
                                   </select>
                                   <button type="submit" class="btn btn-primary">Save changes</button>
                                  </form>

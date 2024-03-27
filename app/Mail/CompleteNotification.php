@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SubmitNotification extends Mailable
+class CompleteNOtification extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -38,7 +38,7 @@ class SubmitNotification extends Mailable
     public function build()
     {
         $currentDate = Carbon::now()->toDateString();
-        return $this->view('emails.submitted')
-                    ->subject('Booking with Hairtricandlashility (Pending) - ' . $currentDate); // Create a blade template in resources/views/emails/marketing.blade.php
+        return $this->view('emails.completed')
+                    ->subject('Booking with Hairtricandlashility (Completed) - ' . $currentDate); // Create a blade template in resources/views/emails/marketing.blade.php
     }
 }

@@ -17,10 +17,14 @@ use App\Models\Location;
 use Illuminate\Http\Request;
 use App\Models\ServiceCategory;
 use App\Models\StylistSchedule;
+use App\Mail\ApprovedNotification;
+use App\Mail\CanceledNotification;
+use App\Mail\CompleteNotification;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
@@ -855,6 +859,46 @@ class AdminController extends Controller
 
     public function changeStatus(Request $request, $id) {
         $booking = Booking::findOrFail($id);
+
+        $locationEmail = Location::where('id', $booking->location_id)->first();
+        $serviceEmail = Service::where('id', $booking->service_id)->first();
+        $stylistEmail = Stylist::where('id', $booking->stylist_id)->first();
+        $customer = Customer::where('id', $booking->customer_id)->first();
+        $fullname = $customer->first_name . $customer->last_name;
+        $bookingCode = $booking->booking_code;
+        $date = $booking->date;
+        $email = $customer->email;
+
+        if ($request->status == "approved") {
+    
+            Mail::to($email)->send(new ApprovedNotification($bookingCode, 
+                                                          $locationEmail->name, 
+                                                          $date, 
+                                                          $serviceEmail->name, 
+                                                          $stylistEmail->display_name,
+                                                          $fullname,
+                                                          $customer->phone ));
+        } elseif ($request->status == "cancelled") {
+
+            Mail::to($email)->send(new CanceledNotification($bookingCode, 
+                                                          $locationEmail->name, 
+                                                          $date, 
+                                                          $serviceEmail->name, 
+                                                          $stylistEmail->display_name,
+                                                          $fullname,
+                                                          $customer->phone ));
+        } elseif ($request->status == "complete") {
+
+            Mail::to($email)->send(new CompleteNotification($bookingCode, 
+                                                          $locationEmail->name, 
+                                                          $date, 
+                                                          $serviceEmail->name, 
+                                                          $stylistEmail->display_name,
+                                                          $fullname,
+                                                          $customer->phone ));
+        }
+
+
         $booking->status = $request->status;
         $booking->save();
 

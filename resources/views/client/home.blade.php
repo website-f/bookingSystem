@@ -435,7 +435,6 @@
           });
         }
         
-        
         function updateDayGridColors(stylistSchedule) {
         
           var daygrid = document.querySelectorAll(".fc-daygrid-day");
@@ -461,9 +460,7 @@
               dayNumberElement.style.textDecoration = "underline solid rgb(6, 187, 6) 50%";
             }
             
-            
           });
-          
         
         }
         
