@@ -507,7 +507,7 @@
                 modalContent += isBooked ? ' (Booked)</button><br>' : (isOffDay ? ' (Off Day)</button><br>' : (isCurrentDay ? ' (Not Available)</button><br>' : ' (Available)</button><br>'));
             }
           } else {
-            for (var hour = 10; hour <= 22; hour++) {
+            for (var hour = 10; hour <= 21; hour++) {
             var startTime = `${stylistSchedule.date}T${hour.toString().padStart(2, '0')}:00:00`;
             // var endTime = `${stylistSchedule.date}T${(hour + 1).toString().padStart(2, '0')}:00:00`;
             console.log(startTime)
