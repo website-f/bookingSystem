@@ -175,7 +175,7 @@
         <td style="overflow-wrap:break-word;word-break:break-word;padding:30px 20px 20px;font-family:'Lato',sans-serif;" align="left">
           
     <div style="font-size: 14px; color: #333333; line-height: 120%; text-align: left; word-wrap: break-word;">
-  <p style="line-height: 120%;">Thank you for choosing the Hairtric &amp; Lashility ! We're thrilled to let you know that rour appointment is confirmed, and we can't wait to see you! Please ensure you arrive on time to make the most of your experience. </p>
+  <p style="line-height: 120%;">Thank you for choosing the Hairtric &amp; Lashility ! We're thrilled to let you know that <b>your appointment is confirmed</b>, and we can't wait to see you! Please ensure you arrive on time to make the most of your experience. </p>
     </div>
   
         </td>
