@@ -438,6 +438,8 @@
         function updateDayGridColors(stylistSchedule) {
         
           var daygrid = document.querySelectorAll(".fc-daygrid-day");
+          var currentDate = new Date(); // Get current date
+          var currentFormattedDate = `${currentDate.getMonth() + 1}-${currentDate.getDate()}-${currentDate.getFullYear()}`;
           
           daygrid.forEach(element => {
             var daygridDate = element.getAttribute("data-date")
@@ -448,16 +450,16 @@
             const formattedDate = `${parsedDate.getMonth() + 1}-${parsedDate.getDate()}-${parsedDate.getFullYear()}`;
         
             var isOffDay = stylistSchedule.offDays.includes(formattedDate);
+            var isCurrentDay = formattedDate === currentFormattedDate;
             
         
-            if (isOffDay) {
-              // Access the <a> element within the <td> and set styles
-              var dayNumberElement = element.querySelector('.fc-daygrid-day-number');
-              dayNumberElement.style.textDecoration = "underline solid red 50%";
+            var dayNumberElement = element.querySelector('.fc-daygrid-day-number');
+            if (isCurrentDay) {
+                dayNumberElement.style.textDecoration = "underline solid yellow 50%";
+            } else if (isOffDay) {
+                dayNumberElement.style.textDecoration = "underline solid red 50%";
             } else {
-              // Access the <a> element within the <td> and set styles
-              var dayNumberElement = element.querySelector('.fc-daygrid-day-number');
-              dayNumberElement.style.textDecoration = "underline solid rgb(6, 187, 6) 50%";
+                dayNumberElement.style.textDecoration = "underline solid rgb(6, 187, 6) 50%";
             }
             
           });
@@ -467,21 +469,59 @@
       
         function updateModalContent(stylistSchedule, date) {
           // Implement logic to update modal content based on availability
+          var locationName = document.getElementById("locationName").value;
+          console.log(locationName);
           var modalContent = '';
           var dateFormatted = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' });
-          // Example: Check each hour from 10 AM to 7 PM
-          for (var hour = 10; hour <= 21; hour++) {
+          var currentDate = new Date(); // Get current date
+          var currentFormattedDate = `${(currentDate.getDate()).toString().padStart(2, '0')}/${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
+          console.log(dateFormatted + currentFormattedDate)
+
+          if (locationName == "Bangsar Shopping Centre (Premium)") {
+            for (var hour = 10; hour <= 20; hour++) {
             var startTime = `${stylistSchedule.date}T${hour.toString().padStart(2, '0')}:00:00`;
-            var endTime = `${stylistSchedule.date}T${(hour + 1).toString().padStart(2, '0')}:00:00`;
             console.log(startTime)
         
             // Check if the time slot is booked
-            var isBooked = stylistSchedule.booked.some(slot => (slot.start <= startTime && slot.end > startTime));
+            var isBooked = stylistSchedule.booked.some(slot => slot.start === startTime);
             var isOffDay = stylistSchedule.offDays.includes(stylistSchedule.date);
+            var isCurrentDay = dateFormatted === currentFormattedDate;
         
             // Format the time slot and add it to the modal content
-            modalContent += `<button data-date="${dateFormatted} , ${hour}:00 - ${(hour + 1)}:00" data-bs-dismiss="modal" onclick="nextPrev(1)" type="button" class="dataDate mb-2 w-100 btn ${isBooked ? 'btn-warning' : (isOffDay ? 'btn-danger' : 'btn-success')}">${hour}:00 - ${(hour + 1)}:00`;
-            modalContent += isBooked ? ' (Booked)</button><br>' : (isOffDay ? ' (Off Day)</button><br>' : ' (Available)</button><br>');
+              modalContent += `<button data-date="${dateFormatted} , ${hour}:00" data-bs-dismiss="modal" onclick="nextPrev(1)" type="button" class="dataDate mb-2 w-100 btn ${isBooked ? 'btn-warning' : (isOffDay ? 'btn-danger' : (isCurrentDay ? 'btn-warning' : 'btn-success'))}">${hour}:00`;
+              modalContent += isBooked ? ' (Booked)</button><br>' : (isOffDay ? ' (Off Day)</button><br>' : (isCurrentDay ? ' (Not Available)</button><br>' : ' (Available)</button><br>'));
+          }
+            
+          } else if (locationName == "Bangsar Telawi" || locationName == "Publika") {
+              for (var hour = 10; hour <= 19; hour++) {
+              var startTime = `${stylistSchedule.date}T${hour.toString().padStart(2, '0')}:30:00`;
+              console.log(startTime)
+          
+              // Check if the time slot is booked
+              var isBooked = stylistSchedule.booked.some(slot => slot.start === startTime);
+              var isOffDay = stylistSchedule.offDays.includes(stylistSchedule.date);
+              var isCurrentDay = dateFormatted === currentFormattedDate;
+          
+              // Format the time slot and add it to the modal content
+                modalContent += `<button data-date="${dateFormatted} , ${hour}:30" data-bs-dismiss="modal" onclick="nextPrev(1)" type="button" class="dataDate mb-2 w-100 btn ${isBooked ? 'btn-warning' : (isOffDay ? 'btn-danger' : (isCurrentDay ? 'btn-warning' : 'btn-success'))}">${hour}:30`;
+                modalContent += isBooked ? ' (Booked)</button><br>' : (isOffDay ? ' (Off Day)</button><br>' : (isCurrentDay ? ' (Not Available)</button><br>' : ' (Available)</button><br>'));
+            }
+          } else {
+            for (var hour = 10; hour <= 22; hour++) {
+            var startTime = `${stylistSchedule.date}T${hour.toString().padStart(2, '0')}:00:00`;
+            // var endTime = `${stylistSchedule.date}T${(hour + 1).toString().padStart(2, '0')}:00:00`;
+            console.log(startTime)
+        
+            // Check if the time slot is booked
+            // var isBooked = stylistSchedule.booked.some(slot => (slot.start <= startTime && slot.end > startTime));
+            var isBooked = stylistSchedule.booked.some(slot => slot.start === startTime);
+            var isOffDay = stylistSchedule.offDays.includes(stylistSchedule.date);
+            var isCurrentDay = dateFormatted === currentFormattedDate;
+        
+            // Format the time slot and add it to the modal content
+            modalContent += `<button data-date="${dateFormatted} , ${hour}:00" data-bs-dismiss="modal" onclick="nextPrev(1)" type="button" class="dataDate mb-2 w-100 btn ${isBooked ? 'btn-warning' : (isOffDay ? 'btn-danger' : (isCurrentDay ? 'btn-warning' : 'btn-success'))}">${hour}:00`;
+            modalContent += isBooked ? ' (Booked)</button><br>' : (isOffDay ? ' (Off Day)</button><br>' : (isCurrentDay ? ' (Not Available)</button><br>' : ' (Available)</button><br>'));
+          }
           }
         
           // Update the modal content

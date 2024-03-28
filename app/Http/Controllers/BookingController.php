@@ -21,10 +21,10 @@ class BookingController extends Controller
     {
         $location = Location::all();
         $category = ServiceCategory::all();
-        $service1 = Service::where('category_id', 1)->get();
-        $service2 = Service::where('category_id', 2)->get();
-        // $service1 = Service::where('category_id', 3)->get();
-        // $service2 = Service::where('category_id', 4)->get();
+        // $service1 = Service::where('category_id', 1)->get();
+        // $service2 = Service::where('category_id', 2)->get();
+        $service1 = Service::where('category_id', 3)->get();
+        $service2 = Service::where('category_id', 4)->get();
     
         // Fetch all stylists initially
         $stylists = Stylist::all();
@@ -49,7 +49,7 @@ class BookingController extends Controller
     public function getServices($locationId)
     {
         // Retrieve services based on location and category
-        $services = Service::where('category_id', 1)
+        $services = Service::where('category_id', 3)
                    ->whereJsonContains('branch', $locationId)
                    ->get();
     
@@ -197,27 +197,51 @@ class BookingController extends Controller
 
     }
 
+//     private function parseBookedString($bookedString)
+// {
+//     $booked = [];
+
+//     // Split the string into date and time parts
+//     list($datePart, $timePart) = explode(' , ', $bookedString);
+
+//     // Format date as 'Y-m-d'
+//     $formattedDate = date('n-d-Y', strtotime(str_replace('/', '-', $datePart)));
+
+//     // Split the time range into start and end times
+//     list($startTime, $endTime) = explode(' - ', $timePart);
+
+//     // Create the time slot in the desired format
+//     $booked[] = [
+//         'start' => $formattedDate . 'T' . date('H:i:s', strtotime($startTime)),
+//         'end' => $formattedDate . 'T' . date('H:i:s', strtotime($endTime)),
+//     ];
+
+//     return $booked;
+// }
+
     private function parseBookedString($bookedString)
-{
-    $booked = [];
+    {
+        $booked = [];
+    
+        // Split the string into date and time parts
+        list($datePart, $timePart) = explode(' , ', $bookedString);
+    
+        // Format date as 'Y-m-d'
+        $formattedDate = date('n-d-Y', strtotime(str_replace('/', '-', $datePart)));
+    
+        // Split the time into hour and minute parts
+        list($hourPart, $minutePart) = explode(':', $timePart);
+        $hour = intval($hourPart);
+        $minute = intval($minutePart);
+    
+        // Create the time slot in the desired format
+        $booked[] = [
+            'start' => $formattedDate . 'T' . str_pad($hour, 2, '0', STR_PAD_LEFT) . ':' . str_pad($minute, 2, '0', STR_PAD_LEFT) . ':00',
+        ];
+    
+        return $booked;
+    }
 
-    // Split the string into date and time parts
-    list($datePart, $timePart) = explode(' , ', $bookedString);
-
-    // Format date as 'Y-m-d'
-    $formattedDate = date('n-d-Y', strtotime(str_replace('/', '-', $datePart)));
-
-    // Split the time range into start and end times
-    list($startTime, $endTime) = explode(' - ', $timePart);
-
-    // Create the time slot in the desired format
-    $booked[] = [
-        'start' => $formattedDate . 'T' . date('H:i:s', strtotime($startTime)),
-        'end' => $formattedDate . 'T' . date('H:i:s', strtotime($endTime)),
-    ];
-
-    return $booked;
-}
 
 
     public function thankyou($id) {
