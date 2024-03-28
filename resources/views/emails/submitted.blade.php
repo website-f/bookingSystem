@@ -175,7 +175,9 @@
         <td style="overflow-wrap:break-word;word-break:break-word;padding:30px 20px 20px;font-family:'Lato',sans-serif;" align="left">
           
     <div style="font-size: 14px; color: #333333; line-height: 120%; text-align: left; word-wrap: break-word;">
-  <p style="line-height: 120%;">Thank you for choosing the Hairtric &amp; Lashility ! We're thrilled to let you know that your booking is now complete and we can't wait to welcome you. </p>
+  <p style="line-height: 120%;">Thank you for booking an appointment with Hairtric and Lashility. We have received your booking and are currently reviewing it with our stylists. We will get back to you shortly to confirm your appointment details.</p><br>
+  <p>Should you have any questions or need to make changes to your booking, please feel free to contact us at +60149112800.</p><br>
+  <p>We look forward to seeing you soon!</p>
     </div>
   
         </td>

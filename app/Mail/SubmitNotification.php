@@ -39,6 +39,6 @@ class SubmitNotification extends Mailable
     {
         $currentDate = Carbon::now()->toDateString();
         return $this->view('emails.submitted')
-                    ->subject('Booking with Hairtricandlashility (Pending) - ' . $currentDate); // Create a blade template in resources/views/emails/marketing.blade.php
+                    ->subject('Booking Received. Thank You for Choosing Hairtric and Lashility - ' . $currentDate); // Create a blade template in resources/views/emails/marketing.blade.php
     }
 }
