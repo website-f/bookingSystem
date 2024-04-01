@@ -440,6 +440,11 @@
           var daygrid = document.querySelectorAll(".fc-daygrid-day");
           var currentDate = new Date(); // Get current date
           var currentFormattedDate = `${currentDate.getMonth() + 1}-${currentDate.getDate()}-${currentDate.getFullYear()}`;
+
+          // Calculate the date for 24 hours from now
+          var next24HoursDate = new Date();
+          next24HoursDate.setDate(currentDate.getDate() + 1);
+          var next24HoursFormattedDate = `${next24HoursDate.getMonth() + 1}-${next24HoursDate.getDate()}-${next24HoursDate.getFullYear()}`;
           
           daygrid.forEach(element => {
             var daygridDate = element.getAttribute("data-date")
@@ -451,10 +456,11 @@
         
             var isOffDay = stylistSchedule.offDays.includes(formattedDate);
             var isCurrentDay = formattedDate === currentFormattedDate;
+            var isNext24Hours = formattedDate === next24HoursFormattedDate;
             
         
             var dayNumberElement = element.querySelector('.fc-daygrid-day-number');
-            if (isCurrentDay) {
+            if (isCurrentDay || isNext24Hours) {
                 dayNumberElement.style.textDecoration = "underline solid yellow 50%";
             } else if (isOffDay) {
                 dayNumberElement.style.textDecoration = "underline solid red 50%";
@@ -477,6 +483,11 @@
           var currentFormattedDate = `${(currentDate.getDate()).toString().padStart(2, '0')}/${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
           console.log(dateFormatted + currentFormattedDate)
 
+          // Calculate the date for 24 hours from now
+          var next24HoursDate = new Date();
+          next24HoursDate.setDate(currentDate.getDate() + 1);
+          var next24HoursFormattedDate = `${(next24HoursDate.getDate()).toString().padStart(2, '0')}/${(next24HoursDate.getMonth() + 1).toString().padStart(2, '0')}/${next24HoursDate.getFullYear()}`;
+
           if (locationName == "Bangsar Shopping Centre (Premium)") {
             for (var hour = 10; hour <= 20; hour++) {
             var startTime = `${stylistSchedule.date}T${hour.toString().padStart(2, '0')}:00:00`;
@@ -486,10 +497,11 @@
             var isBooked = stylistSchedule.booked.some(slot => slot.start === startTime);
             var isOffDay = stylistSchedule.offDays.includes(stylistSchedule.date);
             var isCurrentDay = dateFormatted === currentFormattedDate;
+            var isNext24Hours = dateFormatted === next24HoursFormattedDate;
         
             // Format the time slot and add it to the modal content
-              modalContent += `<button data-date="${dateFormatted} , ${hour}:00" data-bs-dismiss="modal" onclick="nextPrev(1)" type="button" class="dataDate mb-2 w-100 btn ${isBooked ? 'btn-warning' : (isOffDay ? 'btn-danger' : (isCurrentDay ? 'btn-warning' : 'btn-success'))}">${hour}:00`;
-              modalContent += isBooked ? ' (Booked)</button><br>' : (isOffDay ? ' (Off Day)</button><br>' : (isCurrentDay ? ' (Not Available)</button><br>' : ' (Available)</button><br>'));
+              modalContent += `<button data-date="${dateFormatted} , ${hour}:00" data-bs-dismiss="modal" onclick="nextPrev(1)" type="button" class="dataDate mb-2 w-100 btn ${isBooked ? 'btn-warning' : (isOffDay ? 'btn-danger' : (isCurrentDay || isNext24Hours ? 'btn-warning' : 'btn-success'))}">${hour}:00`;
+              modalContent += isBooked ? ' (Booked)</button><br>' : (isOffDay ? ' (Off Day)</button><br>' : (isCurrentDay || isNext24Hours ? ' (Not Available)</button><br>' : ' (Available)</button><br>'));
           }
             
           } else if (locationName == "Bangsar Telawi" || locationName == "Publika") {
@@ -501,10 +513,11 @@
               var isBooked = stylistSchedule.booked.some(slot => slot.start === startTime);
               var isOffDay = stylistSchedule.offDays.includes(stylistSchedule.date);
               var isCurrentDay = dateFormatted === currentFormattedDate;
+              var isNext24Hours = dateFormatted === next24HoursFormattedDate;
           
               // Format the time slot and add it to the modal content
-                modalContent += `<button data-date="${dateFormatted} , ${hour}:30" data-bs-dismiss="modal" onclick="nextPrev(1)" type="button" class="dataDate mb-2 w-100 btn ${isBooked ? 'btn-warning' : (isOffDay ? 'btn-danger' : (isCurrentDay ? 'btn-warning' : 'btn-success'))}">${hour}:30`;
-                modalContent += isBooked ? ' (Booked)</button><br>' : (isOffDay ? ' (Off Day)</button><br>' : (isCurrentDay ? ' (Not Available)</button><br>' : ' (Available)</button><br>'));
+                modalContent += `<button data-date="${dateFormatted} , ${hour}:30" data-bs-dismiss="modal" onclick="nextPrev(1)" type="button" class="dataDate mb-2 w-100 btn ${isBooked ? 'btn-warning' : (isOffDay ? 'btn-danger' : (isCurrentDay || isNext24Hours ? 'btn-warning' : 'btn-success'))}">${hour}:30`;
+                modalContent += isBooked ? ' (Booked)</button><br>' : (isOffDay ? ' (Off Day)</button><br>' : (isCurrentDay || isNext24Hours ? ' (Not Available)</button><br>' : ' (Available)</button><br>'));
             }
           } else {
             for (var hour = 10; hour <= 21; hour++) {
@@ -517,10 +530,11 @@
             var isBooked = stylistSchedule.booked.some(slot => slot.start === startTime);
             var isOffDay = stylistSchedule.offDays.includes(stylistSchedule.date);
             var isCurrentDay = dateFormatted === currentFormattedDate;
+            var isNext24Hours = dateFormatted === next24HoursFormattedDate;
         
             // Format the time slot and add it to the modal content
-            modalContent += `<button data-date="${dateFormatted} , ${hour}:00" data-bs-dismiss="modal" onclick="nextPrev(1)" type="button" class="dataDate mb-2 w-100 btn ${isBooked ? 'btn-warning' : (isOffDay ? 'btn-danger' : (isCurrentDay ? 'btn-warning' : 'btn-success'))}">${hour}:00`;
-            modalContent += isBooked ? ' (Booked)</button><br>' : (isOffDay ? ' (Off Day)</button><br>' : (isCurrentDay ? ' (Not Available)</button><br>' : ' (Available)</button><br>'));
+            modalContent += `<button data-date="${dateFormatted} , ${hour}:00" data-bs-dismiss="modal" onclick="nextPrev(1)" type="button" class="dataDate mb-2 w-100 btn ${isBooked ? 'btn-warning' : (isOffDay ? 'btn-danger' : (isCurrentDay || isNext24Hours ? 'btn-warning' : 'btn-success'))}">${hour}:00`;
+            modalContent += isBooked ? ' (Booked)</button><br>' : (isOffDay ? ' (Off Day)</button><br>' : (isCurrentDay || isNext24Hours ? ' (Not Available)</button><br>' : ' (Available)</button><br>'));
           }
           }
         
