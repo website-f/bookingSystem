@@ -500,7 +500,7 @@
             var isNext24Hours = dateFormatted === next24HoursFormattedDate;
         
             // Format the time slot and add it to the modal content
-              modalContent += `<button data-date="${dateFormatted} , ${hour}:00" data-bs-dismiss="modal" onclick="nextPrev(1)" type="button" class="dataDate mb-2 w-100 btn ${isBooked ? 'btn-warning' : (isOffDay ? 'btn-danger' : (isCurrentDay || isNext24Hours ? 'btn-warning' : 'btn-success'))}">${hour}:00`;
+            modalContent += `<button data-date="${dateFormatted}, ${hour}:00" data-bs-dismiss="modal" ${isCurrentDay || isNext24Hours ? '' : 'onclick="nextPrev(1)"'} type="button" class="dataDate mb-2 w-100 btn ${isBooked ? 'btn-warning' : (isOffDay ? 'btn-danger' : (isCurrentDay || isNext24Hours ? 'btn-warning' : 'btn-success'))}">${hour}:00`;
               modalContent += isBooked ? ' (Booked)</button><br>' : (isOffDay ? ' (Off Day)</button><br>' : (isCurrentDay || isNext24Hours ? ' (Not Available)</button><br>' : ' (Available)</button><br>'));
           }
             
@@ -516,7 +516,7 @@
               var isNext24Hours = dateFormatted === next24HoursFormattedDate;
           
               // Format the time slot and add it to the modal content
-                modalContent += `<button data-date="${dateFormatted} , ${hour}:30" data-bs-dismiss="modal" onclick="nextPrev(1)" type="button" class="dataDate mb-2 w-100 btn ${isBooked ? 'btn-warning' : (isOffDay ? 'btn-danger' : (isCurrentDay || isNext24Hours ? 'btn-warning' : 'btn-success'))}">${hour}:30`;
+              modalContent += `<button data-date="${dateFormatted}, ${hour}:00" data-bs-dismiss="modal" ${isCurrentDay || isNext24Hours ? '' : 'onclick="nextPrev(1)"'} type="button" class="dataDate mb-2 w-100 btn ${isBooked ? 'btn-warning' : (isOffDay ? 'btn-danger' : (isCurrentDay || isNext24Hours ? 'btn-warning' : 'btn-success'))}">${hour}:00`;
                 modalContent += isBooked ? ' (Booked)</button><br>' : (isOffDay ? ' (Off Day)</button><br>' : (isCurrentDay || isNext24Hours ? ' (Not Available)</button><br>' : ' (Available)</button><br>'));
             }
           } else {
@@ -533,7 +533,7 @@
             var isNext24Hours = dateFormatted === next24HoursFormattedDate;
         
             // Format the time slot and add it to the modal content
-            modalContent += `<button data-date="${dateFormatted} , ${hour}:00" data-bs-dismiss="modal" onclick="nextPrev(1)" type="button" class="dataDate mb-2 w-100 btn ${isBooked ? 'btn-warning' : (isOffDay ? 'btn-danger' : (isCurrentDay || isNext24Hours ? 'btn-warning' : 'btn-success'))}">${hour}:00`;
+            modalContent += `<button data-date="${dateFormatted}, ${hour}:00" data-bs-dismiss="modal" ${isCurrentDay || isNext24Hours ? '' : 'onclick="nextPrev(1)"'} type="button" class="dataDate mb-2 w-100 btn ${isBooked ? 'btn-warning' : (isOffDay ? 'btn-danger' : (isCurrentDay || isNext24Hours ? 'btn-warning' : 'btn-success'))}">${hour}:00`;
             modalContent += isBooked ? ' (Booked)</button><br>' : (isOffDay ? ' (Off Day)</button><br>' : (isCurrentDay || isNext24Hours ? ' (Not Available)</button><br>' : ' (Available)</button><br>'));
           }
           }
