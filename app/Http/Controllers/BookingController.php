@@ -219,28 +219,38 @@ class BookingController extends Controller
 //     return $booked;
 // }
 
-    private function parseBookedString($bookedString)
-    {
-        $booked = [];
-    
-        // Split the string into date and time parts
-        list($datePart, $timePart) = explode(' , ', $bookedString);
-    
-        // Format date as 'Y-m-d'
-        $formattedDate = date('n-d-Y', strtotime(str_replace('/', '-', $datePart)));
-    
-        // Split the time into hour and minute parts
-        list($hourPart, $minutePart) = explode(':', $timePart);
-        $hour = intval($hourPart);
-        $minute = intval($minutePart);
-    
-        // Create the time slot in the desired format
-        $booked[] = [
-            'start' => $formattedDate . 'T' . str_pad($hour, 2, '0', STR_PAD_LEFT) . ':' . str_pad($minute, 2, '0', STR_PAD_LEFT) . ':00',
-        ];
-    
-        return $booked;
+private function parseBookedString($bookedString)
+{
+    $booked = [];
+
+    // Split the string into date and time parts
+    $parts = explode(' ', $bookedString);
+
+    // Error handling: Check if explode returned the expected number of parts
+    if(count($parts) != 2) {
+        // Handle error here, for example:
+        echo "Invalid format for booked string";
+        return $booked; // or throw an exception, log an error, etc.
     }
+
+    list($datePart, $timePart) = $parts;
+
+    // Format date as 'Y-m-d'
+    $formattedDate = date('Y-m-d', strtotime(str_replace('/', '-', $datePart)));
+
+    // Split the time into hour and minute parts
+    list($hourPart, $minutePart) = explode(':', $timePart);
+    $hour = intval($hourPart);
+    $minute = intval($minutePart);
+
+    // Create the time slot in the desired format
+    $booked[] = [
+        'start' => $formattedDate . ' ' . str_pad($hour, 2, '0', STR_PAD_LEFT) . ':' . str_pad($minute, 2, '0', STR_PAD_LEFT) . ':00',
+    ];
+
+    return $booked;
+}
+
 
 
 
