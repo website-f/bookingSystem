@@ -159,7 +159,7 @@
                   
                       if ($stylistSch && $stylistSch->off_days !== null) {
                           $stylistSchOffDays = json_decode($stylistSch->off_days, true);
-                          $todayDate = date('n-j-Y');
+                          $todayDate = date('m-d-Y');
                           $isOffDuty = in_array($todayDate, $stylistSchOffDays);
                       }
                   @endphp
