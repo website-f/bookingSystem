@@ -504,7 +504,7 @@
               modalContent += isBooked ? ' (Booked)</button><br>' : (isOffDay ? ' (Off Day)</button><br>' : (isCurrentDay || isNext24Hours ? ' (Not Available)</button><br>' : ' (Available)</button><br>'));
           }
             
-          } else if (locationName == "Bangsar Telawi" || locationName == "Publika") {
+          } else if (locationName == "Publika") {
               for (var hour = 10; hour <= 19; hour++) {
               var startTime = `${stylistSchedule.date}T${hour.toString().padStart(2, '0')}:30:00`;
               console.log(startTime)
@@ -519,6 +519,37 @@
               modalContent += `<button data-date="${dateFormatted}, ${hour}:00" data-bs-dismiss="modal" ${isCurrentDay || isNext24Hours ? '' : 'onclick="nextPrev(1)"'} type="button" class="dataDate mb-2 w-100 btn ${isBooked ? 'btn-warning' : (isOffDay ? 'btn-danger' : (isCurrentDay || isNext24Hours ? 'btn-warning' : 'btn-success'))}">${hour}:00`;
                 modalContent += isBooked ? ' (Booked)</button><br>' : (isOffDay ? ' (Off Day)</button><br>' : (isCurrentDay || isNext24Hours ? ' (Not Available)</button><br>' : ' (Available)</button><br>'));
             }
+          } else if (locationName == "Bangsar Telawi") {
+              // Display the first slot as 10:30 AM
+              var startTime = `${stylistSchedule.date}T10:30:00`;
+              console.log(startTime);
+              
+              // Check if the 10:30 AM slot is booked
+              var isBooked = stylistSchedule.booked.some(slot => slot.start === startTime);
+              var isOffDay = stylistSchedule.offDays.includes(stylistSchedule.date);
+              var isCurrentDay = dateFormatted === currentFormattedDate;
+              var isNext24Hours = dateFormatted === next24HoursFormattedDate;
+              
+              // Format the 10:30 AM slot and add it to the modal content
+              modalContent += `<button data-date="${dateFormatted}, 10:30" data-bs-dismiss="modal" ${isCurrentDay || isNext24Hours ? '' : 'onclick="nextPrev(1)"'} type="button" class="dataDate mb-2 w-100 btn ${isBooked ? 'btn-warning' : (isOffDay ? 'btn-danger' : (isCurrentDay || isNext24Hours ? 'btn-warning' : 'btn-success'))}">10:30`;
+              modalContent += isBooked ? ' (Booked)</button><br>' : (isOffDay ? ' (Off Day)</button><br>' : (isCurrentDay || isNext24Hours ? ' (Not Available)</button><br>' : ' (Available)</button><br>'));
+              
+              // Loop through the rest of the time slots from 11:00 AM to 6:00 PM
+              for (var hour = 11; hour <= 18; hour++) {
+                  // Set the time slot for each hour starting at 11:00 AM
+                  startTime = `${stylistSchedule.date}T${hour.toString().padStart(2, '0')}:00:00`;
+                  console.log(startTime);
+              
+                  // Check if the time slot is booked
+                  isBooked = stylistSchedule.booked.some(slot => slot.start === startTime);
+                  isOffDay = stylistSchedule.offDays.includes(stylistSchedule.date);
+                  isCurrentDay = dateFormatted === currentFormattedDate;
+                  isNext24Hours = dateFormatted === next24HoursFormattedDate;
+              
+                  // Format the time slot and add it to the modal content
+                  modalContent += `<button data-date="${dateFormatted}, ${hour}:00" data-bs-dismiss="modal" ${isCurrentDay || isNext24Hours ? '' : 'onclick="nextPrev(1)"'} type="button" class="dataDate mb-2 w-100 btn ${isBooked ? 'btn-warning' : (isOffDay ? 'btn-danger' : (isCurrentDay || isNext24Hours ? 'btn-warning' : 'btn-success'))}">${hour}:00`;
+                  modalContent += isBooked ? ' (Booked)</button><br>' : (isOffDay ? ' (Off Day)</button><br>' : (isCurrentDay || isNext24Hours ? ' (Not Available)</button><br>' : ' (Available)</button><br>'));
+              }
           } else {
             for (var hour = 10; hour <= 21; hour++) {
             var startTime = `${stylistSchedule.date}T${hour.toString().padStart(2, '0')}:00:00`;
