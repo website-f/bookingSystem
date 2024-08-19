@@ -1,7 +1,7 @@
 @extends('client-main')
 
 @section('title', 'Booking')
-    
+
 @section('content')
     <!-- Page content -->
     <!-- Loading overlay -->
@@ -11,7 +11,7 @@
     <section class="container pt-5">
         <div class="row">
 
-  
+
           <!-- Sidebar (User info + Account menu) -->
           <aside class="col-lg-3 col-md-4 border-end pb-5 mt-n5">
             <div class="position-sticky top-0">
@@ -65,12 +65,12 @@
             <form id="regForm" action="/book-appointment" method="POST">
               @csrf
               <!-- One "tab" for each step in the form: -->
-              <div class="tabBookingStep"> 
+              <div class="tabBookingStep">
                 <div class="ps-md-3 ps-lg-0 mt-md-2 py-md-4">
                   <h1 class="h2 pt-xl-1 pb-3">Location Selection</h1>
                   <input type="hidden" name="location" id="location">
                   <input type="hidden" name="locationName" id="locationName">
-    
+
                   @foreach ($location as $locations)
                   <div class="card overflow-hidden border-0 shadow-sm card-hover mb-2">
                     <div class="row g-0">
@@ -89,7 +89,7 @@
                     </div>
                   </div>
                   @endforeach
-                  
+
                 </div>
               </div>
               <div class="tabBookingStep">
@@ -114,8 +114,8 @@
                       </div>
                     </div>
                   </div>
-                  @endforeach                
-                  
+                  @endforeach
+
                 </div>
               </div>
               <div class="tabBookingStep">
@@ -125,7 +125,7 @@
                   <input type="hidden" id="serviceDetails" name="serviceDetails">
                   <input type="hidden" id="serviceDetailsId" name="serviceDetailsId">
                   <div id="serviceIdOne">
-                    
+
                   </div>
                   <div id="serviceIdTwo">
                     @foreach ($service2 as $services2)
@@ -145,9 +145,9 @@
                         </div>
                       </div>
                     </div>
-                    @endforeach 
+                    @endforeach
                   </div>
-                  
+
                 </div>
               </div>
               <div class="tabBookingStep">
@@ -156,7 +156,7 @@
                   <h1 class="h2 pt-xl-1 pb-3">Select Stylist</h1>
                   <input type="hidden" id="stylist" name="stylist">
                   <input type="hidden" id="stylistId" name="stylistId">
-    
+
                   <div id="stylistContainer">
                     @foreach ($stylists as $stylist)
                     <div class="card overflow-hidden border-0 shadow-sm card-hover mb-2">
@@ -174,7 +174,7 @@
                         </div>
                       </div>
                     </div>
-                    @endforeach 
+                    @endforeach
                   </div>
 
                 </div>
@@ -202,12 +202,12 @@
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-                                    
+
                                   </div>
                                 </div>
                               </div>
                             </div>
-        
+
                            </div>
                         </div>
                     </div>
@@ -218,7 +218,7 @@
                 <!--Info---------------------------->
                 <div class="ps-md-3 ps-lg-0 mt-md-2 py-md-4">
                   <h1 class="h2 pt-xl-1 pb-3">Your Information</h1>
-    
+
                   <div class="needs-validation border-bottom pb-3 pb-lg-4">
                     <div class="row pb-2">
                       <div class="col-sm-6 mb-4">
@@ -250,7 +250,7 @@
                       <button type="button" onclick="nextPrev(1)" class="btn btn-primary">Save changes</button>
                     </div>
                   </div>
-  
+
                 </div>
               </div>
               <div class="tabBookingStep">
@@ -281,7 +281,7 @@
                       </div>
                     </div>
                   </div>
-                  
+
                 </div>
               </div>
               <div style="overflow:auto;">
@@ -290,7 +290,7 @@
                   <button type="submit" class="btn btn-success" id="nextBtn">Submit</button>
                 </div>
               </div>
-              
+
             </form>
           </div>
         </div>
@@ -305,7 +305,7 @@
                 var locationId = $('#location').val();
                 var serviceId = $('#serviceDetailsId').val();
                 console.log("clicked")
-        
+
                 $.ajax({
                     url: '/get-stylist/' + locationId + '/' + serviceId,
                     type: 'GET',
@@ -353,7 +353,7 @@
           function switchTab() {
             calendar.render()
           }
-      
+
           var stylistContainer = document.getElementById('stylistContainer');
           stylistContainer.addEventListener('click', function(event) {
               if (event.target.classList.contains('nextBtn')) {
@@ -370,31 +370,31 @@
           });
           var calendarEl = document.getElementById('calendar');
           var stylistSchedule; // Declare stylistSchedule globally
-        
+
           // Function to update the UI with stylist data
           function updateUI() {
             calendar.render(); // Render the calendar once the stylist data is available
             updateDayGridColors(stylistSchedule);
           }
-        
+
           var calendar = new FullCalendar.Calendar(calendarEl, {
             dateClick: function(info) {
               getStylistSchedule(info.date, function(data) {
                 stylistSchedule = data;
-        
+
                 // Update modal content based on availability
                 updateModalContent(stylistSchedule, info.date);
                 var myModal = new bootstrap.Modal(document.getElementById('eventModal'));
                 myModal.show();
               });
             },
-        
+
             themeSystem: 'bootstrap5',
             // headerToolbar: { center: 'dayGridMonth,timeGridWeek' },
             initialView: 'dayGridMonth',
             events: [], // Add an empty events array to avoid undefined errors
           });
-        
+
           // Add the datesSet event callback
           calendar.on('datesSet', function() {
             getStylistSchedule(calendar.view.activeStart, function(data) {
@@ -402,14 +402,14 @@
               updateDayGridColors(stylistSchedule);
             });
           });
-        
+
           // Fetch stylist data and update the UI
           getStylistSchedule(new Date(), function(data) {
             stylistSchedule = data;
             updateUI();
           });
         });
-        
+
         function getStylistSchedule(date, callback) {
           // Implement logic to fetch stylist's schedule for the clicked date
           // This could involve an AJAX request to your server or retrieving data from your database
@@ -434,9 +434,9 @@
               }
           });
         }
-        
+
         function updateDayGridColors(stylistSchedule) {
-        
+
           var daygrid = document.querySelectorAll(".fc-daygrid-day");
           var currentDate = new Date(); // Get current date
           var currentFormattedDate = `${currentDate.getMonth() + 1}-${currentDate.getDate()}-${currentDate.getFullYear()}`;
@@ -445,20 +445,20 @@
           var next24HoursDate = new Date();
           next24HoursDate.setDate(currentDate.getDate() + 1);
           var next24HoursFormattedDate = `${next24HoursDate.getMonth() + 1}-${next24HoursDate.getDate()}-${next24HoursDate.getFullYear()}`;
-          
+
           daygrid.forEach(element => {
             var daygridDate = element.getAttribute("data-date")
              // Parse the date using the Date object
              const parsedDate = new Date(daygridDate);
-        
+
              // Format the date as "M-D-YYYY"
             const formattedDate = `${parsedDate.getMonth() + 1}-${parsedDate.getDate()}-${parsedDate.getFullYear()}`;
-        
+
             var isOffDay = stylistSchedule.offDays.includes(formattedDate);
             var isCurrentDay = formattedDate === currentFormattedDate;
             var isNext24Hours = formattedDate === next24HoursFormattedDate;
-            
-        
+
+
             var dayNumberElement = element.querySelector('.fc-daygrid-day-number');
             if (isCurrentDay || isNext24Hours) {
                 dayNumberElement.style.textDecoration = "underline solid yellow 50%";
@@ -467,12 +467,12 @@
             } else {
                 dayNumberElement.style.textDecoration = "underline solid rgb(6, 187, 6) 50%";
             }
-            
+
           });
-        
+
         }
-        
-      
+
+
         function updateModalContent(stylistSchedule, date) {
           // Implement logic to update modal content based on availability
           var locationName = document.getElementById("locationName").value;
@@ -489,32 +489,32 @@
           var next24HoursFormattedDate = `${(next24HoursDate.getDate()).toString().padStart(2, '0')}/${(next24HoursDate.getMonth() + 1).toString().padStart(2, '0')}/${next24HoursDate.getFullYear()}`;
 
           if (locationName == "Bangsar Shopping Centre (Premium)") {
-            for (var hour = 10; hour <= 20; hour++) {
+            for (var hour = 10; hour <= 18; hour++) {
             var startTime = `${stylistSchedule.date}T${hour.toString().padStart(2, '0')}:00:00`;
             console.log(startTime)
-        
+
             // Check if the time slot is booked
             var isBooked = stylistSchedule.booked.some(slot => slot.start === startTime);
             var isOffDay = stylistSchedule.offDays.includes(stylistSchedule.date);
             var isCurrentDay = dateFormatted === currentFormattedDate;
             var isNext24Hours = dateFormatted === next24HoursFormattedDate;
-        
+
             // Format the time slot and add it to the modal content
             modalContent += `<button data-date="${dateFormatted}, ${hour}:00" data-bs-dismiss="modal" ${isCurrentDay || isNext24Hours ? '' : 'onclick="nextPrev(1)"'} type="button" class="dataDate mb-2 w-100 btn ${isBooked ? 'btn-warning' : (isOffDay ? 'btn-danger' : (isCurrentDay || isNext24Hours ? 'btn-warning' : 'btn-success'))}">${hour}:00`;
               modalContent += isBooked ? ' (Booked)</button><br>' : (isOffDay ? ' (Off Day)</button><br>' : (isCurrentDay || isNext24Hours ? ' (Not Available)</button><br>' : ' (Available)</button><br>'));
           }
-            
+
           } else if (locationName == "Publika") {
               for (var hour = 10; hour <= 19; hour++) {
               var startTime = `${stylistSchedule.date}T${hour.toString().padStart(2, '0')}:30:00`;
               console.log(startTime)
-          
+
               // Check if the time slot is booked
               var isBooked = stylistSchedule.booked.some(slot => slot.start === startTime);
               var isOffDay = stylistSchedule.offDays.includes(stylistSchedule.date);
               var isCurrentDay = dateFormatted === currentFormattedDate;
               var isNext24Hours = dateFormatted === next24HoursFormattedDate;
-          
+
               // Format the time slot and add it to the modal content
               modalContent += `<button data-date="${dateFormatted}, ${hour}:00" data-bs-dismiss="modal" ${isCurrentDay || isNext24Hours ? '' : 'onclick="nextPrev(1)"'} type="button" class="dataDate mb-2 w-100 btn ${isBooked ? 'btn-warning' : (isOffDay ? 'btn-danger' : (isCurrentDay || isNext24Hours ? 'btn-warning' : 'btn-success'))}">${hour}:00`;
                 modalContent += isBooked ? ' (Booked)</button><br>' : (isOffDay ? ' (Off Day)</button><br>' : (isCurrentDay || isNext24Hours ? ' (Not Available)</button><br>' : ' (Available)</button><br>'));
@@ -523,29 +523,29 @@
               // Display the first slot as 10:30 AM
               var startTime = `${stylistSchedule.date}T10:30:00`;
               console.log(startTime);
-              
+
               // Check if the 10:30 AM slot is booked
               var isBooked = stylistSchedule.booked.some(slot => slot.start === startTime);
               var isOffDay = stylistSchedule.offDays.includes(stylistSchedule.date);
               var isCurrentDay = dateFormatted === currentFormattedDate;
               var isNext24Hours = dateFormatted === next24HoursFormattedDate;
-              
+
               // Format the 10:30 AM slot and add it to the modal content
               modalContent += `<button data-date="${dateFormatted}, 10:30" data-bs-dismiss="modal" ${isCurrentDay || isNext24Hours ? '' : 'onclick="nextPrev(1)"'} type="button" class="dataDate mb-2 w-100 btn ${isBooked ? 'btn-warning' : (isOffDay ? 'btn-danger' : (isCurrentDay || isNext24Hours ? 'btn-warning' : 'btn-success'))}">10:30`;
               modalContent += isBooked ? ' (Booked)</button><br>' : (isOffDay ? ' (Off Day)</button><br>' : (isCurrentDay || isNext24Hours ? ' (Not Available)</button><br>' : ' (Available)</button><br>'));
-              
+
               // Loop through the rest of the time slots from 11:00 AM to 6:00 PM
               for (var hour = 11; hour <= 18; hour++) {
                   // Set the time slot for each hour starting at 11:00 AM
                   startTime = `${stylistSchedule.date}T${hour.toString().padStart(2, '0')}:00:00`;
                   console.log(startTime);
-              
+
                   // Check if the time slot is booked
                   isBooked = stylistSchedule.booked.some(slot => slot.start === startTime);
                   isOffDay = stylistSchedule.offDays.includes(stylistSchedule.date);
                   isCurrentDay = dateFormatted === currentFormattedDate;
                   isNext24Hours = dateFormatted === next24HoursFormattedDate;
-              
+
                   // Format the time slot and add it to the modal content
                   modalContent += `<button data-date="${dateFormatted}, ${hour}:00" data-bs-dismiss="modal" ${isCurrentDay || isNext24Hours ? '' : 'onclick="nextPrev(1)"'} type="button" class="dataDate mb-2 w-100 btn ${isBooked ? 'btn-warning' : (isOffDay ? 'btn-danger' : (isCurrentDay || isNext24Hours ? 'btn-warning' : 'btn-success'))}">${hour}:00`;
                   modalContent += isBooked ? ' (Booked)</button><br>' : (isOffDay ? ' (Off Day)</button><br>' : (isCurrentDay || isNext24Hours ? ' (Not Available)</button><br>' : ' (Available)</button><br>'));
@@ -555,29 +555,29 @@
             var startTime = `${stylistSchedule.date}T${hour.toString().padStart(2, '0')}:00:00`;
             // var endTime = `${stylistSchedule.date}T${(hour + 1).toString().padStart(2, '0')}:00:00`;
             console.log(startTime)
-        
+
             // Check if the time slot is booked
             // var isBooked = stylistSchedule.booked.some(slot => (slot.start <= startTime && slot.end > startTime));
             var isBooked = stylistSchedule.booked.some(slot => slot.start === startTime);
             var isOffDay = stylistSchedule.offDays.includes(stylistSchedule.date);
             var isCurrentDay = dateFormatted === currentFormattedDate;
             var isNext24Hours = dateFormatted === next24HoursFormattedDate;
-        
+
             // Format the time slot and add it to the modal content
             modalContent += `<button data-date="${dateFormatted}, ${hour}:00" data-bs-dismiss="modal" ${isCurrentDay || isNext24Hours ? '' : 'onclick="nextPrev(1)"'} type="button" class="dataDate mb-2 w-100 btn ${isBooked ? 'btn-warning' : (isOffDay ? 'btn-danger' : (isCurrentDay || isNext24Hours ? 'btn-warning' : 'btn-success'))}">${hour}:00`;
             modalContent += isBooked ? ' (Booked)</button><br>' : (isOffDay ? ' (Off Day)</button><br>' : (isCurrentDay || isNext24Hours ? ' (Not Available)</button><br>' : ' (Available)</button><br>'));
           }
           }
-        
+
           // Update the modal content
           document.getElementById('eventTitle').innerHTML = modalContent;
           document.getElementById('exampleModalLabel').innerHTML = `Book Time Slot (${dateFormatted})`;
-        
+
         }
-        
+
         var currentTab = 0; // Current tab is set to be the first tab (0)
         showTab(currentTab); // Display the current tab
-        
+
         function showTab(n) {
           // This function will display the specified tab of the form...
           var x = document.getElementsByClassName("tabBookingStep");
@@ -596,12 +596,12 @@
           //... and run a function that will display the correct step indicator:
           fixStepIndicator(n);
         }
-        
+
         function nextPrev(n) {
           // This function will figure out which tab to display
           var x = document.getElementsByClassName("tabBookingStep");
           // Exit the function if any field in the current tab is invalid:
-          
+
           // Hide the current tab:
           x[currentTab].style.display = "none";
           // Increase or decrease the current tab by 1:
@@ -699,7 +699,7 @@
             console.log(dataServiceValue)
             serviceDetails1Div.style.display = "block";
             serviceDetails2Div.style.display = "none";
-            
+
           } else if (dataServiceValue == "Lash Service") {
             console.log(dataServiceValue)
             serviceDetails1Div.style.display = "none";
@@ -721,18 +721,18 @@
             stylistInputVerify.innerHTML = dataStylistValue;
           }
 
-          
-          
+
+
           fnVerify.innerHTML = fn.value + " " + ln.value;
           emailVerify.innerHTML = email.value;
           phoneVerify.innerHTML = phone.value;
           // Otherwise, display the correct tab:
           showTab(currentTab);
         }
-        
+
         function fixStepIndicator(n) {
           var tabMenu = document.getElementById("account-menu");
-        
+
           if (tabMenu) {
             for (var i = 0; i < tabMenu.children.length; i++) {
               if (i === n) {
@@ -750,10 +750,10 @@
         document.getElementById('regForm').addEventListener('submit', function(event) {
           // Prevent the default form submission behavior
           event.preventDefault();
-    
+
           // Show loading overlay
           document.getElementById('loading-overlay').style.display = 'block';
-    
+
           // Submit the form after a short delay to allow time for the loading overlay to appear
           setTimeout(function() {
             document.getElementById('regForm').submit();
